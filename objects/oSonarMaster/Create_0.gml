@@ -11,15 +11,15 @@ white = {
 hist = array_create(0)
 floor_hist = array_create(0)
 
-isGui = false
+isGui = true
 drawFunc = function(){
 	if (surface_exists(oSLMaster.screenSurf)){
 		surface_set_target(oSLMaster.screenSurf)
+		vertex_begin(oSLMaster.vBuff,oSLMaster.vertexFormat)
+
 		draw_set_color(c_white)
 		for (var i=0; i< array_length(hist)-1; i++){
 
-		
-		if point_distance(ship_master.posx, ship_master.posy, hist[i].x,hist[i].y) < 275 {
 			var dist = 1/(point_distance(hist[i].tempX, hist[i].tempY,hist[i+1].tempX,hist[i+1].tempY))
 			
 			hist[i].tempX += random_range(-1,1) * (1-hist[i].noiseFactor)
@@ -31,15 +31,22 @@ drawFunc = function(){
 			var _y = random_range(-maxDrift,maxDrift) * (1 - hist[i].noiseFactor)
 
 			//draw_sprite(Blip,0,hist[i].tempX+_x,hist[i].tempY+_y)	
-			draw_set_alpha(1/(point_distance(hist[i].tempX, hist[i].tempY,hist[i+1].tempX,hist[i+1].tempY)))
-			draw_line(hist[i].tempX, hist[i].tempY,hist[i+1].tempX,hist[i+1].tempY)
+			//draw_set_alpha(5/(point_distance(hist[i].tempX, hist[i].tempY,hist[i+1].tempX,hist[i+1].tempY)))
+			var screenSrc = relativePos(hist[i].tempX, hist[i].tempY)
+			var screenDst = relativePos(hist[i+1].tempX, hist[i+1].tempY)
+			//draw_line(screenSrc.x, screenSrc.y,screenDst.x,screenDst.y)
+			vertex_position(oSLMaster.vBuff, screenSrc.x,screenSrc.y)
+			vertex_color(oSLMaster.vBuff,c_white,dist)
+			
 
 
-		}
 		
 		
-		draw_set_alpha(1)
+		
+		
 	}
+	draw_set_alpha(1)
 	surface_reset_target()
+	vertex_end(oSLMaster.vBuff)
 	}
 }

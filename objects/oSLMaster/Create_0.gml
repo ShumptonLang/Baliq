@@ -2,7 +2,8 @@ sprite_index = spr_start
 scalex = 800
 scaley = 600
 
-
+view_width = camera_get_view_width(view_camera[0])
+view_height =camera_get_view_height(view_camera[0])
 
 
 //Convert map into a surface
@@ -16,24 +17,27 @@ global.currMapBuffer = buffer_create(4000 * 4000*4, buffer_fast, 1);
 buffer_get_surface(global.currMapBuffer, surf, 0);
 
 
+//Create Aux Surfaces
 shadowSurf = surface_create(4000,4000)
 surface_set_target(shadowSurf)
 draw_set_color(c_black);
 draw_rectangle(0, 0, room_width, room_height,false);
 surface_reset_target()
 
-screenSurf = surface_create(4000,4000)
+screenSurf = -1
 
-
-instance_create_depth(0,0,5,oSonarMaster)
-instance_create_depth(0,0,5,oLidarMaster)
-
+//Create Room Objects
+instance_create_depth(0,0,-3,oSonarMaster)
+instance_create_depth(0,0,-3,oLidarMaster)
 instance_create_depth(1260,540,-5,oSonarButton)
 instance_create_depth(438,184,-5,oLeverAperture)
-
 instance_create_depth(0,0,-5,oNavRotation)
 instance_create_depth(0,0,-5,oLeverForward)
 
 drawables = [oSonarMaster,oLidarMaster,oSonarButton,oLeverAperture,oNavRotation,oLidarMaster]
 
-// After creating and filling the buffer
+vBuff = vertex_create_buffer()
+vertex_format_begin();
+vertex_format_add_position();
+vertex_format_add_color()
+vertexFormat = vertex_format_end();

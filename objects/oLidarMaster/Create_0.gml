@@ -11,19 +11,10 @@ white = {
 hist = array_create(0)
 floor_hist = array_create(0)
 
-isGui = false
+isGui = true
 drawFunc = function(){
-
-	for (var i=0; i< array_length(floor_hist); i++){
-	//draw_set_alpha(0.04 / floor_hist[i][2])
-		var current_point = array_pop(floor_hist)
-		if current_point.isSurfaceLevel {
-			
-		} else {
-			
-		}
-		
-	}
+	if surface_exists(oSLMaster.screenSurf){
+	surface_set_target(oSLMaster.screenSurf)
 	
 
 	for (var i=0; i< array_length(hist)-1; i++){
@@ -37,9 +28,11 @@ drawFunc = function(){
 	
 			var _x = random_range(-maxDrift,maxDrift) * (1 - hist[i].noiseFactor)
 			var _y = random_range(-maxDrift,maxDrift) * (1 - hist[i].noiseFactor)
-
-			draw_sprite(Blip,0,hist[i].tempX+_x,hist[i].tempY+_y)	
+			var screenPos = relativePos(hist[i].tempX+_x,hist[i].tempY+_y)
+			draw_sprite(Blip,0,screenPos.x,screenPos.y)	
 
 		}
-	}	
+	}
+	surface_reset_target()
+	}
 }
