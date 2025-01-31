@@ -1,0 +1,1 @@
+if global.mouse_occupied window_set_cursor(cr_none)

@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"inDepthDebug",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"inDepthDebug",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

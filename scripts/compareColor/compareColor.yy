@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"compareColor",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"compareColor",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}
