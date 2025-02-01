@@ -28,8 +28,8 @@ drawFunc = function(){
 	
 			var _x = random_range(-maxDrift,maxDrift) * (1 - hist[i].noiseFactor)
 			var _y = random_range(-maxDrift,maxDrift) * (1 - hist[i].noiseFactor)
-			var screenPos = relativePos(hist[i].tempX+_x,hist[i].tempY+_y)
-			draw_sprite(Blip,0,screenPos.x,screenPos.y)	
+			var pos = screenPos(hist[i].tempX+_x,hist[i].tempY+_y)
+			draw_sprite(Blip,0,pos.x,pos.y)	
 
 		}
 	}

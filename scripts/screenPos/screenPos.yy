@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"relativePos",
+  "%Name":"screenPos",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"relativePos",
+  "name":"screenPos",
   "parent":{
     "name":"Scripts",
     "path":"folders/Scripts.yy",

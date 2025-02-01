@@ -1,7 +1,6 @@
 //image_angle = 270-ship_master.angle
 //sprite_set_offset(sprite_index, ship_master.posx, ship_master.posy)
 
-
 var px = ship_master.posx
 var py = ship_master.posy
 
@@ -39,7 +38,7 @@ if (getPixelFromBuffer(buffer, px+_fx, py+_fy).a == 255){
 if scanning and !waitingForScan{
 	for (var v = 0; v < 15;v++){
 	while(scanIter < scanTotal){
-		var _scandeg = (scanIter/scanTotal) * 360
+		var _scandeg = (scanIter/scanTotal) * 360 + irandom_range(-5,5)
 
 //Starting rotation is 0, 
 

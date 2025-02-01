@@ -1,3 +1,5 @@
 window_set_size(1440,1080)
 //window_set_fullscreen(true)
+gpu_set_texfilter(false)
+gpu_set_texrepeat(true)
 audio_play_sound(hallofwater2,1,1)

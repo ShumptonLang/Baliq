@@ -20,8 +20,9 @@ draw_surface_ext(screenSurf,0,0,1,1,0,c_white,1)
 
 //show_debug_message("Sonar: Starting draw")
 if oSonarMaster.scanning || oLidarMaster.scanning {
-	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,0.5)
+	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,0.0)
 } else
-	draw_sprite_ext(sSonarHud,0,0,0,1,1,0,c_white,0.5)
+	draw_sprite_ext(sSonarHud,0,0,0,1,1,0,c_white,0.0)
+
 	
-vertex_submit(vBuff,pr_linestrip,0)
+

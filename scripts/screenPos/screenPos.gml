@@ -1,4 +1,4 @@
-function relativePos(worldPosX, worldPosY){
+function screenPos(worldPosX, worldPosY){
 	
 	var cam_x = camera_get_view_x(view_camera[0]);
 	var cam_y = camera_get_view_y(view_camera[0]);
@@ -28,5 +28,5 @@ function relativePos(worldPosX, worldPosY){
 	rotated_x += cam_center_x;
     rotated_y += cam_center_y;
 
-return {x:rotated_x,y:rotated_y}
+return {x:rotated_x,y:rotated_y,normX:rotated_x/camW,normY:rotated_y/camH}
 }

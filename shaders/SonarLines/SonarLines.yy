@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"SonarLines",
+  "name":"SonarLines",
+  "parent":{
+    "name":"Baliq",
+    "path":"Baliq.yyp",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

@@ -1,4 +1,4 @@
-sprite_index = spr_start
+ sprite_index = spr_start
 scalex = 800
 scaley = 600
 
@@ -35,9 +35,3 @@ instance_create_depth(0,0,-5,oNavRotation)
 instance_create_depth(0,0,-5,oLeverForward)
 
 drawables = [oSonarMaster,oLidarMaster,oSonarButton,oLeverAperture,oNavRotation,oLidarMaster]
-
-vBuff = vertex_create_buffer()
-vertex_format_begin();
-vertex_format_add_position();
-vertex_format_add_color()
-vertexFormat = vertex_format_end();
