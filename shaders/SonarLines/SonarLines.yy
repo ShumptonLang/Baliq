@@ -3,8 +3,8 @@
   "%Name":"SonarLines",
   "name":"SonarLines",
   "parent":{
-    "name":"Baliq",
-    "path":"Baliq.yyp",
+    "name":"Sonar",
+    "path":"folders/SonarLidar/Sonar.yy",
   },
   "resourceType":"GMShader",
   "resourceVersion":"2.0",

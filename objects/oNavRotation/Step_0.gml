@@ -14,7 +14,7 @@ if (global.mouse_occupied == self){
 	pullDirection = dcos(new_angle)
 	
 	
-	print(pullDirection)
+	//print(pullDirection)
 
 }
 if(mOccupiedChanged and global.mouse_occupied != self){

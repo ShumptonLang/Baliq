@@ -1,6 +1,7 @@
 buffer = global.currMapBuffer
 noiseB = global.noiseBuffer
 
+lineNoise = sprite_get_texture(funkyNoise,0)
 
 white = {
 	r: 255,
@@ -24,6 +25,7 @@ vertex_format_add_texcoord()
 vertex_format_add_texcoord()
 vertexFormat = vertex_format_end();
 
+
 //Handles vBuffer, not a traditional Draw
 drawFunc = function(){
 	 if (surface_exists(oSLMaster.screenSurf)) {
@@ -36,9 +38,9 @@ drawFunc = function(){
         vertex_begin(vBuff, vertexFormat);
 		for (var i = 2; i < array_length(hist)-2; i++) {
             if (point_distance(ShipMaster.posx, ShipMaster.posy, hist[i].x, hist[i].y) < 300) {
-				var distTo = 20/(point_distance(hist[i].tempX, hist[i].tempY,hist[i+2].tempX,hist[i+2].tempY))+0.1
-				var distFrom = 20/(point_distance(hist[i].tempX, hist[i].tempY,hist[i-2].tempX,hist[i-2].tempY))+0.1
-				var dist = min(distTo,distFrom)
+				var distTo = min(10/(point_distance(hist[i].tempX, hist[i].tempY,hist[i+2].tempX,hist[i+2].tempY)),1)+0.1
+				var distFrom = min(10/(point_distance(hist[i].tempX, hist[i].tempY,hist[i-2].tempX,hist[i-2].tempY)),1)+0.1
+				var dist = min(distTo,distFrom)*0.9
                 var screenSrc = screenPos(hist[i].tempX, hist[i].tempY);
                 
 				uvs = sprite_get_uvs(fakeNoise,0)
@@ -55,15 +57,12 @@ drawFunc = function(){
         }
         
         vertex_end(vBuff);
-		 lastHistLength = array_length(hist)
+		lastHistLength = array_length(hist)
 		shader_set(SonarLines);
 		shader_set_uniform_f(shader_get_uniform(SonarLines, "u_Time"), current_time);
-		//show_debug_message("Texture dimensions: " + string(texture_get_width(lineNoise)) + "x" + string(texture_get_height(lineNoise)));
-		show_debug_message("Texture exists: " + string(asset_get_index("fakeNoise")));
-		
-
-		
 		shader_set_uniform_f(shader_get_uniform(SonarLines, "u_Debug"), keyboard_check(vk_space));
+		var texIndex = shader_get_sampler_index(SonarLines,"u_NoiseTex")
+		texture_set_stage(texIndex, lineNoise)
 		
 		
 

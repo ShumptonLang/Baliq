@@ -72,29 +72,27 @@ if scanning and !waitingForScan{
 		
 				//White
 		
-				if(compareColor(rayPoint,white)){
+				if(rayPoint.r){
 					//print("Successful buffer query at: ",px, ", ", py)
 					var tempX = px
 					var tempY = py
-					var r  = getPixelFromBuffer(buffer, tempX, tempY,4000,4000)
-			
-					tempX += _x / 2
-					tempY += _y / 2
+
 					for(var j=0; j < 10; j++){
 				
 						r = getPixelFromBuffer(buffer, tempX, tempY,4000,4000)
-						if(compareColor(r,white)){
-							tempX += _x
-							tempY += _y
-					
-						} else {
+						var rand = random(255)
+						if(rand>r.r){
+							print(rand, "VS", r.r)
 							tempX -= _x
 							tempY -= _y
+					
+						} else {
+							break
 						}
 				
-						_x /= 2
-						_y /= 2
 					}
+					px = tempX
+					py = tempY
 
 					var wallPoint = {
 						x : px,

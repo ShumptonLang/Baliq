@@ -48,6 +48,7 @@
   },
   "name":"Baliq",
   "resources":[
+    {"id":{"name":"Note1","path":"notes/Note1/Note1.yy",},},
     {"id":{"name":"OInstanedRendering","path":"objects/OInstanedRendering/OInstanedRendering.yy",},},
     {"id":{"name":"oLeverAperture","path":"objects/oLeverAperture/oLeverAperture.yy",},},
     {"id":{"name":"oLeverForward","path":"objects/oLeverForward/oLeverForward.yy",},},
