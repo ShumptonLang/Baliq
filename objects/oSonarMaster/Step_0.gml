@@ -30,7 +30,7 @@ show_debug_message("A: " + string(surf_pixel >> 24));
 }
 
 //print(getPixelFromBuffer(buffer, px+_fx, py+_fy))
-if (getPixelFromBuffer(buffer, px+_fx, py+_fy).a == 255){
+if (getPixelFromBuffer(buffer, px+_fx, py+_fy,4000,4000).a == 255){
 	ship_master.contact = true
 	//print("bang!")
 }
@@ -61,7 +61,7 @@ if scanning and !waitingForScan{
 				
 				
 	
-				var rayPoint = getPixelFromBuffer(buffer,px,py)
+				var rayPoint = getPixelFromBuffer(buffer,px,py,4000,4000)
 
 				//print(getPixelFromBuffer(buffer,px,py).a, getPixelFromBuffer(buffer,px,py).a == 255)
 				//print(surface_getpixel(surf, px, py))
@@ -76,13 +76,13 @@ if scanning and !waitingForScan{
 					//print("Successful buffer query at: ",px, ", ", py)
 					var tempX = px
 					var tempY = py
-					var r  = getPixelFromBuffer(buffer, tempX, tempY)
+					var r  = getPixelFromBuffer(buffer, tempX, tempY,4000,4000)
 			
 					tempX += _x / 2
 					tempY += _y / 2
 					for(var j=0; j < 10; j++){
 				
-						r = getPixelFromBuffer(buffer, tempX, tempY)
+						r = getPixelFromBuffer(buffer, tempX, tempY,4000,4000)
 						if(compareColor(r,white)){
 							tempX += _x
 							tempY += _y
@@ -101,7 +101,8 @@ if scanning and !waitingForScan{
 						y : py,
 						tempX : px,
 						tempY : py,
-						noiseFactor : 0.7
+						noiseX : random(255),
+						noiseY : random(255)
 					}
 					array_insert(hist,0,wallPoint)
 					var floorPoint = {

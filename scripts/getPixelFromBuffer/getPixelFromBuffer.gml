@@ -3,9 +3,12 @@
 /// @param {Real} _x The x coordinate
 /// @param {Real} _y The y coordinate
 /// @returns {Struct} Array of [r,g,b,a] values
-function getPixelFromBuffer(buffer,_x,_y){
-	var width = 4000; 
-    var pixelOffset = (int64(_x) + width * int64(_y)) * 4;
+function getPixelFromBuffer(buffer,_x,_y,dimX,dimY){
+	
+	_x %= dimX
+	_y %= dimY
+
+    var pixelOffset = (int64(_x) + dimX * int64(_y)) * 4;
 	
 	var colors = {
         r: buffer_peek(buffer, pixelOffset, buffer_u8),

@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"ShVTF",
+  "name":"ShVTF",
+  "parent":{
+    "name":"VTF",
+    "path":"folders/Examples/VTF.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

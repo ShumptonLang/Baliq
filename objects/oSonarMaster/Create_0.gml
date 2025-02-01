@@ -1,8 +1,6 @@
 buffer = global.currMapBuffer
-lineNoise = sprite_get_texture(fakeNoise,0)
-if (lineNoise == -1) {
-    show_debug_message("Failed to load noise texture!");
-}
+noiseB = global.noiseBuffer
+
 
 white = {
 	r: 255,
@@ -32,26 +30,40 @@ drawFunc = function(){
 		
         surface_set_target(oSLMaster.screenSurf);
 		
-		if lastHistLength != array_length(hist){
-			updateVBuffer()
-			lastHistLength = array_length(hist)
-		}
-
+		if lastHistLength > 0
+			vertex_delete_buffer(vBuff);
+        vBuff = vertex_create_buffer();
+        vertex_begin(vBuff, vertexFormat);
+		for (var i = 2; i < array_length(hist)-2; i++) {
+            if (point_distance(ShipMaster.posx, ShipMaster.posy, hist[i].x, hist[i].y) < 300) {
+				var distTo = 20/(point_distance(hist[i].tempX, hist[i].tempY,hist[i+2].tempX,hist[i+2].tempY))+0.1
+				var distFrom = 20/(point_distance(hist[i].tempX, hist[i].tempY,hist[i-2].tempX,hist[i-2].tempY))+0.1
+				var dist = min(distTo,distFrom)
+                var screenSrc = screenPos(hist[i].tempX, hist[i].tempY);
+                
+				uvs = sprite_get_uvs(fakeNoise,0)
+				
+                vertex_position_3d(vBuff, screenSrc.x, screenSrc.y,0);
+                vertex_color(vBuff, c_white, dist);
+				vertex_texcoord(vBuff, oSLMaster.view_width , oSLMaster.view_height )
+				var timeScale = current_time / 100
+				var noiseOffset = getPixelFromBuffer(noiseB,hist[i].noiseX * 20 +timeScale, hist[i].noiseY * 20 + timeScale,256,256)
+				
+				vertex_texcoord(vBuff,noiseOffset.r,(noiseOffset.g))  
+				
+            }
+        }
+        
+        vertex_end(vBuff);
+		 lastHistLength = array_length(hist)
 		shader_set(SonarLines);
-		var tex_uniform = shader_get_sampler_index(SonarLines, "u_NoiseTex");
-		gpu_set_texrepeat(true)
-		texture_set_stage(tex_uniform, lineNoise);
 		shader_set_uniform_f(shader_get_uniform(SonarLines, "u_Time"), current_time);
-		show_debug_message("Texture Stage: " + string(tex_uniform));
-		show_debug_message("Noise Texture: " + string(lineNoise));
+		//show_debug_message("Texture dimensions: " + string(texture_get_width(lineNoise)) + "x" + string(texture_get_height(lineNoise)));
+		show_debug_message("Texture exists: " + string(asset_get_index("fakeNoise")));
 		
-		if keyboard_check_pressed(vk_space) {
-			debugg_mode = (debugg_mode + 1) mod 4;
-			
-			}
+
 		
 		shader_set_uniform_f(shader_get_uniform(SonarLines, "u_Debug"), keyboard_check(vk_space));
-		print(debugg_mode)
 		
 		
 
@@ -65,26 +77,8 @@ drawFunc = function(){
 }
 
 function updateVBuffer(){
-		if lastHistLength > 0
-			vertex_delete_buffer(vBuff);
-        vBuff = vertex_create_buffer();
-        vertex_begin(vBuff, vertexFormat);
+		
         
         // Only loop through points within view
-        for (var i = 1; i < array_length(hist)-1; i++) {
-            if (point_distance(ShipMaster.posx, ShipMaster.posy, hist[i].x, hist[i].y) < 300) {
-				var distTo = 9/(point_distance(hist[i].tempX, hist[i].tempY,hist[i+1].tempX,hist[i+1].tempY))
-				var distFrom = 9/(point_distance(hist[i].tempX, hist[i].tempY,hist[i-1].tempX,hist[i-1].tempY))
-				var dist = min(distTo,distFrom)
-                var screenSrc = screenPos(hist[i].tempX, hist[i].tempY);
-                
-                vertex_position_3d(vBuff, screenSrc.x, screenSrc.y,0);
-                vertex_color(vBuff, c_white, dist);
-				vertex_texcoord(vBuff, oSLMaster.view_width , oSLMaster.view_height )
-				vertex_texcoord(vBuff, random(1),random(1))
-				
-            }
-        }
         
-        vertex_end(vBuff);
 }

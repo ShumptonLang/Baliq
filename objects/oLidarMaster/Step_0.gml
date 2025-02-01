@@ -34,7 +34,7 @@ show_debug_message("A: " + string(surf_pixel >> 24));
 }
 
 //print(getPixelFromBuffer(buffer, px+_fx, py+_fy))
-if (getPixelFromBuffer(buffer, px+_fx, py+_fy).a == 255){
+if (getPixelFromBuffer(buffer, px+_fx, py+_fy,4000,4000).a == 255){
 	ship_master.contact = true
 	//print("bang!")
 }
@@ -69,7 +69,7 @@ for(var i=0; i<7;i++){
 		py -= _y
 		//draw_sprite(Blip,0,px,(py))
 		//var __r = buffer_peek(map_buffer,_r,buffer_u8)
-		var rayPoint = getPixelFromBuffer(buffer,px,py)
+		var rayPoint = getPixelFromBuffer(buffer,px,py,4000,4000)
 
 		//print(getPixelFromBuffer(buffer,px,py).a, getPixelFromBuffer(buffer,px,py).a == 255)
 		//print(surface_getpixel(surf, px, py))
@@ -84,13 +84,13 @@ for(var i=0; i<7;i++){
 			//print("Successful buffer query at: ",px, ", ", py)
 			var tempX = px
 			var tempY = py
-			var r  = getPixelFromBuffer(buffer, tempX, tempY)
+			var r  = getPixelFromBuffer(buffer, tempX, tempY,4000,4000)
 			
 			tempX += _x / 2
 			tempY += _y / 2
 			for(var j=0; j < 5; j++){
 				
-				r = getPixelFromBuffer(buffer, tempX, tempY)
+				r = getPixelFromBuffer(buffer, tempX, tempY,4000,4000)
 				if(compareColor(r,white)){
 					tempX += _x
 					tempY += _y

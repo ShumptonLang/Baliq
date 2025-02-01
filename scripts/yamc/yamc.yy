@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"yamc",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"yamc",
+  "parent":{
+    "name":"Baliq",
+    "path":"Baliq.yyp",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

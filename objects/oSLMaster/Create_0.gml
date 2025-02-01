@@ -16,6 +16,15 @@ surface_reset_target()
 global.currMapBuffer = buffer_create(4000 * 4000*4, buffer_fast, 1);
 buffer_get_surface(global.currMapBuffer, surf, 0);
 
+surf = surface_create(256,256)//
+surface_set_target(surf)
+draw_sprite(funkyNoise,0,0,0)
+surface_reset_target()
+
+
+global.noiseBuffer = buffer_create(256 * 256*4, buffer_fast, 1);
+buffer_get_surface(global.noiseBuffer, surf, 0);
+
 
 //Create Aux Surfaces
 shadowSurf = surface_create(4000,4000)

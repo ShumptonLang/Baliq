@@ -1,32 +1,30 @@
-attribute vec2 in_Position;                  // (x,y) (0,screen) Screen space
-attribute vec4 in_Colour;                    // (r,g,b,a)
-attribute vec2 in_TextureCoord0;			// (width,height)
-attribute vec2 in_TextureCoord1;			// (0,1) random position for noise offset
+attribute vec2 in_Position;
+attribute vec4 in_Colour;
+attribute vec2 in_TextureCoord0;
+attribute vec2 in_TextureCoord1;
 
 varying vec4 v_Colour;
 varying vec2 pos;
 varying vec2 offset;
 
 uniform float u_Time;
-uniform sampler2D u_NoiseTex;
 
 void main()
 {
-	// Random offset + time (UV), unbounded, but wrapping is enabled
-	pos = mod(in_TextureCoord1 + u_Time/10000.0,1.);
+    // Calculate and pass UV coordinate
+    pos = in_Position+u_Time/1000.;
     
-    // Sample noise (expecting and getting UV coordinates)
-    vec4 noise = texture2D(u_NoiseTex, pos);
+    // Try sampling with fixed coordinates first
     
-	//Convert noise from UV space to screen space.
-    offset = noise.rg;
+    // Set offset and scale up significantly to make any movement visible
+    offset = (in_TextureCoord1/255.) * 2. -1.;  // Removed the -1 to 1 mapping for testing
+    vec2 position = in_Position.xy + offset;
     
-    // Apply offset in screen space
-    vec2 position = vec2 (in_Position.x + offset.x, in_Position.y + offset.y);
-    
-    // Convert to clip space (-1 to 1) for final output
-	vec4 preFlip = vec4((position / in_TextureCoord0) * 2.0 - 1.0, 0.0, 1.0);
-	preFlip.y = -preFlip.y;
+    // Convert to clip space
+    vec4 preFlip = vec4((position / in_TextureCoord0) * 2.0 - 1.0, 0.0, 1.0);
+    preFlip.y = -preFlip.y;
     gl_Position = preFlip;
-    v_Colour = noise;
+    
+    // Pass noise directly as color for debugging
+    v_Colour = in_Colour;
 }
