@@ -37,10 +37,10 @@ drawFunc = function(){
         vBuff = vertex_create_buffer();
         vertex_begin(vBuff, vertexFormat);
 		for (var i = 2; i < array_length(hist)-2; i++) {
-            if (point_distance(ShipMaster.posx, ShipMaster.posy, hist[i].x, hist[i].y) < 300) {
-				var distTo = min(10/(point_distance(hist[i].tempX, hist[i].tempY,hist[i+2].tempX,hist[i+2].tempY)),1)+0.1
-				var distFrom = min(10/(point_distance(hist[i].tempX, hist[i].tempY,hist[i-2].tempX,hist[i-2].tempY)),1)+0.1
-				var dist = min(distTo,distFrom)*0.9
+            if (point_distance(ShipMaster.posx, ShipMaster.posy, hist[i].x, hist[i].y) < 450) {
+				var distTo = min(15/(point_distance(hist[i].tempX, hist[i].tempY,hist[i+2].tempX,hist[i+2].tempY)),1)
+				var distFrom = min(15/(point_distance(hist[i].tempX, hist[i].tempY,hist[i-2].tempX,hist[i-2].tempY)),1)
+				var dist = min(distTo,distFrom)*0.9 + 0.1
                 var screenSrc = screenPos(hist[i].tempX, hist[i].tempY);
                 
 				uvs = sprite_get_uvs(fakeNoise,0)
@@ -71,6 +71,8 @@ drawFunc = function(){
 		if lastHistLength > 0
 			vertex_submit(vBuff, pr_linestrip, -1);
 		shader_reset();
+		draw_set_color(c_white)
+		draw_circle(720,540,30,1)
         surface_reset_target();
     }
 }

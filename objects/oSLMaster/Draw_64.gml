@@ -15,14 +15,18 @@ for (var i = 0; i < array_length(drawables);i++){
 		drawables[i].drawFunc()	
 }
 
-draw_surface_ext(screenSurf,0,0,1,1,0,c_white,1)
 
+//draw_surface_ext(screenSurf,0,0,1,1,0,c_white,1)
+
+var tex = surface_get_texture(screenSurf)
+vertex_submit(vb, pr_trianglefan, tex);
 
 //show_debug_message("Sonar: Starting draw")
 if oSonarMaster.scanning || oLidarMaster.scanning {
-	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,1.0)
+	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,1)
 } else
-	draw_sprite_ext(sSonarHud,0,0,0,1,1,0,c_white,1.0)
+	draw_sprite_ext(sSonarHud,0,0,0,1,1,0,c_white,1)
+
 
 	
 

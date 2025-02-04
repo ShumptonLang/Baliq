@@ -14,13 +14,15 @@ floor_hist = array_create(0)
 isGui = true
 drawFunc = function(){
 	if surface_exists(oSLMaster.screenSurf){
+		print("Writing to surface")
 	surface_set_target(oSLMaster.screenSurf)
 	
 
 	for (var i=0; i< array_length(hist)-1; i++){
 
 		
-		if point_distance(ship_master.posx, ship_master.posy, hist[i].x,hist[i].y) < 600 {
+		//if point_distance(ship_master.posx, ship_master.posy, hist[i].x,hist[i].y) < 600 
+		{
 			hist[i].tempX += random_range(-1,1) * (1-hist[i].noiseFactor)
 			hist[i].tempX = clamp(hist[i].tempX,hist[i].x - 5,hist[i].x+5)
 			hist[i].tempY += random_range(-1,1) * (1-hist[i].noiseFactor)

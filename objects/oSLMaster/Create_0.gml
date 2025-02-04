@@ -44,3 +44,31 @@ instance_create_depth(0,0,-5,oNavRotation)
 instance_create_depth(0,0,-5,oLeverForward)
 
 drawables = [oSonarMaster,oLidarMaster,oSonarButton,oLeverAperture,oNavRotation,oLidarMaster]
+
+vertex_format_begin();
+vertex_format_add_position_3d();
+vertex_format_add_color()
+vertex_format_add_texcoord()
+format = vertex_format_end();
+
+var _uv_data = sprite_get_uvs(sSonarHud, 0);
+//var _umin = _uv_data[0], _vmin = _uv_data[1], _umax = _uv_data[2], _vmax = _uv_data[3];
+var scale = 2;
+var _umin = 0.25, _vmin = 0.25, _umax = 0.75, _vmax = 0.75;
+
+vb = vertex_create_buffer();
+
+vertex_begin(vb, format);
+	
+vertex_position_3d(vb,   469,395, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, (_umax+_umin)/2, (_vmax+_vmin)/2);
+vertex_position_3d(vb,   146,201, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umin, _vmin);
+vertex_position_3d(vb, 495, 151, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, (_umax+_umin)/2, _vmin);
+vertex_position_3d(vb,   863, 160, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umax, _vmin);
+vertex_position_3d(vb, 898,376, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umax, (_vmax+_vmin)/2);
+vertex_position_3d(vb, 920,627, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umax, _vmax);
+vertex_position_3d(vb,   111,680, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umin, _vmax);
+vertex_position_3d(vb, 120,422, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umin, (_vmax+_vmin)/2);
+vertex_position_3d(vb,   146,201, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umin, _vmin);
+
+vertex_end(vb); 
+

@@ -23,6 +23,9 @@ if contact {
 	audio_play_sound(collision,1,0,abs(forwardv)*5,0,1)
 }
 
+global.mouseX = window_mouse_get_x()
+global.mouseY = window_mouse_get_y()
+
 //debug_sprite_memory()
 //debug_texture_pages()
 

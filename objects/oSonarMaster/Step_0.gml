@@ -48,9 +48,9 @@ if scanning and !waitingForScan{
 
 //print(_scandeg,ship_master.angle, abs((_scandeg-ship_master.angle)/2), sin(abs(degtorad(_scandeg-ship_master.angle)/2)))
 		//print(_scandeg)
-		var fidelity = irandom(10)
-		var _x = lengthdir_x(10 + fidelity,_scandeg)
-		var _y = lengthdir_y(10 + fidelity,_scandeg)
+		var fidelity = random_range(-10,10)
+		var _x = lengthdir_x(10+fidelity/10,_scandeg+fidelity)
+		var _y = lengthdir_y(10+fidelity/10,_scandeg+fidelity)
 
 
 		px = ShipMaster.posx
@@ -77,20 +77,7 @@ if scanning and !waitingForScan{
 					var tempX = px
 					var tempY = py
 
-					for(var j=0; j < 10; j++){
-				
-						r = getPixelFromBuffer(buffer, tempX, tempY,4000,4000)
-						var rand = random(255)
-						if(rand>r.r){
-							print(rand, "VS", r.r)
-							tempX -= _x
-							tempY -= _y
 					
-						} else {
-							break
-						}
-				
-					}
 					px = tempX
 					py = tempY
 

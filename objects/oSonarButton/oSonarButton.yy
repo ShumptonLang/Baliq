@@ -36,5 +36,5 @@
     "path":"sprites/sonar_spr/sonar_spr.yy",
   },
   "spriteMaskId":null,
-  "visible":true,
+  "visible":false,
 }

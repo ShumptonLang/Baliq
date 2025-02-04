@@ -34,7 +34,10 @@ show_debug_message("A: " + string(surf_pixel >> 24));
 }
 
 //print(getPixelFromBuffer(buffer, px+_fx, py+_fy))
-if (getPixelFromBuffer(buffer, px+_fx, py+_fy,4000,4000).a == 255){
+if (getPixelFromBuffer(buffer, px+_fx, py+_fy,4000,4000).a == 255) ||
+   (getPixelFromBuffer(buffer, px-_fx, py+_fy,4000,4000).a == 255) ||
+   (getPixelFromBuffer(buffer, px+_fx, py-_fy,4000,4000).a == 255) ||
+   (getPixelFromBuffer(buffer, px-_fx, py-_fy,4000,4000).a == 255){
 	ship_master.contact = true
 	//print("bang!")
 }
@@ -80,7 +83,7 @@ for(var i=0; i<7;i++){
 		
 		//White
 		
-		if(compareColor(rayPoint,white)){
+		if(rayPoint.r){
 			//print("Successful buffer query at: ",px, ", ", py)
 			var tempX = px
 			var tempY = py
@@ -114,16 +117,6 @@ for(var i=0; i<7;i++){
 				noiseFactor : 1
 			}
 			array_insert(hist,0,wallPoint)
-			var floorPoint = {
-				x : px,
-				y : py,
-				wallX : tempX,
-				wallY : tempY,
-				angle : _scandeg,
-				isSurfaceLevel : false
-			}
-			
-			array_insert(floor_hist,0,floorPoint)
 			break;
 		}
 		//Need to fix
