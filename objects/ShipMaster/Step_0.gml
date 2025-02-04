@@ -9,7 +9,7 @@ var _x = lengthdir_x(1,self.angle-90)
 var _y = lengthdir_y(1,self.angle-90)
 
 forwardv += (-maxv*forward_normal - forwardv)*0.005
-if(forward_normal == 0) forwardv *= 0.99
+if(forward_normal == 0) forwardv *= 0.95
 
 self.posy += _y*forwardv
 self.posx += _x*forwardv

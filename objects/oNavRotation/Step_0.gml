@@ -22,10 +22,10 @@ if(mOccupiedChanged and global.mouse_occupied != self){
 	}
 	
 
-rotv += (rotMaxV*pullDirection-rotv)*0.01
+rotv += (rotMaxV*pullDirection-rotv)*0.05
 rot += rotv
 
-if ship_master.forward_normal{
+if false{
 ship_master.angle -= rotv/25
 } else {
 ship_master.angle -= rotv/40
