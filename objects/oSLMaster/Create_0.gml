@@ -34,6 +34,7 @@ draw_rectangle(0, 0, room_width, room_height,false);
 surface_reset_target()
 
 screenSurf = -1
+lidarSurf = -1
 
 //Create Room Objects
 instance_create_depth(0,0,-3,oSonarMaster)
@@ -56,19 +57,19 @@ var _uv_data = sprite_get_uvs(sSonarHud, 0);
 var scale = 2;
 var _umin = 0.25, _vmin = 0.25, _umax = 0.75, _vmax = 0.75;
 
-vb = vertex_create_buffer();
+sonarBuffer = vertex_create_buffer();
 
-vertex_begin(vb, format);
+vertex_begin(sonarBuffer, format);
 	
-vertex_position_3d(vb,   469,395, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, (_umax+_umin)/2, (_vmax+_vmin)/2);
-vertex_position_3d(vb,   146,201, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umin, _vmin);
-vertex_position_3d(vb, 495, 151, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, (_umax+_umin)/2, _vmin);
-vertex_position_3d(vb,   863, 160, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umax, _vmin);
-vertex_position_3d(vb, 898,376, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umax, (_vmax+_vmin)/2);
-vertex_position_3d(vb, 920,627, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umax, _vmax);
-vertex_position_3d(vb,   111,680, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umin, _vmax);
-vertex_position_3d(vb, 120,422, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umin, (_vmax+_vmin)/2);
-vertex_position_3d(vb,   146,201, 0); vertex_color(vb, c_white, 1); vertex_texcoord(vb, _umin, _vmin);
+vertex_position_3d(sonarBuffer,   469,395, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, (_umax+_umin)/2, (_vmax+_vmin)/2);
+vertex_position_3d(sonarBuffer,   146,201, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, _umin, _vmin);
+vertex_position_3d(sonarBuffer, 495, 151, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, (_umax+_umin)/2, _vmin);
+vertex_position_3d(sonarBuffer,   863, 160, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, _umax, _vmin);
+vertex_position_3d(sonarBuffer, 898,376, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, _umax, (_vmax+_vmin)/2);
+vertex_position_3d(sonarBuffer, 920,627, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, _umax, _vmax);
+vertex_position_3d(sonarBuffer,   111,680, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, _umin, _vmax);
+vertex_position_3d(sonarBuffer, 120,422, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, _umin, (_vmax+_vmin)/2);
+vertex_position_3d(sonarBuffer,   146,201, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, _umin, _vmin);
 
-vertex_end(vb); 
+vertex_end(sonarBuffer); 
 

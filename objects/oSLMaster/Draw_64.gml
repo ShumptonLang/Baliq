@@ -3,9 +3,14 @@ if (!surface_exists(screenSurf)){
 	
 }
 
+if (!surface_exists(lidarSurf)){
+	lidarSurf = surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
+	
+}
+
 //show_debug_message("Master: Starting clear")
 	surface_set_target(screenSurf)
-	draw_clear_alpha(c_black,0)
+	draw_clear_alpha($010101,0)
 	surface_reset_target()
 //show_debug_message("Master: Finished clear")
 	
@@ -18,8 +23,11 @@ for (var i = 0; i < array_length(drawables);i++){
 
 //draw_surface_ext(screenSurf,0,0,1,1,0,c_white,1)
 
+shader_set(CRT)
+shader_set_uniform_f(shader_get_uniform(CRT,"u_screenSize"),view_width,view_height)
 var tex = surface_get_texture(screenSurf)
-vertex_submit(vb, pr_trianglefan, tex);
+vertex_submit(sonarBuffer, pr_trianglefan, tex);
+shader_reset()
 
 //show_debug_message("Sonar: Starting draw")
 if oSonarMaster.scanning || oLidarMaster.scanning {

@@ -89,7 +89,22 @@ if scanning and !waitingForScan{
 						noiseX : random(255),
 						noiseY : random(255)
 					}
-					array_insert(hist,0,wallPoint)
+					
+					var storePoint = string(
+					int64(wallPoint.x - (wallPoint.x%100))) 
+					+ "." + 
+					string(
+					int64(wallPoint.y - (wallPoint.y%100)))
+					
+					if !ds_map_exists(hHist,storePoint){
+							ds_map_add(hHist,storePoint,array_create(0))
+					}
+					if  (array_length(ds_map_find_value(hHist, storePoint)) > 20){
+						array_pop(ds_map_find_value(hHist, storePoint))
+						
+					} 
+					array_insert(ds_map_find_value(hHist, storePoint),0,wallPoint)
+					
 					var floorPoint = {
 						x : px,
 						y : py,

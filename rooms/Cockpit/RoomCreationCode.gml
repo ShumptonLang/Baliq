@@ -1,4 +1,5 @@
 window_set_size(1440,1080)
+game_set_speed(60,gamespeed_fps)
 //window_set_fullscreen(true)
 gpu_set_texfilter(false)
 gpu_set_texrepeat(true)

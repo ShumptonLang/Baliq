@@ -26,7 +26,7 @@ if(global.mouse_occupied == self){
 	}
 	lastPctPulled = pctPulled
 	
-	
+	ship_master.forward_normal = pctPulled * shipSpeed
 } else {
 	pctPulled = 0.9*pctPulled
 	
@@ -36,6 +36,8 @@ if(global.mouse_occupied == self){
 			
 	}
 	lastPctPulled = pctPulled
+	
+	ship_master.forward_normal = 0
 }
 
 	
@@ -46,7 +48,7 @@ x = _start[0] + pctPulled*_xdiff
 y = _start[1] + pctPulled * _ydiff
 
 
-ship_master.forward_normal = pctPulled * shipSpeed
+
 
 
 

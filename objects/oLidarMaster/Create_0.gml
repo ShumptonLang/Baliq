@@ -14,7 +14,6 @@ floor_hist = array_create(0)
 isGui = true
 drawFunc = function(){
 	if surface_exists(oSLMaster.screenSurf){
-		print("Writing to surface")
 	surface_set_target(oSLMaster.screenSurf)
 	
 
