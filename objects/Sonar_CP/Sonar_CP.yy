@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sonar_spr",
-    "path":"sprites/sonar_spr/sonar_spr.yy",
+    "name":"sSonarHud",
+    "path":"sprites/sSonarHud/sSonarHud.yy",
   },
   "spriteMaskId":null,
   "visible":true,

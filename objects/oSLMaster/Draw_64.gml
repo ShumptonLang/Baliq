@@ -36,8 +36,16 @@ vertex_submit(lidarBuffer,pr_trianglefan,tex)
 if oSonarMaster.scanning || oLidarMaster.scanning {
 	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,1)
 } else{
-	var shiftGain = audio_sound_get_gain(Groan2)
-	draw_sprite_ext(sSonarHud,0,0,0,1,1,shiftGain*5,c_white,1)
+	var cGroup = fmod_studio_event_instance_get_channel_group(oNavRotation.eventGroanInst)
+	var dsp = fmod_channel_control_get_dsp(cGroup,0)
+	fmod_dsp_set_metering_enabled(dsp,1,1)
+	var levels = fmod_dsp_get_metering_info(dsp)
+	
+	if array_length(levels.out.rms_level) > 1 {
+		print(levels.out.rms_level[0])
+		//levels[2] = (levels.out.rms_level[0] + levels.out.rms_level[1])/2
+		draw_sprite_ext(sSonarHud,0,(levels.out.rms_level[0]-levels.out.rms_level[1])*10,0,1,1,0,c_white,1)
+	}
 }
 
 

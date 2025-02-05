@@ -21,7 +21,7 @@ if(global.mouse_occupied == self){
 	
 	if pctPulled - (pctPulled % 0.10) > lastPctPulled - (lastPctPulled % 0.10) {
 		
-		audio_play_sound(click,1,0)
+		audio_play_sound(click,1,0, 0.1)
 			
 	}
 	lastPctPulled = pctPulled
@@ -32,7 +32,7 @@ if(global.mouse_occupied == self){
 	
 	if pctPulled - (pctPulled % 0.50) < lastPctPulled -(lastPctPulled % 0.50) {
 		
-		audio_play_sound(click,1,0)
+		audio_play_sound(click,1,0, 0.1)
 			
 	}
 	lastPctPulled = pctPulled

@@ -6,6 +6,8 @@ view_width = camera_get_view_width(view_camera[0])
 view_height =camera_get_view_height(view_camera[0])
 
 
+
+
 //Convert map into a surface
 var surf = surface_create(4000,4000)//
 surface_set_target(surf)
