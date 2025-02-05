@@ -29,11 +29,17 @@ var tex = surface_get_texture(screenSurf)
 vertex_submit(sonarBuffer, pr_trianglefan, tex);
 shader_reset()
 
+tex = surface_get_texture(lidarSurf)
+vertex_submit(lidarBuffer,pr_trianglefan,tex)
+
 //show_debug_message("Sonar: Starting draw")
 if oSonarMaster.scanning || oLidarMaster.scanning {
 	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,1)
-} else
-	draw_sprite_ext(sSonarHud,0,0,0,1,1,0,c_white,1)
+} else{
+	var shiftGain = audio_sound_get_gain(Groan2)
+	draw_sprite_ext(sSonarHud,0,0,0,1,1,shiftGain*5,c_white,1)
+}
+
 
 
 	

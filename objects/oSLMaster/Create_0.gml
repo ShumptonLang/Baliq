@@ -58,6 +58,7 @@ var scale = 2;
 var _umin = 0.25, _vmin = 0.25, _umax = 0.75, _vmax = 0.75;
 
 sonarBuffer = vertex_create_buffer();
+lidarBuffer = vertex_create_buffer();
 
 vertex_begin(sonarBuffer, format);
 	
@@ -72,4 +73,12 @@ vertex_position_3d(sonarBuffer, 120,422, 0); vertex_color(sonarBuffer, c_white, 
 vertex_position_3d(sonarBuffer,   146,201, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, _umin, _vmin);
 
 vertex_end(sonarBuffer); 
+vertex_begin(lidarBuffer,format);
 
+vertex_position_3d(lidarBuffer,   949,387, 0); vertex_color(lidarBuffer, c_white, 1); vertex_texcoord(lidarBuffer, _umin, _vmin);
+vertex_position_3d(lidarBuffer,   1156,355, 0); vertex_color(lidarBuffer, c_white, 1); vertex_texcoord(lidarBuffer, _umax, _vmin);
+vertex_position_3d(lidarBuffer, 1197, 556, 0); vertex_color(lidarBuffer, c_white, 1); vertex_texcoord(lidarBuffer, _umax, _vmax);
+vertex_position_3d(lidarBuffer,   975, 583, 0); vertex_color(lidarBuffer, c_white, 1); vertex_texcoord(lidarBuffer, _umin, _vmax);
+vertex_position_3d(lidarBuffer,   949,387, 0); vertex_color(lidarBuffer, c_white, 1); vertex_texcoord(lidarBuffer, _umax, _vmax);
+
+vertex_end(lidarBuffer)

@@ -34,10 +34,7 @@ show_debug_message("A: " + string(surf_pixel >> 24));
 }
 
 //print(getPixelFromBuffer(buffer, px+_fx, py+_fy))
-if (getPixelFromBuffer(buffer, px+_fx, py+_fy,4000,4000).a == 255) ||
-   (getPixelFromBuffer(buffer, px-_fx, py+_fy,4000,4000).a == 255) ||
-   (getPixelFromBuffer(buffer, px+_fx, py-_fy,4000,4000).a == 255) ||
-   (getPixelFromBuffer(buffer, px-_fx, py-_fy,4000,4000).a == 255){
+if (getPixelFromBuffer(buffer, px+_fx, py+_fy,4000,4000).a == 255) {
 	ship_master.contact = true
 	//print("bang!")
 }

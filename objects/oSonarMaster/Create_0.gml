@@ -45,25 +45,45 @@ drawFunc = function(){
 		var lookupRange = 4
 		for (var i = 0; i < 2*lookupRange+1; i++) {
 			for (var j = 0; j < 2*lookupRange+1; j++){
-				if random(1) < 0.0001 {
-					var xDom= irandom(1)
-					var errorX = irandom(1)
-					var errorY = irandom(1)
-					if xDom
-						errorX *= oSLMaster.view_width * random(1)
-					else
-						errorY *= oSLMaster.view_height * random(1)
-					var error = worldPos(errorX,errorY)
-					array_insert(randomErrors,0,error)
-					print(error)
-					
-				}
+				
 				var cellPos = string((i-lookupRange)*100 + mapPointX) + "." + string((j-lookupRange)*100 + mapPointY)
 				
 				var cellArray = ds_map_find_value(hHist,cellPos)
 				
 				
+				
+				
 				for( var k = 0; k < array_length(cellArray); k++){
+					
+					
+					if random(10) < 0.00001 {
+					var xDom= irandom(1)
+					var errorX = 0
+					var errorY = 0
+					if xDom {
+						errorX = oSLMaster.view_width * random(1) * 0.5 + 360
+						errorY = oSLMaster.view_height * irandom(1) * 0.5 + 270
+					}
+					else {
+						errorY = oSLMaster.view_height * random(1) * 0.5 + 270
+						errorX = oSLMaster.view_width * irandom(1) * 0.5 + 360
+					}
+					var error = {x:errorX,y:errorY,i:i,j:j,k:k,life:50000}
+					array_insert(randomErrors,0,error)
+					print(error)
+					
+					}
+				
+					
+					for (var l = 0; l < array_length(randomErrors);l++){
+						if(randomErrors[l].i == i and randomErrors[l].j == j and randomErrors[l].k == k and randomErrors[l].life > 0){
+							vertex_position_3d(vBuff, randomErrors[l].x, randomErrors[l].y,0);
+							vertex_color(vBuff, c_white, 0.1);
+							vertex_texcoord(vBuff, oSLMaster.view_width , oSLMaster.view_height )
+							vertex_texcoord(vBuff,0,0)
+						}
+						randomErrors[l].life--
+					}
 
 					var screenSrc = screenPos(cellArray[k].tempX, cellArray[k].tempY);
 
@@ -86,14 +106,9 @@ drawFunc = function(){
 				
 					vertex_texcoord(vBuff,noiseOffset.r,(noiseOffset.g))  
 					
-					for (var l = 0; l < array_length(randomErrors);l++){
-					screenSrc = screenPos(randomErrors[l].x,randomErrors[l].y)
-					vertex_position_3d(vBuff, screenSrc.x, screenSrc.y,0);
-					vertex_color(vBuff, c_white, 1);
-					vertex_texcoord(vBuff, oSLMaster.view_width , oSLMaster.view_height )
-					vertex_texcoord(vBuff,0,0)
-					}
+					
 				}	
+					
             }
         }
         

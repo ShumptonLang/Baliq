@@ -14,6 +14,9 @@ function worldPos(screenPosX, screenPosY){
 	screenPosX -= cam_center_x;
     screenPosY -= cam_center_y;
 	
+	screenPosX *= 0.25;
+    screenPosY *= 0.25;
+	
 	var angle_rad = degtorad(cam_angle);
 	
 	var rotated_x = screenPosX * cos(angle_rad) - screenPosY * sin(angle_rad);
