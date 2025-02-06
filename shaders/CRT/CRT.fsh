@@ -1,7 +1,7 @@
 
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
-uniform vec2 u_screenSize;
+uniform float u_radControl;
 
 vec3 chromaticAberration(vec2 uv, float strength) {
     float r = texture2D(gm_BaseTexture, uv + vec2(strength, 0.0)).r;
@@ -10,18 +10,31 @@ vec3 chromaticAberration(vec2 uv, float strength) {
     return vec3(r, g, b);
 }
 
-float scanlineIntensity(vec2 uv, float time) {
-    float scanline = sin(uv.y * u_screenSize.y * 3.14159 * 2.0);
-    return mix(0.9, 1.0, abs(scanline)); // Adjust mix values for darker/brighter lines
-}
+//float scanlineIntensity(vec2 uv, float time) {
+//    float scanline = sin(uv.y * u_screenSize.y * 3.14159 * 2.0);
+//   return mix(0.9, 1.0, abs(scanline)); // Adjust mix values for darker/brighter lines
+//}
 
-vec3 phosphorGlow(vec2 uv, float radius) {
-    vec3 color = texture2D(gm_BaseTexture, uv).rgb;
-    color += texture2D(gm_BaseTexture, uv + vec2(radius, 0.0)).rgb;
-    color += texture2D(gm_BaseTexture, uv - vec2(radius, 0.0)).rgb;
-    color += texture2D(gm_BaseTexture, uv + vec2(0.0, radius)).rgb;
-    color += texture2D(gm_BaseTexture, uv - vec2(0.0, radius)).rgb;
-    return color / 5.0;
+vec3 phosphorGlow(sampler2D tex, vec2 uv, float size, float intensity) {
+    vec3 sum = vec3(0.);
+	float uv_x = uv.x * size;
+    float uv_y = uv.y * size;
+        for (int n = 0; n < 9; ++n) {
+			uv_y = (uv.y * size) + (size * float(n - 4));
+            vec3 h_sum = vec3(0.);
+            h_sum += texture2D(tex, vec2(uv_x - (4.0 * size),uv_y)).rgb;
+            h_sum += texture2D(tex, vec2(uv_x - (3.0 * size),uv_y)).rgb;
+            h_sum += texture2D(tex, vec2(uv_x - (2.0 * size),uv_y)).rgb;
+            h_sum += texture2D(tex, vec2(uv_x - (1.0 * size),uv_y)).rgb;
+            h_sum += texture2D(tex, vec2(uv_x ,uv_y)).rgb;
+            h_sum += texture2D(tex, vec2(uv_x + (1.0 * size),uv_y)).rgb;
+            h_sum += texture2D(tex, vec2(uv_x + (2.0 * size),uv_y)).rgb;
+            h_sum += texture2D(tex, vec2(uv_x + (3.0 * size),uv_y)).rgb;
+            h_sum += texture2D(tex, vec2(uv_x + (4.0 * size),uv_y)).rgb;
+            sum += h_sum / 9.0;
+        }
+
+        return ((sum / 9.0) * intensity);
 }
 
 float vignette(vec2 uv) {
@@ -34,8 +47,13 @@ void main()
 {
 	vec2 uv = v_vTexcoord;
 	
-	vec3 color = chromaticAberration(uv,0.0004);
-	color += phosphorGlow(uv, 0.003) * 1.;
+	vec3 color = chromaticAberration(uv,0.0009);
+	vec3 glow = phosphorGlow(gm_BaseTexture,uv, 0.99985,8.);
+	color += glow;
+	glow = phosphorGlow(gm_BaseTexture,uv, 0.9985,5.);
+	color += glow;
+	glow = phosphorGlow(gm_BaseTexture,uv, 0.9975,2.8);
+	color += glow;
 	
 	//color *= scanlineIntensity(uv, 1.1);
 	

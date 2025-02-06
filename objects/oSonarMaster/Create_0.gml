@@ -12,6 +12,8 @@ white = {
 
 randomErrors = array_create(0)
 hHist = ds_map_create()
+chunkSize = 500
+
 lastHistLength = 0
 floor_hist = array_create(0)
 
@@ -37,23 +39,23 @@ drawFunc = function(){
 			vertex_delete_buffer(vBuff);
         vBuff = vertex_create_buffer();
         vertex_begin(vBuff, vertexFormat);
-		var mapPointX = round(ShipMaster.posx / 100)*100
-		var mapPointY = round(ShipMaster.posy / 100)*100
+		var mapPointX = round(ShipMaster.posx / chunkSize)*chunkSize
+		var mapPointY = round(ShipMaster.posy / chunkSize)*chunkSize
 		//Range of hashmap lookup, ex. 4 = -200,200
 		
 	
-		var lookupRange = 4
+		var lookupRange = 2
 		for (var i = 0; i < 2*lookupRange+1; i++) {
 			for (var j = 0; j < 2*lookupRange+1; j++){
 				
-				var cellPos = string((i-lookupRange)*100 + mapPointX) + "." + string((j-lookupRange)*100 + mapPointY)
+				var cellPos = string((i-lookupRange)*chunkSize + mapPointX) + "." + string((j-lookupRange)*chunkSize + mapPointY)
 				
 				var cellArray = ds_map_find_value(hHist,cellPos)
 				
 				
 				
 				
-				for( var k = 0; k < array_length(cellArray); k++){
+				for( var k = 1; k < array_length(cellArray)-1; k++){
 					
 					
 					if random(10) < 0.00002 {
@@ -89,29 +91,51 @@ drawFunc = function(){
 
 				
 					var normPos = normalizeToCenter(screenSrc)
-					var angle = point_direction(720,540,normPos.x,normPos.y)*100
+					var angle = point_direction(720,540,normPos.x,normPos.y) +ShipMaster.angle
+
 					//print(normPos)
 					normPos = screen2clip(normPos.x,normPos.y)
 					//print(normPos)
 					
-					var warpMin = 1.2
-					var warpMax = 1.3
-					var warpMult = warpMax-warpMin
+					var siltImpact = cellArray[k].material.g / 255
 					
-					normPos.x *= warpMult * dsin(angle*current_time/100000) + warpMin
-					normPos.y *= warpMult * dsin(angle*current_time/100000) + warpMin
+					var warpMin = 1 - siltImpact/10
+					var warpMax = 1 + siltImpact/10
+					
+					
+					var warpMult = (warpMax-warpMin)
+					
+					normPos.x *= warpMult * (dsin(5*angle+current_time/10)/2) + warpMin
+					normPos.y *= warpMult * (dsin(5*angle+current_time/20)/2) + warpMin
+					
+					warpMin = 1 - siltImpact/20
+					warpMax = 1 + siltImpact/15
+
+					warpMult = (warpMax-warpMin)
+					
+					normPos.x *= warpMult * (dsin(20*angle-current_time/30)/2) + warpMin
+					normPos.y *= warpMult * (dsin(20*angle-current_time/10)/2) + warpMin
+					
+					var warpColor = ((1-abs(dcos(5*angle+current_time/100)))*5)
+					warpColor = max(warpColor,0)
+
+					
+					//normPos.x *= random_range(0.9,1.1)
+					//normPos.y *= random_range(0.9,1.1)
 					//print(normPos)
 					normPos = clip2screen(normPos.x,normPos.y)
 					//print(normPos)
-
-					var distShip = sqr(min(29/(point_distance(cellArray[k].tempX, cellArray[k].tempY,ShipMaster.posx,ShipMaster.posy)),1))*2.8
+					var distTo = 255/(point_distance(cellArray[k].tempX, cellArray[k].tempY,cellArray[k+1].tempX,cellArray[k+1].tempY))*10
+					var distFrom = 255/(point_distance(cellArray[k].tempX, cellArray[k].tempY,cellArray[k-1].tempX,cellArray[k-1].tempY))*10
+					var dist = min(min(distTo,distFrom),0)
+					var distShip = 255/power(point_distance(cellArray[k].tempX, cellArray[k].tempY,ShipMaster.posx,ShipMaster.posy),3)*50000
+					dist = distShip+warpColor
 				//print(dist, ":", distShip)
-					var dist = distShip
 				
 				
 				
 					vertex_position_3d(vBuff, normPos.x, normPos.y,0);
-					vertex_color(vBuff, c_white, dist);
+					vertex_color(vBuff, make_color_rgb(dist,dist,dist), 1);
 					vertex_texcoord(vBuff, oSLMaster.view_width , oSLMaster.view_height )
 					var timeScale = current_time / 100
 					var noiseOffset = getPixelFromBuffer(noiseB,cellArray[k].noiseX * 20 +timeScale, cellArray[k].noiseY * 20 + timeScale)

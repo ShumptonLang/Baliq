@@ -36,7 +36,7 @@ if (getPixelFromBuffer(buffer, px+_fx, py+_fy).r == 255){
 }
 	
 if scanning and !waitingForScan{
-	for (var v = 0; v < 8;v++){
+	for (var v = 0; v < 4;v++){
 	while(scanIter < scanTotal){
 		var _scandeg = (scanIter/scanTotal) * 360 + irandom_range(-5,5)
 
@@ -48,7 +48,7 @@ if scanning and !waitingForScan{
 
 //print(_scandeg,ship_master.angle, abs((_scandeg-ship_master.angle)/2), sin(abs(degtorad(_scandeg-ship_master.angle)/2)))
 		//print(_scandeg)
-		var fidelity = random_range(-10,10)
+		var fidelity = random_range(-9,10)
 		var _x = lengthdir_x(10+fidelity/10,_scandeg+fidelity)
 		var _y = lengthdir_y(10+fidelity/10,_scandeg+fidelity)
 
@@ -92,15 +92,15 @@ if scanning and !waitingForScan{
 					}
 					
 					var storePoint = string(
-					int64(wallPoint.x - (wallPoint.x%100))) 
+					int64(wallPoint.x - (wallPoint.x%chunkSize))) 
 					+ "." + 
 					string(
-					int64(wallPoint.y - (wallPoint.y%100)))
+					int64(wallPoint.y - (wallPoint.y%chunkSize)))
 					
 					if !ds_map_exists(hHist,storePoint){
 							ds_map_add(hHist,storePoint,array_create(0))
 					}
-					if  (array_length(ds_map_find_value(hHist, storePoint)) > 20){
+					if  (array_length(ds_map_find_value(hHist, storePoint)) > 200){
 						array_pop(ds_map_find_value(hHist, storePoint))
 						
 					} 

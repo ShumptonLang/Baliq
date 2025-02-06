@@ -10,7 +10,7 @@ if (!surface_exists(lidarSurf)){
 
 //show_debug_message("Master: Starting clear")
 	surface_set_target(screenSurf)
-	draw_clear_alpha($010101,0)
+	draw_clear_alpha(c_black,0)
 	surface_reset_target()
 //show_debug_message("Master: Finished clear")
 	
@@ -24,7 +24,7 @@ for (var i = 0; i < array_length(drawables);i++){
 //draw_surface_ext(screenSurf,0,0,1,1,0,c_white,1)
 
 shader_set(CRT)
-shader_set_uniform_f(shader_get_uniform(CRT,"u_screenSize"),view_width,view_height)
+shader_set_uniform_f(shader_get_uniform(CRT,"u_radControl"),device_mouse_x_to_gui(0)/window_get_width()*5)
 var tex = surface_get_texture(screenSurf)
 vertex_submit(sonarBuffer, pr_trianglefan, tex);
 shader_reset()
