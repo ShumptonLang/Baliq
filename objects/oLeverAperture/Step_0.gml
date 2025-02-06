@@ -6,13 +6,10 @@ var changed = engaged
 if (x >= initPos[0] + range){ 
 	engaged = true
 	
+	
 }
 //Turn off the sca and stop spring force when the lever is pulled to the beginning
-if (x - initPos[0] < 5) && engaged{
-	engaged = false
-	falling = false
-	global.mouse_occupied = 0
-}
+
 changed = engaged != changed
 
 if engaged && changed {
@@ -23,15 +20,7 @@ if engaged && changed {
 oLidarMaster.scanning = engaged
 	
 	
-	if changed && engaged{ 
-		if audio_is_playing(sonarlaser) {
-			audio_stop_sound(sonarlaser)
-			audio_sound_gain(sonarlaser,1,0)
-			
-		}
-		audio_play_sound(sonarlaser,1,1,1,0,2.1)
-	}
-	if changed && !engaged audio_sound_gain(sonarlaser,0, 100)
+	
 	
 //print(engaged,global.mouse_occupied,reject_mouse)
 
@@ -50,11 +39,10 @@ if(global.mouse_occupied == self && !engaged){
 
 	
 }
-if falling {
-	var acceleration = (-_k * (x-initPos[0]) + -0.5 * velocity);
-	velocity += acceleration
-	x += velocity
+if (global.mouse_occupied != self and !engaged){
+	x -= x/(initPos[0] + range)*range*0.1
 }
+
 
 x = clamp(x,initPos[0],initPos[0] + range)
 

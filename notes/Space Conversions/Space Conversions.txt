@@ -1,0 +1,20 @@
+Broken Statue Hall: (1750,1300)
+
+Screen to UV (h,w) -> (0,1)
+x/width
+y/height
+
+
+UV to Clip (0,1) -> (-1,1)
+component * 2 - 1
+
+Clip to Clip Screen (-1,1) -> (-h/2,h/2)(-w/2,w/2)
+component * (h||w)/2
+
+Clip Screen to screen
+component + h/w
+
+(500,500) dim
+-150,200 clip screen
+
+add half screen

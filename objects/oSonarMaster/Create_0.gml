@@ -56,7 +56,7 @@ drawFunc = function(){
 				for( var k = 0; k < array_length(cellArray); k++){
 					
 					
-					if random(10) < 0.00001 {
+					if random(10) < 0.00002 {
 					var xDom= irandom(1)
 					var errorX = 0
 					var errorY = 0
@@ -89,8 +89,20 @@ drawFunc = function(){
 
 				
 					var normPos = normalizeToCenter(screenSrc)
-
-				
+					var angle = point_direction(720,540,normPos.x,normPos.y)*100
+					//print(normPos)
+					normPos = screen2clip(normPos.x,normPos.y)
+					//print(normPos)
+					
+					var warpMin = 1.2
+					var warpMax = 1.3
+					var warpMult = warpMax-warpMin
+					
+					normPos.x *= warpMult * dsin(angle*current_time/100000) + warpMin
+					normPos.y *= warpMult * dsin(angle*current_time/100000) + warpMin
+					//print(normPos)
+					normPos = clip2screen(normPos.x,normPos.y)
+					//print(normPos)
 
 					var distShip = sqr(min(29/(point_distance(cellArray[k].tempX, cellArray[k].tempY,ShipMaster.posx,ShipMaster.posy)),1))*2.8
 				//print(dist, ":", distShip)
@@ -102,7 +114,7 @@ drawFunc = function(){
 					vertex_color(vBuff, c_white, dist);
 					vertex_texcoord(vBuff, oSLMaster.view_width , oSLMaster.view_height )
 					var timeScale = current_time / 100
-					var noiseOffset = getPixelFromBuffer(noiseB,cellArray[k].noiseX * 20 +timeScale, cellArray[k].noiseY * 20 + timeScale,256,256)
+					var noiseOffset = getPixelFromBuffer(noiseB,cellArray[k].noiseX * 20 +timeScale, cellArray[k].noiseY * 20 + timeScale)
 				
 					vertex_texcoord(vBuff,noiseOffset.r,(noiseOffset.g))  
 					

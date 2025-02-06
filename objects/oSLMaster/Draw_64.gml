@@ -29,23 +29,20 @@ var tex = surface_get_texture(screenSurf)
 vertex_submit(sonarBuffer, pr_trianglefan, tex);
 shader_reset()
 
+shader_set(CRTLidar)
+var samp = shader_get_sampler_index(CRTLidar,"u_GlassTex")
+texture_set_stage(samp,sprite_get_texture(SpecularMap,0))
 tex = surface_get_texture(lidarSurf)
 vertex_submit(lidarBuffer,pr_trianglefan,tex)
+shader_reset()
 
 //show_debug_message("Sonar: Starting draw")
-if oSonarMaster.scanning || oLidarMaster.scanning {
-	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,1)
+if oSonarMaster.scanning || oLidarMaster.scanning || fmod_studio_event_instance_get_playback_state(oLidarMaster.eventLidarEngagedI) == FMOD_STUDIO_PLAYBACK_STATE.PLAYING {
+	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,0.5)
 } else{
-	var cGroup = fmod_studio_event_instance_get_channel_group(oNavRotation.eventGroanInst)
-	var dsp = fmod_channel_control_get_dsp(cGroup,0)
-	fmod_dsp_set_metering_enabled(dsp,1,1)
-	var levels = fmod_dsp_get_metering_info(dsp)
 	
-	if array_length(levels.out.rms_level) > 1 {
-		print(levels.out.rms_level[0])
-		//levels[2] = (levels.out.rms_level[0] + levels.out.rms_level[1])/2
-		draw_sprite_ext(sSonarHud,0,(levels.out.rms_level[0]-levels.out.rms_level[1])*10,0,1,1,0,c_white,1)
-	}
+		draw_sprite_ext(sSonarHud,0,0,0,1,1,0,c_white,0.5)
+	
 }
 
 

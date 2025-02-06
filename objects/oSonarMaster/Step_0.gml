@@ -30,13 +30,13 @@ show_debug_message("A: " + string(surf_pixel >> 24));
 }
 
 //print(getPixelFromBuffer(buffer, px+_fx, py+_fy))
-if (getPixelFromBuffer(buffer, px+_fx, py+_fy,4000,4000).a == 255){
+if (getPixelFromBuffer(buffer, px+_fx, py+_fy).r == 255){
 	ship_master.contact = true
 	//print("bang!")
 }
 	
 if scanning and !waitingForScan{
-	for (var v = 0; v < 15;v++){
+	for (var v = 0; v < 8;v++){
 	while(scanIter < scanTotal){
 		var _scandeg = (scanIter/scanTotal) * 360 + irandom_range(-5,5)
 
@@ -55,13 +55,13 @@ if scanning and !waitingForScan{
 
 		px = ShipMaster.posx
 		py = ShipMaster.posy
-		for(var i=0; i<50;i++){
+		for(var i=0; i<100;i++){
 				px -= _x
 				py -= _y
 				
 				
 	
-				var rayPoint = getPixelFromBuffer(buffer,px,py,4000,4000)
+				var rayPoint = getPixelFromBuffer(buffer,px,py)
 
 				//print(getPixelFromBuffer(buffer,px,py).a, getPixelFromBuffer(buffer,px,py).a == 255)
 				//print(surface_getpixel(surf, px, py))
@@ -87,7 +87,8 @@ if scanning and !waitingForScan{
 						tempX : px,
 						tempY : py,
 						noiseX : random(255),
-						noiseY : random(255)
+						noiseY : random(255),
+						material: rayPoint
 					}
 					
 					var storePoint = string(

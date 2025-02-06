@@ -9,6 +9,8 @@ function normalizeToCenter(screenSrc){
 				//Normalize  (-1,1)
 			centeredPos[0] /= tempLength*(4/3) *3
 			centeredPos[1] /= tempLength*(3/3)*3
+			var clipX = centeredPos[0]
+			var clipY = centeredPos[1]
 				
 				//centeredPos[0] /= tempLength*(4/3)
 				//centeredPos[1] /= tempLength*(3/3)
@@ -21,5 +23,5 @@ function normalizeToCenter(screenSrc){
 			centeredPos[0] += oSLMaster.view_width/2
 			centeredPos[1] += oSLMaster.view_height/2
 			
-			return {x : centeredPos[0], y : centeredPos[1]}
+			return {x : centeredPos[0], y : centeredPos[1], cX:clipX, cY:clipY}
 }

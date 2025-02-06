@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"CRTLidar",
+  "name":"CRTLidar",
+  "parent":{
+    "name":"Lidar",
+    "path":"folders/SonarLidar/Lidar.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}
