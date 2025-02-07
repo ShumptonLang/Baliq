@@ -55,7 +55,7 @@ if scanning and !waitingForScan{
 
 		px = ShipMaster.posx
 		py = ShipMaster.posy
-		for(var i=0; i<100;i++){
+		for(var i=0; i<400;i++){
 				px -= _x
 				py -= _y
 				
@@ -137,7 +137,7 @@ if waitingForScan{
 
 
 
-//Update pointsToRender Points
+
 
 
 var mapPointX = round(ShipMaster.posx / chunkSize)*chunkSize
@@ -145,6 +145,8 @@ var mapPointY = round(ShipMaster.posy / chunkSize)*chunkSize
 
 
 var lookupRange = 4
+
+//Update pointsToRender Points
 for (var i = 0; i < 2*lookupRange+1; i++) {
 		for (var j = 0; j < 2*lookupRange+1; j++){
 				
@@ -198,7 +200,7 @@ for( var k = 0; k < array_length(pointsToRender); k++){
 					normPos.x *= warpMult * (dsin(20*angle-current_time/30)/2) + warpMin
 					normPos.y *= warpMult * (dsin(20*angle-current_time/10)/2) + warpMin
 					
-					var warpColor = ((1-abs(dcos(5*angle+current_time/100)))*10)
+					var warpColor = ((1-abs(dcos(5*angle+current_time/100)))*3)
 					warpColor = max(warpColor,0)
 
 					

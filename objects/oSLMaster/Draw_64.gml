@@ -38,10 +38,10 @@ shader_reset()
 
 //show_debug_message("Sonar: Starting draw")
 if oSonarMaster.scanning || oLidarMaster.scanning || fmod_studio_event_instance_get_playback_state(oLidarMaster.eventLidarEngagedI) == FMOD_STUDIO_PLAYBACK_STATE.PLAYING {
-	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,0.5)
+	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,1)
 } else{
 	
-		draw_sprite_ext(sSonarHud,0,0,0,1,1,0,c_white,0.5)
+		draw_sprite_ext(sSonarHud,0,0,0,1,1,0,c_white,1)
 	
 }
 

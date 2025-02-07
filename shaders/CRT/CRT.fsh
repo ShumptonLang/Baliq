@@ -48,7 +48,7 @@ void main()
 	vec2 uv = v_vTexcoord;
 	
 	vec3 color = chromaticAberration(uv,0.0009);
-	vec3 glow = phosphorGlow(gm_BaseTexture,uv, 0.99985,8.);
+	vec3 glow = phosphorGlow(gm_BaseTexture,uv, 0.99985,25.);
 	color += glow;
 	glow = phosphorGlow(gm_BaseTexture,uv, 0.9985,5.);
 	color += glow;

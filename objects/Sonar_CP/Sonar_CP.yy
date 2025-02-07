@@ -8,8 +8,8 @@
   "name":"Sonar_CP",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Cockpit",
+    "path":"folders/Cockpit.yy",
   },
   "parentObjectId":null,
   "persistent":false,
@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sSonarHud",
-    "path":"sprites/sSonarHud/sSonarHud.yy",
+    "name":"funkyNoise",
+    "path":"sprites/funkyNoise/funkyNoise.yy",
   },
   "spriteMaskId":null,
   "visible":true,

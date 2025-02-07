@@ -37,12 +37,10 @@ if waitForCue and abs(rotv/rotMaxV) > 0.3 {
 
 fmod_studio_system_set_parameter_by_name("rotationVelocity",rotv/rotMaxV)
 
-rotv += (rotMaxV*pullDirection-rotv)*0.05
+rotv += (rotMaxV*pullDirection-rotv)*0.03
 rot += rotv
 
-if false{
+
 ship_master.angle -= rotv/25
-} else {
-ship_master.angle -= rotv/40
-}
+
 

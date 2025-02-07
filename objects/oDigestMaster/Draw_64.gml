@@ -1,0 +1,1 @@
+draw_sprite(sDigest,0,0,0)

@@ -14,8 +14,8 @@
   "name":"ShipMaster",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/Objects.yy",
+    "name":"Cockpit",
+    "path":"folders/Cockpit.yy",
   },
   "parentObjectId":null,
   "persistent":true,

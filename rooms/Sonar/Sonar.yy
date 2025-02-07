@@ -18,8 +18,8 @@
   ],
   "name":"Sonar",
   "parent":{
-    "name":"Rooms",
-    "path":"folders/Rooms.yy",
+    "name":"SonarLidar",
+    "path":"folders/SonarLidar.yy",
   },
   "parentRoom":null,
   "physicsSettings":{
