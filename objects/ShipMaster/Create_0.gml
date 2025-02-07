@@ -3,4 +3,6 @@ global.mouse_occupied_changed = false
 lastMOccupiedInterim = 0
 global.lastMouseOccupied = 0
 
+shipPower = 0
+
 randomize()

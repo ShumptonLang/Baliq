@@ -31,16 +31,18 @@ if(mOccupiedChanged and global.mouse_occupied == self){
 	}
 if waitForCue and abs(rotv/rotMaxV) > 0.3 {
 	waitForCue = false
-	if fmod_studio_event_instance_get_playback_state(eventGroanInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+	if fmod_studio_event_instance_get_playback_state(eventGroanInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED and ShipMaster.shipPower
 		fmod_studio_event_instance_start(eventGroanInst);
 }
 
 fmod_studio_system_set_parameter_by_name("rotationVelocity",rotv/rotMaxV)
 
+
 rotv += (rotMaxV*pullDirection-rotv)*0.03
 rot += rotv
 
+if ShipMaster.shipPower
+	ship_master.angle -= rotv/25
 
-ship_master.angle -= rotv/25
 
 
