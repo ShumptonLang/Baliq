@@ -12,9 +12,9 @@ shipStatus = {
 		sonarScanning : false,
 		sonarLidarSwitchEngaged : false,
 		sonarScanTime : 0,
-		
 		lidarScanning: false,
-		lidarScanTime: false
+		lidarScanTime: 0,
+		forwardLever: 0
 	}, 
 	digestive: {
 		running: false,
@@ -25,7 +25,11 @@ shipStatus = {
 	}
 }
 
+function getValue(roomid, value){
+		return variable_struct_get(variable_struct_get(shipStatus,roomid),value)
+}
 
+#region FMOD Banks and events
 //bank_ref = fmod_studio_system_load_bank_file(fmod_path_bundle("Desktop\\Master.bank"), FMOD_STUDIO_LOAD_BANK.NORMAL);
 //strings_bank_ref = fmod_studio_system_load_bank_file(fmod_path_bundle("Desktop\\Master.strings.bank"), FMOD_STUDIO_LOAD_BANK.NORMAL);
 //SFXBankRef = fmod_studio_system_load_bank_file(fmod_path_bundle("Desktop\\SFX.bank"), FMOD_STUDIO_LOAD_BANK.NORMAL);
@@ -35,6 +39,7 @@ ambienceBankRef = fmod_studio_system_load_bank_file(fmod_path_bundle("Desktop//A
 eventB = fmod_studio_system_get_event("event:/basilicaAmbience");
 
 eventBasilicaAmbience = fmod_studio_event_description_create_instance(eventB);
+#endregion
 
 
 

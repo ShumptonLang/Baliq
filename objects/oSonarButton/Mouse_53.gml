@@ -4,7 +4,7 @@
 	if _x > x - 32 && _x < x + 32 && _y > y - 32 && _y < y+32
 	{
 
-		oSonarMaster.scanning = true
+		oSLMaster.updateStatus("sonarButton",true)
 		audio_play_sound(click,1,0,0.1,0,3)
 	}
 

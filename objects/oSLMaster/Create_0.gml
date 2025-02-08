@@ -43,15 +43,41 @@ screenSurf = -1
 lidarSurf = -1
 
 //Create Room Objects
-instance_create_depth(0,0,-3,oSonarMaster,{master:oSLMaster})
-instance_create_depth(0,0,-3,oLidarMaster)
-instance_create_depth(1260,540,-5,oSonarButton)
-instance_create_depth(438,184,-5,oLeverAperture)
-instance_create_depth(0,0,-5,oNavRotation)
-instance_create_depth(0,0,-5,oLeverForward)
+instance_create_depth(0,0,-3,oLidarMaster,{master:oSLMaster})
+instance_create_depth(1260,540,-5,oSonarButton,{master:oSLMaster})
+instance_create_depth(438,184,-5,oLeverAperture,{master:oSLMaster})
+instance_create_depth(0,0,-5,oNavRotation,{master:oSLMaster})
+instance_create_depth(0,0,-5,oLeverForward,{master:oSLMaster})
 instance_create_depth(0,0,-5,oSLPowerSwitch,{master:oSLMaster})
 
-drawables = [oSonarMaster,oLidarMaster,oSonarButton,oLeverAperture,oNavRotation,oLidarMaster]
+drawables = []
+
+#region Sonar variables
+lineNoise = sprite_get_texture(funkyNoise,0)
+wait = 0
+scanning = false
+waitLength = 3
+scanIter = 0
+scanTotal = 100
+
+
+pointMap = {}
+chunkSize = 100
+
+lastHistLength = 0
+pointsToRender = array_create(0)
+
+isGui = true
+debugg_mode = 0
+
+vBuff = vertex_create_buffer()
+vertex_format_begin();
+vertex_format_add_position_3d();
+vertex_format_add_color()
+vertex_format_add_texcoord()
+vertex_format_add_texcoord()
+vertexFormat = vertex_format_end();
+#endregion
 
 vertex_format_begin();
 vertex_format_add_position_3d();
@@ -93,7 +119,7 @@ vertex_end(lidarBuffer)
 
 
 
-function updateStatus(buttonid,buttonStatus){
+function updateStatus(buttonid,status){
 	switch(buttonid){
 		case "SLPowerSwitch":
 		
@@ -102,7 +128,115 @@ function updateStatus(buttonid,buttonStatus){
 		}
 		break;
 		
+		case "sonarButton" :
+		
+		if !master.getValue("sonarLidar", "sonarScanning")
+			grabPoints()
+		
+		with (master){
+				shipStatus.sonarLidar.sonarScanning = status	
+			}	
+		break;
+		
+		case "leverForward":
+		with (master){
+				shipStatus.sonarLidar.forwardLever = status	
+			}	
+		break;
+		
 	}
+}
+
+function grabPoints(){
+	for (var v = 0; v < 1;v++){
+	while(scanIter < scanTotal){
+		var _scandeg = (scanIter/scanTotal) * 360
+
+//Starting rotation is 0, 
+
+
+
+//Resampling performs poorly. Find out how to make a distibution
+
+//print(_scandeg,ship_master.angle, abs((_scandeg-ship_master.angle)/2), sin(abs(degtorad(_scandeg-ship_master.angle)/2)))
+		//print(_scandeg)
+		var fidelity = random_range(-9,10)
+		var _x = lengthdir_x(10+fidelity/10,_scandeg+fidelity)
+		var _y = lengthdir_y(10+fidelity/10,_scandeg+fidelity)
+
+
+		px = ShipMaster.posx
+		py = ShipMaster.posy
+		for(var i=0; i<400;i++){
+				px -= _x
+				py -= _y
+				
+				
+	
+				var rayPoint = getPixelFromBuffer(global.currMapBuffer,px,py)
+
+				//print(getPixelFromBuffer(buffer,px,py).a, getPixelFromBuffer(buffer,px,py).a == 255)
+				//print(surface_getpixel(surf, px, py))
+				//print(colour_get_red(surface_getpixel(surf, px, py)))
+				//if (__a) print("Buffer Transfer Successful!  ", __a);
+		
+				//print("Trialing dummy point at: ",px, ", ", py)
+		
+				//White
+		
+				if(rayPoint.r){
+					//print("Successful buffer query at: ",px, ", ", py)
+					var tempX = px
+					var tempY = py
+
+					
+					px = tempX
+					py = tempY
+
+					var wallPoint = {
+						x : px,
+						y : py,
+						noiseX : random(255),
+						noiseY : random(255),
+						material: rayPoint
+					}
+					
+					var storePoint = string(
+					int64(wallPoint.x - (wallPoint.x%chunkSize))) 
+					+ "." + 
+					string(
+					int64(wallPoint.y - (wallPoint.y%chunkSize)))
+					
+					var hash = variable_get_hash(storePoint)
+					
+					if !variable_struct_exists(pointMap,storePoint){
+						
+						struct_set_from_hash(pointMap,hash,array_create(0))
+
+					}
+					
+					var cell = struct_get_from_hash(pointMap,hash)
+					
+					if  (array_length(cell) > 20){
+						array_pop(cell)
+						
+					} 
+					array_insert(cell,0,wallPoint)
+					
+					
+					
+					break;
+				}
+
+		
+		}
+		scanIter ++
+	}
+	scanIter = 0
+	
+				
+}
+
 }
 
 
