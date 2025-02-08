@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sDigestLED",
-    "path":"sprites/sDigestLED/sDigestLED.yy",
+    "name":"sDigest",
+    "path":"sprites/sDigest/sDigest.yy",
   },
   "spriteMaskId":null,
   "visible":true,

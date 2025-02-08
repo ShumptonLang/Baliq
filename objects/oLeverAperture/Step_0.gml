@@ -3,7 +3,7 @@
 var changed = engaged
 
 //Engage the scan when it reaches the end of the rail
-if (x >= initPos[0] + range) and ShipMaster.shipPower{ 
+if (x >= initPos[0] + range) and ShipMaster.SLPower{ 
 	engaged = true
 	
 	

@@ -3,6 +3,7 @@ noiseB = global.noiseBuffer
 
 lineNoise = sprite_get_texture(funkyNoise,0)
 
+
 white = {
 	r: 255,
 	g: 255,

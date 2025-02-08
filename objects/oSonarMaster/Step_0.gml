@@ -139,7 +139,6 @@ if waitingForScan{
 
 
 
-
 var mapPointX = round(ShipMaster.posx / chunkSize)*chunkSize
 var mapPointY = round(ShipMaster.posy / chunkSize)*chunkSize
 
@@ -162,7 +161,7 @@ for (var i = 0; i < 2*lookupRange+1; i++) {
 				
 		}
 }
-print(array_length(pointsToRender))
+
 
 //Apply modifications to pointsToRender
 for( var k = 0; k < array_length(pointsToRender); k++){

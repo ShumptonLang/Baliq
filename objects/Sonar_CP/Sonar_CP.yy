@@ -30,8 +30,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"funkyNoise",
-    "path":"sprites/funkyNoise/funkyNoise.yy",
+    "name":"sSonarHud",
+    "path":"sprites/sSonarHud/sSonarHud.yy",
   },
   "spriteMaskId":null,
   "visible":true,

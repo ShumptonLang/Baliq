@@ -25,6 +25,7 @@
     {"$GMFolder":"","%Name":"Sprites","folderPath":"folders/Sprites.yy","name":"Sprites","resourceType":"GMFolder","resourceVersion":"2.0",},
   ],
   "IncludedFiles":[
+    {"$GMIncludedFile":"","%Name":"Ambience.bank","CopyToMask":-1,"filePath":"datafiles/Desktop","name":"Ambience.bank","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Master.bank","CopyToMask":-1,"filePath":"datafiles/Desktop","name":"Master.bank","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"Master.strings.bank","CopyToMask":-1,"filePath":"datafiles/Desktop","name":"Master.strings.bank","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
     {"$GMIncludedFile":"","%Name":"SFX.bank","CopyToMask":-1,"filePath":"datafiles/Desktop","name":"SFX.bank","resourceType":"GMIncludedFile","resourceVersion":"2.0",},
@@ -50,6 +51,7 @@
     {"id":{"name":"oPumpMaster","path":"objects/oPumpMaster/oPumpMaster.yy",},},
     {"id":{"name":"oSamplerMaster","path":"objects/oSamplerMaster/oSamplerMaster.yy",},},
     {"id":{"name":"oSLMaster","path":"objects/oSLMaster/oSLMaster.yy",},},
+    {"id":{"name":"oSLPowerSwitch","path":"objects/oSLPowerSwitch/oSLPowerSwitch.yy",},},
     {"id":{"name":"oSonarButton","path":"objects/oSonarButton/oSonarButton.yy",},},
     {"id":{"name":"oSonarLidarHud","path":"objects/oSonarLidarHud/oSonarLidarHud.yy",},},
     {"id":{"name":"oSonarMaster","path":"objects/oSonarMaster/oSonarMaster.yy",},},

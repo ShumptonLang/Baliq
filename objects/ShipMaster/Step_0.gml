@@ -26,6 +26,25 @@ if contact {
 global.mouseX = window_mouse_get_x()
 global.mouseY = window_mouse_get_y()
 
+//print(room_get_name(room))
+fmod_studio_system_set_parameter_by_name("shiplocation", room)
+var distanceToWind = point_distance(posx,posy,2000,624)/1400
+var distanceToHall = point_distance(posx,posy,2400,3500)/2800
+if distanceToWind < distanceToHall{
+	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"Location", 0)
+	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"dtOutside", distanceToWind)
+}else {
+	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"Location", 1)
+	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"dtOutside", distanceToWind)
+}
+print(distanceToWind,distanceToHall)
+//print(fmod_studio_system_get_parameter_by_name("shiplocation"))
+//print(fmod_last_result())
+
+if SLPower and fmod_studio_event_instance_get_playback_state(eventBasilicaAmbience) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+	fmod_studio_event_instance_start(eventBasilicaAmbience)
+//print(fmod_last_result())
+
 //debug_sprite_memory()
 //debug_texture_pages()
 
