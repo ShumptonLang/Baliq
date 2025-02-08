@@ -25,7 +25,7 @@ if(global.mouse_occupied == self){
 			
 	}
 	lastPctPulled = pctPulled
-	if ShipMaster.shipPower
+	if ShipMaster.shipStatus.digestive.running
 		ship_master.forward_normal = pctPulled * shipSpeed
 } else {
 	pctPulled = 0.9*pctPulled
@@ -36,7 +36,7 @@ if(global.mouse_occupied == self){
 			
 	}
 	lastPctPulled = pctPulled
-	if ShipMaster.shipPower
+	if ShipMaster.shipStatus.digestive.running
 		ship_master.forward_normal = 0
 }
 

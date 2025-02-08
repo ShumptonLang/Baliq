@@ -22,7 +22,6 @@ for (var i = 0; i < array_length(drawables);i++){
 
 
 //draw_surface_ext(screenSurf,0,0,1,1,0,c_white,1)
-if ShipMaster.SLPower {
 shader_set(CRT)
 shader_set_uniform_f(shader_get_uniform(CRT,"u_radControl"),device_mouse_x_to_gui(0)/window_get_width()*5)
 var tex = surface_get_texture(screenSurf)
@@ -36,7 +35,7 @@ tex = surface_get_texture(lidarSurf)
 vertex_submit(lidarBuffer,pr_trianglefan,tex)
 shader_reset()
 
-}
+
 
 //show_debug_message("Sonar: Starting draw")
 if oSonarMaster.scanning || oLidarMaster.scanning || fmod_studio_event_instance_get_playback_state(oLidarMaster.eventLidarEngagedI) == FMOD_STUDIO_PLAYBACK_STATE.PLAYING {

@@ -41,13 +41,13 @@ print(distanceToWind,distanceToHall)
 //print(fmod_studio_system_get_parameter_by_name("shiplocation"))
 //print(fmod_last_result())
 
-if SLPower and fmod_studio_event_instance_get_playback_state(eventBasilicaAmbience) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+if shipStatus.digestive.running and fmod_studio_event_instance_get_playback_state(eventBasilicaAmbience) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
 	fmod_studio_event_instance_start(eventBasilicaAmbience)
 //print(fmod_last_result())
 
 //debug_sprite_memory()
 //debug_texture_pages()
 
-
+print(shipStatus.sonarLidar)
 
 //print(rotv)

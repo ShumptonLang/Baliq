@@ -41,7 +41,7 @@ fmod_studio_system_set_parameter_by_name("rotationVelocity",rotv/rotMaxV)
 rotv += (rotMaxV*pullDirection-rotv)*0.03
 rot += rotv
 
-if ShipMaster.shipPower
+if ShipMaster.shipStatus.digestive.running
 	ship_master.angle -= rotv/25
 
 

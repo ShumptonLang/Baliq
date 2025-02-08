@@ -1,9 +1,11 @@
- sprite_index = spr_start
+sprite_index = spr_start
 scalex = 800
 scaley = 600
 
 view_width = camera_get_view_width(view_camera[0])
 view_height =camera_get_view_height(view_camera[0])
+
+master = ShipMaster
 
 
 if global.currMapBuffer  == -1 {
@@ -41,13 +43,13 @@ screenSurf = -1
 lidarSurf = -1
 
 //Create Room Objects
-instance_create_depth(0,0,-3,oSonarMaster)
+instance_create_depth(0,0,-3,oSonarMaster,{master:oSLMaster})
 instance_create_depth(0,0,-3,oLidarMaster)
 instance_create_depth(1260,540,-5,oSonarButton)
 instance_create_depth(438,184,-5,oLeverAperture)
 instance_create_depth(0,0,-5,oNavRotation)
 instance_create_depth(0,0,-5,oLeverForward)
-instance_create_depth(0,0,-5,oSLPowerSwitch)
+instance_create_depth(0,0,-5,oSLPowerSwitch,{master:oSLMaster})
 
 drawables = [oSonarMaster,oLidarMaster,oSonarButton,oLeverAperture,oNavRotation,oLidarMaster]
 
@@ -87,3 +89,23 @@ vertex_position_3d(lidarBuffer,   975, 583, 0); vertex_color(lidarBuffer, c_whit
 vertex_position_3d(lidarBuffer,   949,387, 0); vertex_color(lidarBuffer, c_white, 1); vertex_texcoord(lidarBuffer, _umax, _vmax);
 
 vertex_end(lidarBuffer)
+
+
+
+
+function updateStatus(buttonid,buttonStatus){
+	switch(buttonid){
+		case "SLPowerSwitch":
+		
+		with (master){
+			shipStatus.sonarLidar.sonarLidarSwitchEngaged = !shipStatus.sonarLidar.sonarLidarSwitchEngaged
+		}
+		break;
+		
+	}
+}
+
+
+
+
+

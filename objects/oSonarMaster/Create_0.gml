@@ -4,16 +4,8 @@ noiseB = global.noiseBuffer
 lineNoise = sprite_get_texture(funkyNoise,0)
 
 
-white = {
-	r: 255,
-	g: 255,
-	b: 255,
-	a: 255
-}
 
-randomErrors = array_create(0)
 pointMap = {}
-pointMapOffset = {}
 chunkSize = 100
 
 lastHistLength = 0
@@ -77,9 +69,11 @@ drawFunc = function(){
     }
 }
 
-function updateVBuffer(){
+function updateStatus(buttonid, buttonStatus){
 		
         
         // Only loop through points within view
         
 }
+
+	
