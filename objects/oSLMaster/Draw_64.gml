@@ -8,26 +8,22 @@ if (!surface_exists(lidarSurf)){
 	
 }
 
-//show_debug_message("Master: Starting clear")
-	surface_set_target(screenSurf)
-	draw_clear_alpha(c_black,0)
-	surface_reset_target()
-//show_debug_message("Master: Finished clear")
+
+surface_set_target(screenSurf)
+draw_clear_alpha(c_black,0)
+surface_reset_target()
+
 	
 //show_debug_message("Master: Drawables")
-for (var i = 0; i < array_length(drawables);i++){
-	if drawables[i].isGui
-		drawables[i].drawFunc()	
-}
 
 
 //draw_surface_ext(screenSurf,0,0,1,1,0,c_white,1)
 
 
 #region Draw Sonar CRT
-if (surface_exists(oSLMaster.screenSurf)) {
+if (surface_exists(screenSurf)) {
 		
-        surface_set_target(oSLMaster.screenSurf);
+        surface_set_target(screenSurf);
 		
 		if struct_names_count(pointMap) > 0
 			vertex_delete_buffer(vBuff);
@@ -39,7 +35,7 @@ if (surface_exists(oSLMaster.screenSurf)) {
 				//print(pointsToRender[i].x)
 				vertex_position_3d(vBuff, pointsToRender[i].displayX, pointsToRender[i].displayY,0);
 				vertex_color(vBuff, make_color_rgb(pointsToRender[i].lumin,pointsToRender[i].lumin,pointsToRender[i].lumin), 1);
-				vertex_texcoord(vBuff, oSLMaster.view_width , oSLMaster.view_height )
+				vertex_texcoord(vBuff, surface_get_width(screenSurf), surface_get_height(screenSurf) )
 				var timeScale = current_time / 100
 				var noiseOffset = getPixelFromBuffer(global.noiseBuffer,pointsToRender[i].noiseX * 20 +timeScale, pointsToRender[i].noiseY * 20 + timeScale)
 				vertex_texcoord(vBuff,noiseOffset.r,(noiseOffset.g))
@@ -76,6 +72,21 @@ if (surface_exists(oSLMaster.screenSurf)) {
 #endregion
 
 
+#region Draw Lidar CRT
+
+if surface_exists(lidarSurf){
+	surface_set_target(lidarSurf)
+	
+	if lastHistTotal != (hist){
+		draw_clear_alpha($010101,0)
+		lastHistTotal = (hist)
+		draw_sprite_general(spr_start,0,ShipMaster.posx-oSLMaster.view_width/2,ShipMaster.posy-oSLMaster.view_height/2,oSLMaster.view_width,oSLMaster.view_height,0,0,1,1,0,c_green,c_green,c_green,c_green,1)
+		//draw_sprite_part_ext(dummyNoise,0,0,0,oSLMaster.view_width,oSLMaster.view_height,0,0,10,10,c_red,0.8)
+	
+	}
+	surface_reset_target()
+}
+
 shader_set(CRTLidar)
 var samp = shader_get_sampler_index(CRTLidar,"u_GlassTex")
 texture_set_stage(samp,sprite_get_texture(SpecularMap,0))
@@ -83,10 +94,12 @@ tex = surface_get_texture(lidarSurf)
 vertex_submit(lidarBuffer,pr_trianglefan,tex)
 shader_reset()
 
+#endregion
+
 
 
 //show_debug_message("Sonar: Starting draw")
-if oLidarMaster.scanning || fmod_studio_event_instance_get_playback_state(oLidarMaster.eventLidarEngagedI) == FMOD_STUDIO_PLAYBACK_STATE.PLAYING {
+if master.getValue("sonarLidar", "lidarScanning") || master.getValue("sonarLidar", "sonarScanning"){//fmod_studio_event_instance_get_playback_state(ShipMaster.eventLidarEngagedI) == FMOD_STUDIO_PLAYBACK_STATE.PLAYING {
 	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,1)
 } else{
 	

@@ -7,7 +7,7 @@ view_height =camera_get_view_height(view_camera[0])
 
 master = ShipMaster
 
-
+#region Map Buffer Creation
 if global.currMapBuffer  == -1 {
 //Convert map into a surface
 	var surf = surface_create(4000,4000)//
@@ -30,33 +30,26 @@ if global.noiseBuffer == -1 {
 	global.noiseBuffer = buffer_create(256 * 256*4, buffer_fast, 1);
 	buffer_get_surface(global.noiseBuffer, surf, 0);
 }
+#endregion
 
 
 //Create Aux Surfaces
-shadowSurf = surface_create(4000,4000)
-surface_set_target(shadowSurf)
-draw_set_color(c_black);
-draw_rectangle(0, 0, room_width, room_height,false);
-surface_reset_target()
-
 screenSurf = -1
 lidarSurf = -1
 
 //Create Room Objects
-instance_create_depth(0,0,-3,oLidarMaster,{master:oSLMaster})
-instance_create_depth(1260,540,-5,oSonarButton,{master:oSLMaster})
+instance_create_depth(0,0,-5,oSonarButton,{master:oSLMaster})
 instance_create_depth(438,184,-5,oLeverAperture,{master:oSLMaster})
 instance_create_depth(0,0,-5,oNavRotation,{master:oSLMaster})
 instance_create_depth(0,0,-5,oLeverForward,{master:oSLMaster})
 instance_create_depth(0,0,-5,oSLPowerSwitch,{master:oSLMaster})
 
-drawables = []
 
 #region Sonar variables
 lineNoise = sprite_get_texture(funkyNoise,0)
-wait = 0
+waitSonar = 0
 scanning = false
-waitLength = 3
+waitSonarLength = 3
 scanIter = 0
 scanTotal = 100
 
@@ -79,6 +72,13 @@ vertex_format_add_texcoord()
 vertexFormat = vertex_format_end();
 #endregion
 
+#region Lidar variables
+lastHistTotal = 0
+hist = 0
+waitLidar = 0
+waitLidarLength = 3
+#endregion
+
 vertex_format_begin();
 vertex_format_add_position_3d();
 vertex_format_add_color()
@@ -93,6 +93,8 @@ var _umin = 0.25, _vmin = 0.25, _umax = 0.75, _vmax = 0.75;
 sonarBuffer = vertex_create_buffer();
 lidarBuffer = vertex_create_buffer();
 
+
+#region Sonar Vertex Points
 vertex_begin(sonarBuffer, format);
 	
 vertex_position_3d(sonarBuffer,   469,395, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, (_umax+_umin)/2, (_vmax+_vmin)/2);
@@ -106,6 +108,9 @@ vertex_position_3d(sonarBuffer, 120,422, 0); vertex_color(sonarBuffer, c_white, 
 vertex_position_3d(sonarBuffer,   146,201, 0); vertex_color(sonarBuffer, c_white, 1); vertex_texcoord(sonarBuffer, _umin, _vmin);
 
 vertex_end(sonarBuffer); 
+#endregion
+
+#region Lidar Vertex Points
 vertex_begin(lidarBuffer,format);
 
 vertex_position_3d(lidarBuffer,   949,387, 0); vertex_color(lidarBuffer, c_white, 1); vertex_texcoord(lidarBuffer, _umin, _vmin);
@@ -115,12 +120,13 @@ vertex_position_3d(lidarBuffer,   975, 583, 0); vertex_color(lidarBuffer, c_whit
 vertex_position_3d(lidarBuffer,   949,387, 0); vertex_color(lidarBuffer, c_white, 1); vertex_texcoord(lidarBuffer, _umax, _vmax);
 
 vertex_end(lidarBuffer)
+#endregion
 
 
 
 
-function updateStatus(buttonid,status){
-	switch(buttonid){
+function updateStatus(statusid,status){
+	switch(statusid){
 		case "SLPowerSwitch":
 		
 		with (master){
@@ -128,7 +134,7 @@ function updateStatus(buttonid,status){
 		}
 		break;
 		
-		case "sonarButton" :
+		case "sonarEngaged" :
 		
 		if !master.getValue("sonarLidar", "sonarScanning")
 			grabPoints()
@@ -144,29 +150,39 @@ function updateStatus(buttonid,status){
 			}	
 		break;
 		
+		case "rotationWheel":
+		with (master){
+				shipStatus.sonarLidar.rotationWheel = status	
+			}	
+		break;
+		
+		case "lidarEngaged" :
+		
+		if !master.getValue("sonarLidar", "lidarScanning")
+			grabPoints()
+		
+		with (master){
+				shipStatus.sonarLidar.lidarScanning = status	
+			}	
+		break;
+		
 	}
 }
 
 function grabPoints(){
+	var testTotal = 0
 	for (var v = 0; v < 1;v++){
 	while(scanIter < scanTotal){
 		var _scandeg = (scanIter/scanTotal) * 360
 
-//Starting rotation is 0, 
 
-
-
-//Resampling performs poorly. Find out how to make a distibution
-
-//print(_scandeg,ship_master.angle, abs((_scandeg-ship_master.angle)/2), sin(abs(degtorad(_scandeg-ship_master.angle)/2)))
-		//print(_scandeg)
 		var fidelity = random_range(-9,10)
 		var _x = lengthdir_x(10+fidelity/10,_scandeg+fidelity)
 		var _y = lengthdir_y(10+fidelity/10,_scandeg+fidelity)
 
-
-		px = ShipMaster.posx
-		py = ShipMaster.posy
+		
+		var px = ShipMaster.posx
+		var py = ShipMaster.posy
 		for(var i=0; i<400;i++){
 				px -= _x
 				py -= _y
@@ -222,6 +238,7 @@ function grabPoints(){
 						
 					} 
 					array_insert(cell,0,wallPoint)
+					testTotal ++
 					
 					
 					
@@ -234,7 +251,7 @@ function grabPoints(){
 	}
 	scanIter = 0
 	
-				
+	print(testTotal)		
 }
 
 }

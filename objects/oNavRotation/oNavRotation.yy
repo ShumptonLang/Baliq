@@ -15,10 +15,7 @@
     "name":"SonarLidar",
     "path":"folders/SonarLidar.yy",
   },
-  "parentObjectId":{
-    "name":"oSonarButton",
-    "path":"objects/oSonarButton/oSonarButton.yy",
-  },
+  "parentObjectId":null,
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

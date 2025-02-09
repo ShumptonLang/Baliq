@@ -46,7 +46,6 @@
     {"id":{"name":"oIgnitionMaster","path":"objects/oIgnitionMaster/oIgnitionMaster.yy",},},
     {"id":{"name":"oLeverAperture","path":"objects/oLeverAperture/oLeverAperture.yy",},},
     {"id":{"name":"oLeverForward","path":"objects/oLeverForward/oLeverForward.yy",},},
-    {"id":{"name":"oLidarMaster","path":"objects/oLidarMaster/oLidarMaster.yy",},},
     {"id":{"name":"oNavRotation","path":"objects/oNavRotation/oNavRotation.yy",},},
     {"id":{"name":"oPumpMaster","path":"objects/oPumpMaster/oPumpMaster.yy",},},
     {"id":{"name":"oSamplerMaster","path":"objects/oSamplerMaster/oSamplerMaster.yy",},},

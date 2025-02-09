@@ -1,9 +1,10 @@
-function screenPos(worldPosX, worldPosY){
+function screenPos(worldPosX, worldPosY,surface){
 	
-	var cam_x = camera_get_view_x(view_camera[0]);
-	var cam_y = camera_get_view_y(view_camera[0]);
-	var camW = camera_get_view_width(view_camera[0])
-	var camH = camera_get_view_height(view_camera[0])
+	
+	var camW = surface_get_width(surface)
+	var camH = surface_get_height(surface)
+	var cam_x = ShipMaster.posx - camW/2;
+	var cam_y = ShipMaster.posy - camH/2;
 		
 	var cam_angle = -ShipMaster.angle // Get camera rotation
     

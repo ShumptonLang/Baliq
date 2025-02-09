@@ -8,8 +8,8 @@ var pullDirection = 0
 
 if (global.mouse_occupied == self){
 
-	if fmod_studio_event_instance_get_playback_state(eventRotWheelInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED{
-		fmod_studio_event_instance_start(eventRotWheelInst);
+	if fmod_studio_event_instance_get_playback_state(ShipMaster.eventRotWheelInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED{
+		fmod_studio_event_instance_start(ShipMaster.eventRotWheelInst);
 
 	}
 	
@@ -31,8 +31,8 @@ if(mOccupiedChanged and global.mouse_occupied == self){
 	}
 if waitForCue and abs(rotv/rotMaxV) > 0.3 {
 	waitForCue = false
-	if fmod_studio_event_instance_get_playback_state(eventGroanInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED and ShipMaster.shipPower
-		fmod_studio_event_instance_start(eventGroanInst);
+	if fmod_studio_event_instance_get_playback_state(ShipMaster.eventGroanInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+		fmod_studio_event_instance_start(ShipMaster.eventGroanInst);
 }
 
 fmod_studio_system_set_parameter_by_name("rotationVelocity",rotv/rotMaxV)
@@ -41,8 +41,7 @@ fmod_studio_system_set_parameter_by_name("rotationVelocity",rotv/rotMaxV)
 rotv += (rotMaxV*pullDirection-rotv)*0.03
 rot += rotv
 
-if ShipMaster.shipStatus.digestive.running
-	ship_master.angle -= rotv/25
+master.updateStatus("rotationWheel",rotv/25)
 
 
 

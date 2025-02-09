@@ -1,4 +1,4 @@
-self.angle += rotv
+self.angle -= shipStatus.sonarLidar.rotationWheel
 self.angle = (self.angle + 360) % 360
 
 global.mouse_occupied_changed = lastMOccupiedInterim != global.mouse_occupied
@@ -37,7 +37,7 @@ if distanceToWind < distanceToHall{
 	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"Location", 1)
 	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"dtOutside", distanceToWind)
 }
-print(distanceToWind,distanceToHall)
+
 //print(fmod_studio_system_get_parameter_by_name("shiplocation"))
 //print(fmod_last_result())
 
@@ -48,6 +48,6 @@ if shipStatus.digestive.running and fmod_studio_event_instance_get_playback_stat
 //debug_sprite_memory()
 //debug_texture_pages()
 
-print(shipStatus.sonarLidar)
+//print(shipStatus.sonarLidar)
 
 //print(rotv)

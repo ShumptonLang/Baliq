@@ -9,17 +9,35 @@ else {
 
 
 
-print(array_length(pointsToRender))
 
+#region Timers
 if master.getValue("sonarLidar", "sonarScanning"){
-	wait += delta_time / 1000000
-	if wait >= waitLength {
-		wait = 0
-		updateStatus("sonarButton",false)
+	waitSonar += delta_time / 1000000
+	if waitSonar >= waitSonarLength {
+		waitSonar = 0
+		updateStatus("sonarEngaged",false)
 	}
 }
 
-#region Sonar collect local points for rendering
+if master.getValue("sonarLidar", "lidarScanning"){
+	waitLidar += delta_time / 1000000
+	if fmod_studio_event_instance_get_playback_state(ShipMaster.eventLidarEngagedI) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED {
+		
+		fmod_studio_event_instance_set_parameter_by_name(ShipMaster.eventLidarEngagedI, "lidarEngaged", 1)
+		fmod_studio_event_instance_start(ShipMaster.eventLidarEngagedI)
+	}
+	
+	if waitLidar >= waitLidarLength {
+		fmod_studio_event_instance_set_parameter_by_name(ShipMaster.eventLidarEngagedI, "lidarEngaged", 0)
+		waitLidar = 0
+		updateStatus("lidarEngaged",false)
+		oLeverAperture.status = "idle"
+		hist++
+	}
+}
+#endregion
+
+#region Sonar cull available points for rendering
 var mapPointX = round(ShipMaster.posx / chunkSize)*chunkSize
 var mapPointY = round(ShipMaster.posy / chunkSize)*chunkSize
 
@@ -37,6 +55,7 @@ for (var i = 0; i < 2*lookupRange+1; i++) {
 				
 				if array_length(cellArray) > 0{
 					pointsToRender = array_concat(pointsToRender,cellArray)	
+					//print(cellArray)
 					
 				}
 				
@@ -46,16 +65,18 @@ for (var i = 0; i < 2*lookupRange+1; i++) {
 
 
 //Apply modifications to pointsToRender
+
 for( var k = 0; k < array_length(pointsToRender); k++){
 					
 
-					var screenSrc = screenPos(pointsToRender[k].x, pointsToRender[k].y);
+					var screenSrc = screenPos(pointsToRender[k].x, pointsToRender[k].y,screenSurf);
 
-				
-					var normPos = normalizeToCenter(screenSrc)
+					var normPos = normalizeToCenter(screenSrc,screenSurf)
+					
 					var angle = point_direction(720,540,normPos.x,normPos.y) +ShipMaster.angle
 					
 					pointsToRender[k].degree = angle
+					//print(angle)
 
 					//print(normPos)
 					normPos = screen2clip(normPos.x,normPos.y)
@@ -104,7 +125,12 @@ array_sort(pointsToRender,function(elm1, elm2){
 						return elm1.degree - elm2.degree;	
 					});
 #endregion
-					
+
+
+
+	
+
+
 
 
 
