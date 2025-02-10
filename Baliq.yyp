@@ -39,6 +39,7 @@
   "resources":[
     {"id":{"name":"FMOD","path":"extensions/FMOD/FMOD.yy",},},
     {"id":{"name":"Space Conversions","path":"notes/Space Conversions/Space Conversions.yy",},},
+    {"id":{"name":"AudioService","path":"objects/AudioService/AudioService.yy",},},
     {"id":{"name":"Digest_CP","path":"objects/Digest_CP/Digest_CP.yy",},},
     {"id":{"name":"FMODManager","path":"objects/FMODManager/FMODManager.yy",},},
     {"id":{"name":"oDigestMaster","path":"objects/oDigestMaster/oDigestMaster.yy",},},

@@ -5,7 +5,7 @@ if global.mouse_occupied == self and global.mouse_occupied_changed
 		case "sleeping":
 	
 		for (var i = 0; i < array_length(buttonPos); i++) {
-			var nuButton = instance_create_depth(buttonPos[i][0],buttonPos[i][1],-1,oIgnitionButton, {state:correctCombo[i]})
+			var nuButton = instance_create_depth(buttonPos[i][0],buttonPos[i][1],-1,oIgnitionButton, {state:initStates[i], pid:i})
 			array_insert(buttons,0,nuButton)
 		}
 	
@@ -63,6 +63,7 @@ if state == "failure" {
 					instance_destroy(buttons[i])
 				}
 				buttons = array_create(0)
+				initStates = correctCombo
 			}
 }
 

@@ -48,6 +48,6 @@ if shipStatus.digestive.running and fmod_studio_event_instance_get_playback_stat
 //debug_sprite_memory()
 //debug_texture_pages()
 
-//print(shipStatus.sonarLidar)
+print(shipStatus.digestive)
 
 //print(rotv)

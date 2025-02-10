@@ -136,21 +136,24 @@ function updateStatus(statusid,status){
 		
 		case "sonarEngaged" :
 		
-		if !master.getValue("sonarLidar", "sonarScanning")
+		if !master.getValue("sonarLidar", "sonarScanning") and master.getValue("digestive", "running")
 			grabPoints()
 		
-		with (master){
-				shipStatus.sonarLidar.sonarScanning = status	
-			}	
+		if master.getValue("digestive", "running")
+			with (master){
+					shipStatus.sonarLidar.sonarScanning = status	
+				}	
 		break;
 		
 		case "leverForward":
+		if master.getValue("digestive", "running")
 		with (master){
 				shipStatus.sonarLidar.forwardLever = status	
 			}	
 		break;
 		
 		case "rotationWheel":
+		if master.getValue("digestive", "running")
 		with (master){
 				shipStatus.sonarLidar.rotationWheel = status	
 			}	
@@ -158,12 +161,15 @@ function updateStatus(statusid,status){
 		
 		case "lidarEngaged" :
 		
-		if !master.getValue("sonarLidar", "lidarScanning")
+		if !master.getValue("sonarLidar", "lidarScanning") and master.getValue("digestive", "running")
 			grabPoints()
 		
+		if master.getValue("digestive", "running"){
 		with (master){
 				shipStatus.sonarLidar.lidarScanning = status	
-			}	
+			}	} else {
+				oLeverAperture.status = "idle"
+			}
 		break;
 		
 	}

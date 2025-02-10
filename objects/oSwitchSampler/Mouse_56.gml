@@ -1,1 +1,0 @@
-reject_mouse = false

@@ -14,12 +14,16 @@ dMatLights = [[x,y+yOff*3,0],[x+xOff,y+yOff*3,0]]
 targetValues = [0.2,0.9,0.4,0.3]
 targetFuzz = 0.1
 
-aMatSwitch = instance_create_depth(975,475,-1,oSwitchSampler,{_end:[1200,475]})
-bMatSwitch = instance_create_depth(975,475+yOff,-1,oSwitchSampler,{_end:[1200,475+yOff]})
-cMatSwitch = instance_create_depth(975,475+yOff*2,-1,oSwitchSampler,{_end:[1200,475+yOff*2]})
-dMatSwitch = instance_create_depth(975,475+yOff*3,-1,oSwitchSampler,{_end:[1200,475+yOff*3]})
+aMatSwitch = instance_create_depth(975,475,-1,oSwitchSampler,{_end:[1200,475], pid:0,position:switchPositions[0]})
+bMatSwitch = instance_create_depth(975,475+yOff,-1,oSwitchSampler,{_end:[1200,475+yOff], pid:1,position:switchPositions[1]})
+cMatSwitch = instance_create_depth(975,475+yOff*2,-1,oSwitchSampler,{_end:[1200,475+yOff*2],pid:2,position:switchPositions[2]})
+dMatSwitch = instance_create_depth(975,475+yOff*3,-1,oSwitchSampler,{_end:[1200,475+yOff*3],pid:3,position:switchPositions[3]})
 
 switches = [aMatSwitch,bMatSwitch,cMatSwitch,dMatSwitch]
+
+function updateStatus(switchid, status){
+	master.updateStatus("compSwitchPositions", {pid:switchid,state:status})
+}
 
 
 

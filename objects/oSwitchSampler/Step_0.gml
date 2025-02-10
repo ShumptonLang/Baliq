@@ -22,6 +22,7 @@ if(global.mouse_occupied == self){
 	if pctPulled - (pctPulled % 0.10) > lastPctPulled - (lastPctPulled % 0.10) {
 		
 		audio_play_sound(click,1,0, 0.1)
+		oSamplerMaster.updateStatus(pid,pctPulled)
 			
 	}
 	lastPctPulled = pctPulled
