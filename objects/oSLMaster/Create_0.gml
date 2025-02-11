@@ -132,9 +132,13 @@ function lidarTimerSuccess(){
 	if instance_exists(oLeverAperture)
 		oLeverAperture.status = "idle"
 }
+
+function sonarTimerSuccess(){
+	ShipMaster.shipStatus.sonarLidar.sonarScanning = 0
+}
 	
 function startUpScreen(currTime){
-	if currTime > 1 {
+	if currTime > 3 {
 		if global.sonarSurf != -1 {
 			surface_set_target(global.sonarSurf)
 			draw_clear_alpha(c_black,0)
@@ -148,6 +152,8 @@ function startUpScreen(currTime){
 function updateAmbience(event) {
 	if fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
 		fmod_studio_event_instance_start(event)
+	if ShipMaster.shipStatus.sonarLidar.sonarLidarSwitchEngaged and fmod_studio_event_instance_get_paused(event) == true
+		fmod_studio_event_instance_set_paused(event,0)
 	var distanceToWind = point_distance(ShipMaster.posx,ShipMaster.posy,2000,624)/1400
 	var distanceToHall = point_distance(ShipMaster.posx,ShipMaster.posy,2400,3500)/2800
 	if distanceToWind < distanceToHall{
@@ -163,10 +169,32 @@ function updateAmbience(event) {
 function killAmbience(event) {
 	
 		if !(ShipMaster.shipStatus.digestive.running and ShipMaster.shipStatus.sonarLidar.sonarLidarSwitchEngaged){
-			fmod_studio_event_instance_stop(event)
+			fmod_studio_event_instance_set_paused(event,1)
 			return true
 		}
 }
+#endregion
+#region Wheel Audio Service
+function updateWheelSound(event) {
+	if fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+		fmod_studio_event_instance_start(event)
+	if instance_exists(oNavRotation)
+		var rot = oNavRotation.rotv
+	else
+		var rot = ShipMaster.shipStatus.sonarLidar.rotationWheel
+	if abs(rot/10) > 0.3 and fmod_studio_event_instance_get_playback_state(AudioService.eventGroanInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+		fmod_studio_event_instance_start(AudioService.eventGroanInst)
+
+	fmod_studio_system_set_parameter_by_name("rotationVelocity",rot/10)
+	
+			
+}
+
+function killWheel(event) {
+	
+		return false
+}
+AudioService.play(AudioService.eventRotWheelInst,updateWheelSound, killWheel)
 #endregion
 
 function startUpSL(){
@@ -192,7 +220,7 @@ function updateStatus(statusid,status){
 
 		if !master.getValue("sonarLidar", "sonarLidarSwitchEngaged") and master.getValue("digestive", "running") {
 			audio_play_sound(puterStartup,1,0)
-			ShipMaster.startTimer(ShipMaster.shipStatus.sonarLidar.lidarScanTime, 3, startUpSL, startUpScreen)
+			ShipMaster.startTimer(ShipMaster.shipStatus.sonarLidar.lidarScanTime, 10, startUpSL, startUpScreen)
 		}
 		if master.getValue("sonarLidar", "sonarLidarSwitchEngaged")
 		with(master){
@@ -205,10 +233,14 @@ function updateStatus(statusid,status){
 		if !master.getValue("sonarLidar", "sonarScanning") and master.getValue("digestive", "running") and master.getValue("sonarLidar", "sonarLidarSwitchEngaged")
 			grabPoints()
 		
-		if master.getValue("digestive", "running") and master.getValue("sonarLidar", "sonarLidarSwitchEngaged")
+		if master.getValue("digestive", "running") and master.getValue("sonarLidar", "sonarLidarSwitchEngaged"){
 			with (master){
 					shipStatus.sonarLidar.sonarScanning = status	
 				}	
+		}
+		if status == 1 {
+				ShipMaster.startTimer(ShipMaster.shipStatus.sonarLidar.sonarScanTime, 3, sonarTimerSuccess)
+			}
 		break;
 		
 		case "leverForward":

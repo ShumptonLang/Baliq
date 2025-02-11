@@ -25,10 +25,7 @@ function play(audioEvent,updateFunc, stateFunc){
 function playStep(service){
 	
 		service.update(service.event)
-		if service.state(service.event){
-			print ("Toast")
-			fmod_studio_event_instance_stop(service.event)
-		}
+		return service.state(service.event)
 }
 
 

@@ -39,8 +39,12 @@ shipStatus = {
 function getValue(roomid, value){
 		return variable_struct_get(variable_struct_get(shipStatus,roomid),value)
 }
+	
+	function nil(){
+		
+	}
 
-function startTimer(shipStatusTimer, timerGoal, goalFunc,updFunc = {}){
+function startTimer(shipStatusTimer, timerGoal, goalFunc,updFunc = nil){
 	
 	array_insert(timers,0,{timerCurrentValue: shipStatusTimer, goal:timerGoal, goalFunc:goalFunc, update:updFunc})	
 }
