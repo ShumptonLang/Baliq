@@ -13,6 +13,9 @@ eventGroan = fmod_studio_system_get_event("event:/hullGroans");
 eventGroanInst = fmod_studio_event_description_create_instance(eventGroan);
 
 activeServices = array_create(0)
+#endregion
+
+
 
 function play(audioEvent,updateFunc, stateFunc){
 		
@@ -27,3 +30,26 @@ function playStep(service){
 			fmod_studio_event_instance_stop(service.event)
 		}
 }
+
+
+#region Object Services
+#region Lidar Audio Service
+function updateLidarSound(event) {
+		if ShipMaster.shipStatus.sonarLidar.lidarScanning{
+			if fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED {
+				fmod_studio_event_instance_start(event)
+			}
+			fmod_studio_event_instance_set_parameter_by_name(event, "lidarEngaged", 1)
+		}
+		else
+			fmod_studio_event_instance_set_parameter_by_name(event, "lidarEngaged", 0)
+			
+}
+
+function killLidarSound(event) {
+		return false
+}
+	
+AudioService.play(AudioService.eventLidarEngagedI,updateLidarSound,killLidarSound)
+#endregion
+

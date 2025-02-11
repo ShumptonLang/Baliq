@@ -17,7 +17,7 @@ if chemicalCorrect {
 	if waterVolume >=1 {
 		if waterConditionsMet {
 			updateStatus("running",true)
-			print("Engine Powered")
+			audio_play_sound(engineStart,1,0)
 		}
 	}
 	

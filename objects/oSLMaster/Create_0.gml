@@ -34,8 +34,11 @@ if global.noiseBuffer == -1 {
 
 
 //Create Aux Surfaces
-screenSurf = -1
-lidarSurf = -1
+
+if global.lidarSurf == -1
+	global.lidarSurf = surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
+if global.sonarSurf == -1
+	global.sonarSurf = surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
 
 //Create Room Objects
 instance_create_depth(0,0,-5,oSonarButton,{master:oSLMaster})
@@ -124,17 +127,76 @@ vertex_end(lidarBuffer)
 
 
 function lidarTimerSuccess(){
-	oSLMaster.updateStatus("lidarEngaged",false)
-	oLeverAperture.status = "idle"
-	oSLMaster.hist++
+	ShipMaster.shipStatus.sonarLidar.lidarScanning = 0
+	ShipMaster.shipStatus.sonarLidar.lidarStatus = "idle"
+	if instance_exists(oLeverAperture)
+		oLeverAperture.status = "idle"
+}
+	
+function startUpScreen(currTime){
+	if currTime > 1 {
+		if global.sonarSurf != -1 {
+			surface_set_target(global.sonarSurf)
+			draw_clear_alpha(c_black,0)
+			draw_sprite_ext(startup,0,360,270,1.2,1.3,0,c_white,0.5)
+			surface_reset_target()
+		}
+	}
+}
+	
+#region Ambience Audio Service
+function updateAmbience(event) {
+	if fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+		fmod_studio_event_instance_start(event)
+	var distanceToWind = point_distance(ShipMaster.posx,ShipMaster.posy,2000,624)/1400
+	var distanceToHall = point_distance(ShipMaster.posx,ShipMaster.posy,2400,3500)/2800
+	if distanceToWind < distanceToHall{
+		fmod_studio_event_instance_set_parameter_by_name(event,"Location", 0)
+		fmod_studio_event_instance_set_parameter_by_name(event,"dtOutside", distanceToWind)
+	}else {
+		fmod_studio_event_instance_set_parameter_by_name(event,"Location", 1)
+		fmod_studio_event_instance_set_parameter_by_name(event,"dtOutside", distanceToWind)
+}
+			
+}
+
+function killAmbience(event) {
+	
+		if !(ShipMaster.shipStatus.digestive.running and ShipMaster.shipStatus.sonarLidar.sonarLidarSwitchEngaged){
+			fmod_studio_event_instance_stop(event)
+			return true
+		}
+}
+#endregion
+
+function startUpSL(){
+	ShipMaster.shipStatus.sonarLidar.sonarLidarSwitchEngaged = 1
+	AudioService.play(AudioService.eventBasilicaAmbience,updateAmbience,killAmbience)
+}
+	
+function updateLidar(){
+	surface_set_target(global.lidarSurf)
+	
+	draw_clear_alpha($010101,0)
+	draw_sprite_general(spr_start,0,ShipMaster.posx-oSLMaster.view_width/2,ShipMaster.posy-oSLMaster.view_height/2,oSLMaster.view_width,oSLMaster.view_height,0,0,1,1,0,c_green,c_green,c_green,c_green,1)
+		
+	
+
+	surface_reset_target()
 }
 
 function updateStatus(statusid,status){
 	switch(statusid){
 		case "SLPowerSwitch":
 		
-		with (master){
-			shipStatus.sonarLidar.sonarLidarSwitchEngaged = !shipStatus.sonarLidar.sonarLidarSwitchEngaged
+
+		if !master.getValue("sonarLidar", "sonarLidarSwitchEngaged") and master.getValue("digestive", "running") {
+			audio_play_sound(puterStartup,1,0)
+			ShipMaster.startTimer(ShipMaster.shipStatus.sonarLidar.lidarScanTime, 3, startUpSL, startUpScreen)
+		}
+		if master.getValue("sonarLidar", "sonarLidarSwitchEngaged")
+		with(master){
+			shipStatus.sonarLidar.sonarLidarSwitchEngaged = 0	
 		}
 		break;
 		
@@ -170,8 +232,10 @@ function updateStatus(statusid,status){
 			with (master){
 				shipStatus.sonarLidar.lidarScanning = status	
 			}
-			if status == 1
+			if status == 1 {
 				ShipMaster.startTimer(ShipMaster.shipStatus.sonarLidar.lidarScanTime, 3, lidarTimerSuccess)
+				updateLidar()
+			}
 		} else {
 				oLeverAperture.status = "idle"
 		}

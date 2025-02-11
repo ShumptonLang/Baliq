@@ -51,12 +51,14 @@ for (var i = 0; i < array_length(timers); i++){
 		timer.timerCurrentValue = 0
 		timer.goalFunc()
 	} else {
-		array_insert(timers,0,timer)
+		array_push(timers,timer)
+		timer.update(timer.timerCurrentValue)
 	}
 }
 
 
 print(shipStatus.sonarLidar)
+print(AudioService.activeServices)
 
 if keyboard_check_pressed(vk_numpad0)
 	shipStatus.digestive.running = true

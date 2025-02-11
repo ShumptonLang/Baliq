@@ -52,9 +52,9 @@ for (var i = 0; i < 2*lookupRange+1; i++) {
 for( var k = 0; k < array_length(pointsToRender); k++){
 					
 
-					var screenSrc = screenPos(pointsToRender[k].x, pointsToRender[k].y,screenSurf);
+					var screenSrc = screenPos(pointsToRender[k].x, pointsToRender[k].y,global.sonarSurf);
 
-					var normPos = normalizeToCenter(screenSrc,screenSurf)
+					var normPos = normalizeToCenter(screenSrc,global.sonarSurf)
 					
 					var angle = point_direction(720,540,normPos.x,normPos.y) +ShipMaster.angle
 					
