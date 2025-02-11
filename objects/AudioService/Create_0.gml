@@ -49,4 +49,55 @@ function killLidarSound(event) {
 	
 AudioService.play(AudioService.eventLidarEngagedI,updateLidarSound,killLidarSound)
 #endregion
+#region Ambience Audio Service
+function updateAmbience(event) {
+	if ShipMaster.shipStatus.digestive.running and ShipMaster.shipStatus.sonarLidar.sonarLidarSwitchEngaged and fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+		fmod_studio_event_instance_start(event)
+	if ShipMaster.shipStatus.sonarLidar.sonarLidarSwitchEngaged and fmod_studio_event_instance_get_paused(event) == true
+		fmod_studio_event_instance_set_paused(event,0)
+	var distanceToWind = point_distance(ShipMaster.posx,ShipMaster.posy,2000,624)/1400
+	var distanceToHall = point_distance(ShipMaster.posx,ShipMaster.posy,2400,3500)/2800
+	if distanceToWind < distanceToHall{
+		fmod_studio_event_instance_set_parameter_by_name(event,"Location", 0)
+		fmod_studio_event_instance_set_parameter_by_name(event,"dtOutside", distanceToWind)
+	}else {
+		fmod_studio_event_instance_set_parameter_by_name(event,"Location", 1)
+		fmod_studio_event_instance_set_parameter_by_name(event,"dtOutside", distanceToWind)
+}
+			
+}
+
+function killAmbience(event) {
+	
+		if !(ShipMaster.shipStatus.digestive.running and ShipMaster.shipStatus.sonarLidar.sonarLidarSwitchEngaged){
+			fmod_studio_event_instance_set_paused(event,1)
+			return false
+		}
+}
+
+AudioService.play(AudioService.eventBasilicaAmbience,updateAmbience, killAmbience)
+#endregion
+#region Wheel Audio Service
+function updateWheelSound(event) {
+	if fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+		fmod_studio_event_instance_start(event)
+	if instance_exists(oNavRotation)
+		var rot = oNavRotation.rotv
+	else
+		var rot = ShipMaster.shipStatus.sonarLidar.rotationWheel
+	if abs(rot/10) > 0.3 and fmod_studio_event_instance_get_playback_state(AudioService.eventGroanInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+		fmod_studio_event_instance_start(AudioService.eventGroanInst)
+
+	fmod_studio_system_set_parameter_by_name("rotationVelocity",rot/10)
+	
+			
+}
+
+function killWheel(event) {
+	
+		return false
+}
+AudioService.play(AudioService.eventRotWheelInst,updateWheelSound, killWheel)
+#endregion
+#endregion
 
