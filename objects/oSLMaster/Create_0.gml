@@ -123,7 +123,11 @@ vertex_end(lidarBuffer)
 #endregion
 
 
-
+function lidarTimerSuccess(){
+	oSLMaster.updateStatus("lidarEngaged",false)
+	oLeverAperture.status = "idle"
+	oSLMaster.hist++
+}
 
 function updateStatus(statusid,status){
 	switch(statusid){
@@ -136,10 +140,10 @@ function updateStatus(statusid,status){
 		
 		case "sonarEngaged" :
 		
-		if !master.getValue("sonarLidar", "sonarScanning") and master.getValue("digestive", "running")
+		if !master.getValue("sonarLidar", "sonarScanning") and master.getValue("digestive", "running") and master.getValue("sonarLidar", "sonarLidarSwitchEngaged")
 			grabPoints()
 		
-		if master.getValue("digestive", "running")
+		if master.getValue("digestive", "running") and master.getValue("sonarLidar", "sonarLidarSwitchEngaged")
 			with (master){
 					shipStatus.sonarLidar.sonarScanning = status	
 				}	
@@ -161,15 +165,16 @@ function updateStatus(statusid,status){
 		
 		case "lidarEngaged" :
 		
-		if !master.getValue("sonarLidar", "lidarScanning") and master.getValue("digestive", "running")
-			grabPoints()
 		
-		if master.getValue("digestive", "running"){
-		with (master){
+		if master.getValue("digestive", "running") and master.getValue("sonarLidar", "sonarLidarSwitchEngaged"){
+			with (master){
 				shipStatus.sonarLidar.lidarScanning = status	
-			}	} else {
-				oLeverAperture.status = "idle"
 			}
+			if status == 1
+				ShipMaster.startTimer(ShipMaster.shipStatus.sonarLidar.lidarScanTime, 3, lidarTimerSuccess)
+		} else {
+				oLeverAperture.status = "idle"
+		}
 		break;
 		
 	}

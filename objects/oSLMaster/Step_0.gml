@@ -1,40 +1,23 @@
-if ShipMaster.shipStatus.digestive.running{
-	if fmod_studio_event_instance_get_playback_state(ShipMaster.eventBasilicaAmbience) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
-		fmod_studio_event_instance_start(ShipMaster.eventBasilicaAmbience)
-	fmod_studio_event_instance_set_volume(ShipMaster.eventBasilicaAmbience,1) 
-}
-else {
-	fmod_studio_event_instance_set_volume(ShipMaster.eventBasilicaAmbience,0) 
-}
+//if ShipMaster.shipStatus.digestive.running{
+//	if fmod_studio_event_instance_get_playback_state(ShipMaster.eventBasilicaAmbience) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+//		fmod_studio_event_instance_start(ShipMaster.eventBasilicaAmbience)
+//	fmod_studio_event_instance_set_volume(ShipMaster.eventBasilicaAmbience,1) 
+//}
+//else {
+//	fmod_studio_event_instance_set_volume(ShipMaster.eventBasilicaAmbience,0) 
+//}
 
 
 
 
 #region Timers
-if master.getValue("sonarLidar", "sonarScanning"){
-	waitSonar += delta_time / 1000000
-	if waitSonar >= waitSonarLength {
-		waitSonar = 0
-		updateStatus("sonarEngaged",false)
-	}
+if master.getValue("sonarLidar", "sonarScanTime") >= waitSonarLength{
+
+	updateStatus("sonarEngaged",false)
+	
 }
 
-if master.getValue("sonarLidar", "lidarScanning"){
-	waitLidar += delta_time / 1000000
-	if fmod_studio_event_instance_get_playback_state(ShipMaster.eventLidarEngagedI) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED {
-		
-		fmod_studio_event_instance_set_parameter_by_name(ShipMaster.eventLidarEngagedI, "lidarEngaged", 1)
-		fmod_studio_event_instance_start(ShipMaster.eventLidarEngagedI)
-	}
-	
-	if waitLidar >= waitLidarLength {
-		fmod_studio_event_instance_set_parameter_by_name(ShipMaster.eventLidarEngagedI, "lidarEngaged", 0)
-		waitLidar = 0
-		updateStatus("lidarEngaged",false)
-		oLeverAperture.status = "idle"
-		hist++
-	}
-}
+
 #endregion
 
 #region Sonar cull available points for rendering

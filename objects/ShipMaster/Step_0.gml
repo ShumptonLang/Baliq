@@ -30,24 +30,34 @@ global.mouseY = window_mouse_get_y()
 fmod_studio_system_set_parameter_by_name("shiplocation", room)
 var distanceToWind = point_distance(posx,posy,2000,624)/1400
 var distanceToHall = point_distance(posx,posy,2400,3500)/2800
-if distanceToWind < distanceToHall{
-	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"Location", 0)
-	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"dtOutside", distanceToWind)
-}else {
-	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"Location", 1)
-	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"dtOutside", distanceToWind)
+//if distanceToWind < distanceToHall{
+//	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"Location", 0)
+//	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"dtOutside", distanceToWind)
+//}else {
+//	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"Location", 1)
+//	fmod_studio_event_instance_set_parameter_by_name(eventBasilicaAmbience,"dtOutside", distanceToWind)
+//}
+
+
+//if shipStatus.digestive.running and fmod_studio_event_instance_get_playback_state(eventBasilicaAmbience) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+//	fmod_studio_event_instance_start(eventBasilicaAmbience)
+
+print(timers)
+
+for (var i = 0; i < array_length(timers); i++){
+	var timer = array_shift(timers)
+	timer.timerCurrentValue += delta_time / 1000000
+	if timer.timerCurrentValue >= timer.goal {
+		timer.timerCurrentValue = 0
+		timer.goalFunc()
+	} else {
+		array_insert(timers,0,timer)
+	}
 }
 
-//print(fmod_studio_system_get_parameter_by_name("shiplocation"))
-//print(fmod_last_result())
 
-if shipStatus.digestive.running and fmod_studio_event_instance_get_playback_state(eventBasilicaAmbience) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
-	fmod_studio_event_instance_start(eventBasilicaAmbience)
-//print(fmod_last_result())
+print(shipStatus.sonarLidar)
 
-//debug_sprite_memory()
-//debug_texture_pages()
-
-print(shipStatus.digestive)
-
+if keyboard_check_pressed(vk_numpad0)
+	shipStatus.digestive.running = true
 //print(rotv)
