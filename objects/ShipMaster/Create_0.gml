@@ -5,8 +5,30 @@ global.mouse_occupied_changed = false
 lastMOccupiedInterim = 0
 global.lastMouseOccupied = 0
 
-global.currMapBuffer = -1
-global.noiseBuffer = -1
+#region Map Buffer Creation
+
+//Convert map into a surface
+var surf = surface_create(8000,8000)//
+surface_set_target(surf)
+draw_sprite(spr_start,0,0,0)
+surface_reset_target()
+
+
+global.currMapBuffer = buffer_create(8000 * 8000*4, buffer_fast, 1);
+buffer_get_surface(global.currMapBuffer, surf, 0);
+
+
+
+surf = surface_create(256,256)//
+surface_set_target(surf)
+draw_sprite(funkyNoise,0,0,0)
+surface_reset_target()
+
+
+global.noiseBuffer = buffer_create(256 * 256*4, buffer_fast, 1);
+buffer_get_surface(global.noiseBuffer, surf, 0);
+
+#endregion
 
 global.sonarSurf = -1
 global.lidarSurf = -1
@@ -44,6 +66,13 @@ function getValue(roomid, value){
 		
 	}
 
+/**
+ * Creates a timer that is handled by the ShipMaster. 
+ * @param {any*} shipStatusTimer The ShipMaster Status to reference.
+ * @param {any*} timerGoal The amount of time the timer will exist for.
+ * @param {any*} goalFunc A function that is called when the timer reaches its goal
+ * @param {function} [updFunc]=nil An optional function that is called every timer tick. The update function is passed the current time of the timer.
+ */
 function startTimer(shipStatusTimer, timerGoal, goalFunc,updFunc = nil){
 	
 	array_insert(timers,0,{timerCurrentValue: shipStatusTimer, goal:timerGoal, goalFunc:goalFunc, update:updFunc})	

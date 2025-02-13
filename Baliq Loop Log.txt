@@ -1,0 +1,6 @@
+- Loop Problem: Gameplay is not engaging enough. Things are learned too quickly, no goals are in place, no challenge exists, no direct feedback is given. Aflow.
+- Prototypes
+	Test out the map variation of navigation. Give the rotation wheel a degree heading, and the map a pencil and tools. Get feedback on a graybox environment of the map and the player in a maze. Test with and without starting point given.
+	
+	
+	

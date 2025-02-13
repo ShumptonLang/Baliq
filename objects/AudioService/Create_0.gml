@@ -17,6 +17,12 @@ activeServices = array_create(0)
 
 
 
+/**
+ * Creates an Audio Service manager for the given event. Customizeable updates and kill toggles can also be supplied
+ * @param {event_instance_ref} audioEvent The FMOD Event Instance to manage
+ * @param {any*} updateFunc A function that is called every update tick. Updates are passed the Event Instance
+ * @param {any*} stateFunc A function that handles termination of an Audio Service. The Audio Service will be terminated when this function returns true.
+ */
 function play(audioEvent,updateFunc, stateFunc){
 		
 		array_insert(activeServices,0,{event:audioEvent,update:updateFunc,state:stateFunc})
