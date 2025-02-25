@@ -30,8 +30,10 @@ buffer_get_surface(global.noiseBuffer, surf, 0);
 
 #endregion
 
-global.sonarSurf = -1
-global.lidarSurf = -1
+global.lidarSurf = surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
+global.sonarSurf = surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
+global.mapSurf = surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
+
 
 instance_create_depth(0,0,0,AudioService)
 timers = array_create(0)
