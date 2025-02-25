@@ -9,12 +9,10 @@
     {"name":"inst_7841678D","path":"rooms/Cockpit/Cockpit.yy",},
     {"name":"inst_36BB438B","path":"rooms/Cockpit/Cockpit.yy",},
     {"name":"ship_master","path":"rooms/Cockpit/Cockpit.yy",},
-    {"name":"inst_62C3B35C","path":"rooms/Cockpit/Cockpit.yy",},
   ],
   "isDnd":false,
   "layers":[
     {"$GMRInstanceLayer":"","%Name":"Instances","depth":0,"effectEnabled":true,"effectType":null,"gridX":32,"gridY":32,"hierarchyFrozen":false,"inheritLayerDepth":false,"inheritLayerSettings":false,"inheritSubLayers":true,"inheritVisibility":true,"instances":[
-        {"$GMRInstance":"v1","%Name":"inst_62C3B35C","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":0.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_62C3B35C","objectId":{"name":"Digest_CP","path":"objects/Digest_CP/Digest_CP.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":0.3,"scaleY":0.3,"x":640.0,"y":736.0,},
         {"$GMRInstance":"v1","%Name":"inst_7841678D","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":0.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_7841678D","objectId":{"name":"Sonar_CP","path":"objects/Sonar_CP/Sonar_CP.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":-0.12667376,"scaleX":0.45555556,"scaleY":0.44814816,"x":864.0,"y":256.0,},
         {"$GMRInstance":"v1","%Name":"ship_master","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":0.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"ship_master","objectId":{"name":"ShipMaster","path":"objects/ShipMaster/ShipMaster.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":2.0,"scaleY":2.0,"x":672.0,"y":704.0,},
         {"$GMRInstance":"v1","%Name":"inst_36BB438B","colour":4294967295,"frozen":false,"hasCreationCode":false,"ignore":false,"imageIndex":0,"imageSpeed":1.0,"inheritCode":false,"inheritedItemId":null,"inheritItemSettings":false,"isDnd":false,"name":"inst_36BB438B","objectId":{"name":"FMODManager","path":"objects/FMODManager/FMODManager.yy",},"properties":[],"resourceType":"GMRInstance","resourceVersion":"2.0","rotation":0.0,"scaleX":1.0,"scaleY":1.0,"x":-128.0,"y":-2624.0,},

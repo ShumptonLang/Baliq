@@ -78,13 +78,14 @@ shader_reset()
 
 
 //show_debug_message("Sonar: Starting draw")
-if master.getValue("sonarLidar", "lidarScanning") || master.getValue("sonarLidar", "sonarScanning"){//fmod_studio_event_instance_get_playback_state(ShipMaster.eventLidarEngagedI) == FMOD_STUDIO_PLAYBACK_STATE.PLAYING {
+if !global.debug and master.getValue("sonarLidar", "lidarScanning") || master.getValue("sonarLidar", "sonarScanning"){//fmod_studio_event_instance_get_playback_state(ShipMaster.eventLidarEngagedI) == FMOD_STUDIO_PLAYBACK_STATE.PLAYING {
 	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,1)
-} else{
+} else if !global.debug{
 	
 		draw_sprite_ext(sSonarHud,0,0,0,1,1,0,c_white,1)
 	
 }
+
 
 
 

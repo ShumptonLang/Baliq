@@ -1,9 +1,9 @@
 {
   "$GMObject":"",
-  "%Name":"oMap",
+  "%Name":"oMapCP",
   "eventList":[],
   "managed":true,
-  "name":"oMap",
+  "name":"oMapCP",
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
@@ -27,7 +27,10 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":null,
+  "spriteId":{
+    "name":"sMapCP",
+    "path":"sprites/sMapCP/sMapCP.yy",
+  },
   "spriteMaskId":null,
   "visible":true,
 }

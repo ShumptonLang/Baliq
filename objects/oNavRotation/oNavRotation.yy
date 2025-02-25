@@ -45,5 +45,5 @@
     "path":"sprites/Sprite9/Sprite9.yy",
   },
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }

@@ -1,5 +1,5 @@
 //The Job of the ShipMaster is to hold all statuses of each object
-
+global.debug = true
 global.mouse_occupied = 0
 global.mouse_occupied_changed = false
 lastMOccupiedInterim = 0
@@ -48,7 +48,7 @@ shipStatus = {
 		rotationWheel: 0
 	}, 
 	digestive: {
-		running: false,
+		running: 1,
 		compSwitchPositions : [0,0,0,0],
 		ignitionState : "sleeping",
 		ignitionSwitchStates : [4,3,4,2,1],
