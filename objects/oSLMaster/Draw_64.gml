@@ -59,7 +59,8 @@ if (surface_exists(global.sonarSurf)) and master.getValue("sonarLidar", "sonarLi
 	shader_set(CRT)
 	shader_set_uniform_f(shader_get_uniform(CRT,"u_radControl"),device_mouse_x_to_gui(0)/window_get_width()*5)
 	var tex = surface_get_texture(global.sonarSurf)
-	vertex_submit(oSLMaster.sonarBuffer, pr_trianglefan, tex);
+	if false
+		vertex_submit(oSLMaster.sonarBuffer, pr_trianglefan, tex);
 	shader_reset()
 #endregion
 

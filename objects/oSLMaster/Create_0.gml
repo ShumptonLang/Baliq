@@ -113,7 +113,8 @@ function startUpScreen(currTime){
 		if global.sonarSurf != -1 {
 			surface_set_target(global.sonarSurf)
 			draw_clear_alpha(c_black,0)
-			draw_sprite_ext(startup,0,360,270,1.2,1.3,0,c_white,0.5)
+			var screen = startup
+			draw_sprite_ext(screen,0,sprite_get_width(screen)/2,sprite_get_height(screen)/2 - 50,1.2,1.3,0,c_white,0.5)
 			surface_reset_target()
 		}
 	}
