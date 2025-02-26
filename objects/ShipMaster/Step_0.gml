@@ -42,7 +42,7 @@ var distanceToHall = point_distance(posx,posy,2400,3500)/2800
 //if shipStatus.digestive.running and fmod_studio_event_instance_get_playback_state(eventBasilicaAmbience) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
 //	fmod_studio_event_instance_start(eventBasilicaAmbience)
 
-print(timers)
+
 
 for (var i = 0; i < array_length(timers); i++){
 	var timer = array_shift(timers)
@@ -57,8 +57,8 @@ for (var i = 0; i < array_length(timers); i++){
 }
 
 
-print(shipStatus.sonarLidar)
-print(AudioService.activeServices)
+//print(shipStatus.sonarLidar)
+//print(AudioService.activeServices)
 
 if keyboard_check_pressed(vk_numpad0)
 	shipStatus.digestive.running = true

@@ -10,11 +10,6 @@ master = ShipMaster
 
 
 
-//Create Aux Surfaces
-
-
-
-
 //Create Room Objects
 instance_create_depth(0,0,-5,oSonarButton,{master:oSLMaster})
 instance_create_depth(438,184,-5,oLeverAperture,{master:oSLMaster})

@@ -32,7 +32,9 @@ buffer_get_surface(global.noiseBuffer, surf, 0);
 
 global.lidarSurf = surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
 global.sonarSurf = surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
-global.mapSurf = surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
+
+global.mapSurf = surface_create(4000,4000)
+
 
 
 instance_create_depth(0,0,0,AudioService)
