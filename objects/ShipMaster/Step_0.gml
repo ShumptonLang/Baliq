@@ -14,6 +14,7 @@ if(shipStatus.sonarLidar.forwardLever == 0) forwardv *= 0.95
 self.posy += _y*forwardv
 self.posx += _x*forwardv
 
+contact = getPixelFromBuffer(global.currMapBuffer,posx-_x*30,posy-_y*30).r
 //print(contact)
 if contact {
 	contact = false
@@ -23,8 +24,8 @@ if contact {
 	audio_play_sound(collision,1,0,abs(forwardv)*5,0,1)
 }
 
-global.mouseX = window_mouse_get_x()
-global.mouseY = window_mouse_get_y()
+global.mouseX = device_mouse_x_to_gui(0)
+global.mouseY = device_mouse_y_to_gui(0)
 
 //print(room_get_name(room))
 fmod_studio_system_set_parameter_by_name("shiplocation", room)

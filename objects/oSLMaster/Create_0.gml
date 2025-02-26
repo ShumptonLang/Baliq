@@ -11,12 +11,13 @@ master = ShipMaster
 
 
 //Create Room Objects
-instance_create_depth(0,0,-5,oSonarButton,{master:oSLMaster})
-instance_create_depth(438,184,-5,oLeverAperture,{master:oSLMaster})
+//instance_create_depth(0,0,-5,oSonarButton,{master:oSLMaster})
+//instance_create_depth(438,184,-5,oLeverAperture,{master:oSLMaster})
 instance_create_depth(0,0,-5,oNavRotation,{master:oSLMaster})
 instance_create_depth(0,0,-5,oLeverForward,{master:oSLMaster})
-instance_create_depth(0,0,-5,oSLPowerSwitch,{master:oSLMaster})
+//instance_create_depth(0,0,-5,oSLPowerSwitch,{master:oSLMaster})
 instance_create_depth(0,0,-5,oMapCP,{master:oSLMaster})
+instance_create_depth(0,0,-5,oDistanceApproximator)
 
 
 #region Sonar variables
@@ -134,6 +135,10 @@ function updateLidar(){
 	//draw_sprite_part(spr_start,0,sin(current_time/1000)*100,0,view_width*2,view_height*2,0,0)
 		
 	draw_circle(view_width/2,view_height/2,10,0)
+	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(1000,ShipMaster.angle+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+90),10)
+	
+	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(400,ShipMaster.angle+oDistanceApproximator.hand1.a+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+oDistanceApproximator.hand1.a+90),5)
+	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(400,ShipMaster.angle+oDistanceApproximator.hand2.a+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+oDistanceApproximator.hand2.a+90),5)
 
 	surface_reset_target()
 }

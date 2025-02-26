@@ -71,7 +71,8 @@ if (surface_exists(global.sonarSurf)) and master.getValue("sonarLidar", "sonarLi
 var samp = shader_get_sampler_index(CRTLidar,"u_GlassTex")
 texture_set_stage(samp,sprite_get_texture(SpecularMap,0))
 tex = surface_get_texture(global.lidarSurf)
-vertex_submit(lidarBuffer,pr_trianglefan,tex)
+if keyboard_check(vk_shift)
+	vertex_submit(lidarBuffer,pr_trianglefan,tex)
 //shader_reset()
 
 #endregion

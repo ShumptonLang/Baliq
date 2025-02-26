@@ -1,4 +1,4 @@
-if (!global.mouse_occupied){
+if (global.mouse_occupied == 0){
 	var _x = device_mouse_x_to_gui(0)
 	var _y = device_mouse_y_to_gui(0)
 	var relx = x - 50

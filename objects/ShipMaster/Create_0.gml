@@ -28,12 +28,28 @@ surface_reset_target()
 global.noiseBuffer = buffer_create(256 * 256*4, buffer_fast, 1);
 buffer_get_surface(global.noiseBuffer, surf, 0);
 
+
+
+
 #endregion
 
 global.lidarSurf = surface_create(1000,1000)
 global.sonarSurf = surface_create(camera_get_view_width(view_camera[0]),camera_get_view_height(view_camera[0]))
 
 global.mapSurf = surface_create(4000,4000)
+
+distSurf = surface_create(250,250)
+distSurf2= surface_create(250,250)
+
+surface_set_target(distSurf)
+draw_clear(c_black)
+surface_reset_target()
+
+surface_set_target(distSurf2)
+draw_clear(c_black)
+surface_reset_target()
+
+global.distSurfs = [distSurf,distSurf2,false]
 
 
 
