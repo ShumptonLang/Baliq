@@ -1,25 +1,38 @@
-if (!global.mouse_occupied){
+if (global.mouse_occupied == 0){
 	var _x = device_mouse_x_to_gui(0)
 	var _y = device_mouse_y_to_gui(0)
 	
-	if mouseInBounds({x:60,y:450},100){
-		state.magnifyerUp = true
-	}
 	
-	if mouseInBounds({x:1055,y:450},100){
-		print("closed!")
-		state.magnifyerUp = false
+	if state.magnifyerUp{
+		if mouseInRecBounds(magMapTL,magMapBR)
+		{
+			global.mouse_occupied = self
+			lastX = _x 
+			lastY = _y 
+			virtualMouse.x = (lastX - magMapTL.x)
+			virtualMouse.y = (lastY - magMapTL.y)
+			virtualMouse.lx = (lastX - magMapTL.x)
+			virtualMouse.ly = (lastY - magMapTL.y)
+		}
+		
+		if mouseInRecBounds({x:mapXMin, y:mapYMin},{x:mapXMax, y:mapYMax}) and !mouseInRecBounds(magMapTL,magMapBR)and !mouseInBounds({x:1055,y:450},100){
+			global.mouse_occupied = "mapDrag"
+			lastX = _x
+			lastY = _y
+			wasDragging = true
+		}
 	}
-	
-	if mouseInBounds({x:231+482, y:58+482},482)
-	{
-		global.mouse_occupied = self
-		lastX = _x - mapXMin
-		lastY = _y - mapYMin
-		virtualMouse.x = lastX *4.15
-		virtualMouse.y = lastY*4.15
-		virtualMouse.lx = lastX*4.15
-		virtualMouse.ly = lastY*4.15
+	else {
+		if mouseInRecBounds({x:mapXMin, y:mapYMin},{x:mapXMax, y:mapYMax})
+		{
+			global.mouse_occupied = self
+			lastX = _x 
+			lastY = _y 
+			virtualMouse.x = (lastX - mapXMin) * surface_get_width(global.mapSurf) / mapW 
+			virtualMouse.y = (lastY - mapYMin) * surface_get_height(global.mapSurf) / mapH
+			virtualMouse.lx = (lastX - mapXMin) * surface_get_width(global.mapSurf) / mapW 
+			virtualMouse.ly = (lastY - mapYMin) * surface_get_height(global.mapSurf) / mapH
+		}
 	}
 
 }

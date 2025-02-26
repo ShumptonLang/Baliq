@@ -9,6 +9,7 @@ state = {
 	magnifyerPos: {x:1000,y:2000}
 }
 
+wasDragging = false
 
 
 lastX = device_mouse_x_to_gui(0)
@@ -26,6 +27,11 @@ vertex_format_add_texcoord()
 format = vertex_format_end();
 
 drawingBuffer = vertex_create_buffer();
+
+magMapTL = {x:0,y:193}
+magMapBR = {x:886,y:886}
+magMapH = magMapBR.y - magMapTL.y
+magMapW = magMapBR.x - magMapTL.x
 
 mapW = 1000
 mapH = 1000

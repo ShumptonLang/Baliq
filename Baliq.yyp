@@ -81,6 +81,7 @@
     {"id":{"name":"getPixelFromBuffer","path":"scripts/getPixelFromBuffer/getPixelFromBuffer.yy",},},
     {"id":{"name":"inDepthDebug","path":"scripts/inDepthDebug/inDepthDebug.yy",},},
     {"id":{"name":"mouseInBounds","path":"scripts/mouseInBounds/mouseInBounds.yy",},},
+    {"id":{"name":"mouseInRecBounds","path":"scripts/mouseInRecBounds/mouseInRecBounds.yy",},},
     {"id":{"name":"normalizeToCenter","path":"scripts/normalizeToCenter/normalizeToCenter.yy",},},
     {"id":{"name":"print","path":"scripts/print/print.yy",},},
     {"id":{"name":"screen2clip","path":"scripts/screen2clip/screen2clip.yy",},},
