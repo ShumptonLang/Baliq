@@ -1,6 +1,5 @@
 
-var mOccupiedChanged = mOccupiedOld != global.mouse_occupied
-mOccupiedOld = global.mouse_occupied
+
 
 
 
@@ -18,11 +17,16 @@ if (global.mouse_occupied == self){
 	
 	//print(pullDirection)
 
-} else {
+} 
+
+if global.mouse_occupied == "proxy" {
+	var new_angle = point_direction(x,y,global.mouseX,global.mouseY)
 	
+	proxyAngle += dcos(new_angle)
+	proxyAngle %= 360
 }
 
-
+print(proxyAngle)
 
 fmod_studio_system_set_parameter_by_name("rotationVelocity",rotv/rotMaxV)
 

@@ -8,4 +8,8 @@ if (global.mouse_occupied==0){
 		global.mouse_occupied = self
 
 	}
+	
+	if mouseInBounds({x:x,y:y-200},30){
+		global.mouse_occupied = "proxy"
+	}
 }

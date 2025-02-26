@@ -2,14 +2,14 @@ x = 828
 y = 232
 
 hand1 = {
-	a:180,
+	a:150,
 	dist:0,
 	x:0,
 	y:0
 }
 
 hand2 = {
-	a:0,
+	a:20,
 	dist:0,
 	x:0,
 	y:0
@@ -29,9 +29,9 @@ hand1.y = y + lengthdir_y(100,hand1.a)
 hand2.x = x + lengthdir_x(100,hand2.a)
 hand2.y = y + lengthdir_y(100,hand2.a)
 
-fidelity = 0.2
-grain = 1
-maxDist = 500
+fidelity = 0
+grain = 20
+maxDist = 800
 
 function grabDist(hand){
 

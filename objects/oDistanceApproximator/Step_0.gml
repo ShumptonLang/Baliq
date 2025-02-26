@@ -27,7 +27,7 @@ if global.mouse_occupied == "hand2" {
 if abs(ShipMaster.shipStatus.sonarLidar.rotationWheel) > random(0.2)
 	updateDist = true
 	
-if abs(ShipMaster.shipStatus.sonarLidar.forwardLever) > random(0.5)
+if abs(ShipMaster.forwardv) > random(0.2)
 	updateDist = true
 
 grabDist(hand1)
