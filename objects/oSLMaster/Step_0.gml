@@ -26,6 +26,7 @@ var mapPointY = round(ShipMaster.posy / chunkSize)*chunkSize
 
 
 var lookupRange = 4
+if global.debug updateLidar()
 
 
 //Update pointsToRender 

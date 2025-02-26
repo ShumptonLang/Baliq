@@ -115,6 +115,7 @@
     {"id":{"name":"mapy","path":"sprites/mapy/mapy.yy",},},
     {"id":{"name":"marble","path":"sprites/marble/marble.yy",},},
     {"id":{"name":"noiseTexture","path":"sprites/noiseTexture/noiseTexture.yy",},},
+    {"id":{"name":"paier","path":"sprites/paier/paier.yy",},},
     {"id":{"name":"sButton","path":"sprites/sButton/sButton.yy",},},
     {"id":{"name":"sCyril","path":"sprites/sCyril/sCyril.yy",},},
     {"id":{"name":"sDigest","path":"sprites/sDigest/sDigest.yy",},},

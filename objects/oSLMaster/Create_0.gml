@@ -2,8 +2,8 @@ sprite_index = spr_start
 scalex = 800
 scaley = 600
 
-view_width = camera_get_view_width(view_camera[0])
-view_height =camera_get_view_height(view_camera[0])
+view_width = surface_get_width(global.lidarSurf)
+view_height = surface_get_height(global.lidarSurf)
 
 master = ShipMaster
 
@@ -127,10 +127,12 @@ function startUpSL(){
 function updateLidar(){
 	surface_set_target(global.lidarSurf)
 	
-	draw_clear_alpha($010101,0)
-	draw_sprite_general(spr_start,0,ShipMaster.posx-oSLMaster.view_width/2,ShipMaster.posy-oSLMaster.view_height/2,oSLMaster.view_width,oSLMaster.view_height,0,0,1,1,0,c_green,c_green,c_green,c_green,1)
+	//draw_clear_alpha($010101,0)
+
+	draw_sprite_general(spr_start,0,ShipMaster.posx-oSLMaster.view_width/2,ShipMaster.posy-oSLMaster.view_height/2,oSLMaster.view_width,oSLMaster.view_height,0,0,1,1,0,c_white,c_white,c_white,c_white,1)
+	//draw_sprite_part(spr_start,0,sin(current_time/1000)*100,0,view_width*2,view_height*2,0,0)
 		
-	
+	draw_circle(view_width/2,view_height/2,10,0)
 
 	surface_reset_target()
 }
