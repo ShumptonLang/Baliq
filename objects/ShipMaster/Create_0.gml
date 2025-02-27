@@ -65,7 +65,9 @@ shipStatus = {
 		lidarScanTime: 0,
 		lidarStatus : "idle",
 		forwardLever: 0,
-		rotationWheel: 0
+		rotationWheel: 0,
+		compassDeg:35,
+		dappPos:[60,30]
 	}, 
 	digestive: {
 		running: 1,

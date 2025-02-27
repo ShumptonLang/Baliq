@@ -2,36 +2,37 @@ x = 828
 y = 232
 
 hand1 = {
-	a:150,
+	a:ShipMaster.shipStatus.sonarLidar.dappPos[0],
 	dist:0,
 	x:0,
 	y:0
 }
 
 hand2 = {
-	a:20,
+	a:ShipMaster.shipStatus.sonarLidar.dappPos[1],
 	dist:0,
 	x:0,
 	y:0
 }
 
 
-
+lastPts=[0,0]
+mouseVPos = {x:0,y:0}
 
 lastHand = 0
-updateDist = false
+updateRate = 1
+frame = 0
 
 
 
-
-hand1.x = x + lengthdir_x(100,hand1.a)
-hand1.y = y + lengthdir_y(100,hand1.a)
-hand2.x = x + lengthdir_x(100,hand2.a)
-hand2.y = y + lengthdir_y(100,hand2.a)
+hand1.x = x + lengthdir_x(100,hand1.a+90)
+hand1.y = y + lengthdir_y(100,hand1.a+90)
+hand2.x = x + lengthdir_x(100,hand2.a+90)
+hand2.y = y + lengthdir_y(100,hand2.a+90)
 
 fidelity = 0
-grain = 20
-maxDist = 800
+grain = 5
+maxDist = 400
 
 function grabDist(hand){
 

@@ -5,5 +5,3 @@ y = _start[1]
 prvMouseDeg = -1
 prvHandleDeg = 180
 
-
-proxyAngle = 35

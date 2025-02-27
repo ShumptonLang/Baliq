@@ -22,11 +22,10 @@ if (global.mouse_occupied == self){
 if global.mouse_occupied == "proxy" {
 	var new_angle = point_direction(x,y,global.mouseX,global.mouseY)
 	
-	proxyAngle += dcos(new_angle)
-	proxyAngle %= 360
+	ShipMaster.shipStatus.sonarLidar.compassDeg += dcos(new_angle)
+	ShipMaster.shipStatus.sonarLidar.compassDeg %= 360
 }
 
-print(proxyAngle)
 
 fmod_studio_system_set_parameter_by_name("rotationVelocity",rotv/rotMaxV)
 
