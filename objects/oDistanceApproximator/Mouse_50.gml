@@ -1,4 +1,4 @@
-if(global.mouse_occupied == 0){
+if(global.mouse_occupied == 0) and false{
 	if mouseInBounds(hand1,30) {
 		global.mouse_occupied = "hand1"	
 		lastHand = 1

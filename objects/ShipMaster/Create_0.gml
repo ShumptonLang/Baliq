@@ -5,6 +5,8 @@ global.mouse_occupied_changed = false
 lastMOccupiedInterim = 0
 global.lastMouseOccupied = 0
 
+forward = {x:lengthdir_x(1,self.angle-90),y:lengthdir_y(1,self.angle-90)}
+
 #region Map Buffer Creation
 
 //Convert map into a surface
@@ -66,8 +68,7 @@ shipStatus = {
 		lidarStatus : "idle",
 		forwardLever: 0,
 		rotationWheel: 0,
-		compassDeg:35,
-		dappPos:[60,30]
+		compassDeg:35
 	}, 
 	digestive: {
 		running: 1,

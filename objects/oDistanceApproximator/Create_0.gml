@@ -2,17 +2,23 @@ x = 828
 y = 232
 
 hand1 = {
-	a:ShipMaster.shipStatus.sonarLidar.dappPos[0],
+	a:90,
+	scanA:90,
 	dist:0,
 	x:0,
-	y:0
+	y:0,
+	frame:0,
+	id:1
 }
 
 hand2 = {
-	a:ShipMaster.shipStatus.sonarLidar.dappPos[1],
+	a:270,
+	scanA:90,
 	dist:0,
 	x:0,
-	y:0
+	y:0,
+	frame:0,
+	id:2
 }
 
 
@@ -21,7 +27,7 @@ mouseVPos = {x:0,y:0}
 
 lastHand = 0
 updateRate = 1
-frame = 0
+sweepAngle = 60
 
 
 
@@ -31,12 +37,51 @@ hand2.x = x + lengthdir_x(100,hand2.a+90)
 hand2.y = y + lengthdir_y(100,hand2.a+90)
 
 fidelity = 0
-grain = 5
-maxDist = 400
+grain = 1
+maxDist = 200
 
 function grabDist(hand){
 
-	_scandeg = hand.a + ShipMaster.angle+90
+	var _scandeg = hand.frame 
+	var scanPos = {x:_scandeg *ShipMaster.forward.x+ShipMaster.posx, y: _scandeg*ShipMaster.forward.y+ShipMaster.posy}
+	var normDir = {x:power(-1,hand.id)*cos(ShipMaster.forward.x*pi/2),y:power(-1,hand.id)*cos(ShipMaster.forward.y*pi/2)}
+	
+	var _fidelity = random(grain*fidelity*2)-fidelity
+	
+	var _grain = grain + _fidelity
+
+	
+
+	var fail = true
+	for(var i=0; i<maxDist;i++){
+		var sampX = scanPos.x + i*normDir.x
+		var sampY = scanPos.y + i*normDir.y
+				
+				
+	
+		var rayPoint = getPixelFromBuffer(global.currMapBuffer,sampX,sampY)
+
+		
+		if(rayPoint.r){
+			hand.dist = i*_grain
+			fail = false
+			break
+		}
+
+		
+	}
+	
+	if fail
+		hand.dist = maxDist
+
+
+
+	
+}
+	
+function grabDistWorking(hand){
+
+	_scandeg = hand.scanA + ShipMaster.angle+90
 	
 	
 	

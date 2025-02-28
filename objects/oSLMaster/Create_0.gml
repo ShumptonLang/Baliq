@@ -129,17 +129,17 @@ function startUpSL(){
 function updateLidar(){
 	surface_set_target(global.lidarSurf)
 	
-	//draw_clear_alpha($010101,0)
-
-	draw_sprite_general(spr_start,0,ShipMaster.posx-oSLMaster.view_width/2,ShipMaster.posy-oSLMaster.view_height/2,oSLMaster.view_width,oSLMaster.view_height,0,0,1,1,0,c_white,c_white,c_white,c_white,1)
+	draw_clear_alpha(c_black,0)
+	draw_set_alpha(0.5)
+	draw_sprite_general(spr_start,0,ShipMaster.posx-oSLMaster.view_width/2,ShipMaster.posy-oSLMaster.view_height/2,oSLMaster.view_width,oSLMaster.view_height,0,0,1,1,0,c_white,c_white,c_white,c_white,0.5)
 	//draw_sprite_part(spr_start,0,sin(current_time/1000)*100,0,view_width*2,view_height*2,0,0)
 		
 	draw_circle(view_width/2,view_height/2,10,0)
 	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(1000,ShipMaster.angle+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+90),10)
 	
-	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(400,ShipMaster.angle+oDistanceApproximator.hand1.a+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+oDistanceApproximator.hand1.a+90),5)
-	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(400,ShipMaster.angle+oDistanceApproximator.hand2.a+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+oDistanceApproximator.hand2.a+90),5)
-
+	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(400,ShipMaster.angle+oDistanceApproximator.hand1.scanA+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+oDistanceApproximator.hand1.scanA+90),5)
+	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(400,ShipMaster.angle+oDistanceApproximator.hand2.scanA+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+oDistanceApproximator.hand2.scanA+90),5)
+	draw_set_alpha(1)
 	surface_reset_target()
 }
 
