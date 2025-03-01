@@ -50,7 +50,6 @@ function grabDist(hand){
 
 	var scanPos = {x:_scandeg *ShipMaster.forward.x+ShipMaster.posx, y: _scandeg*ShipMaster.forward.y+ShipMaster.posy}
 	var normDir = {x:lengthdir_x(1,ShipMaster.angle+hand.id*180),y:lengthdir_y(1,ShipMaster.angle+hand.id*180)}
-	print(ShipMaster.forward,normDir)
 	
 	var _fidelity = random(grain*fidelity*2)-fidelity
 	
