@@ -13,13 +13,13 @@ if true{
 	draw_clear(c_black)
 	draw_surface(global.distSurfs[!distSurfIter],0,1)
 	
-	var point = ((hand1.dist/maxDist)/2)*surface_get_width(global.distSurfs[0])-1
-	if hand1.frame != 0
+	var point = ((1-hand1.dist/maxDist)/2)*surface_get_width(global.distSurfs[0])-3
+	if hand1.frame >= 2 and hand1.dist != 0 and !hand1.fail
 		draw_line(point,0,lastPts[0],1)
 	lastPts[0] = point
 
 	point = (hand2.dist/maxDist/2)*surface_get_width(global.distSurfs[0])+surface_get_width(global.distSurfs[0])/2
-	if hand1.frame != 0
+	if hand2.frame >= 2 and hand2.dist != 0 and !hand2.fail
 		draw_line(point,0,lastPts[1],1)
 	lastPts[1] = point
 

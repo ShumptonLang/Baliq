@@ -135,10 +135,17 @@ function updateLidar(){
 	//draw_sprite_part(spr_start,0,sin(current_time/1000)*100,0,view_width*2,view_height*2,0,0)
 		
 	draw_circle(view_width/2,view_height/2,10,0)
+	draw_circle(view_width/2 + (oDistanceApproximator.hand1.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.x,view_height/2 + (oDistanceApproximator.hand1.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.y,10,0)
 	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(1000,ShipMaster.angle+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+90),10)
 	
-	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(400,ShipMaster.angle+oDistanceApproximator.hand1.scanA+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+oDistanceApproximator.hand1.scanA+90),5)
-	draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(400,ShipMaster.angle+oDistanceApproximator.hand2.scanA+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+oDistanceApproximator.hand2.scanA+90),5)
+	draw_circle(oDistanceApproximator.hand1.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand1.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,5,0)
+	if !oDistanceApproximator.hand1.fail
+		draw_line_width(view_width/2 + (oDistanceApproximator.hand1.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.x,view_height/2 + (oDistanceApproximator.hand1.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.y,oDistanceApproximator.hand1.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand1.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,3)
+	
+	draw_circle(oDistanceApproximator.hand2.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand2.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,5,0)
+	if !oDistanceApproximator.hand2.fail
+		draw_line_width(view_width/2 + (oDistanceApproximator.hand2.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.x,view_height/2 + (oDistanceApproximator.hand2.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.y,oDistanceApproximator.hand2.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand2.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,3)
+	
 	draw_set_alpha(1)
 	surface_reset_target()
 }

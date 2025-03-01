@@ -8,7 +8,9 @@ hand1 = {
 	x:0,
 	y:0,
 	frame:0,
-	id:1
+	id:0,
+	lastPointPos: {x:0,y:0},
+	fail:0
 }
 
 hand2 = {
@@ -18,7 +20,9 @@ hand2 = {
 	x:0,
 	y:0,
 	frame:0,
-	id:2
+	id:1,
+	lastPointPos: {x:0,y:0},
+	fail:0
 }
 
 
@@ -27,7 +31,7 @@ mouseVPos = {x:0,y:0}
 
 lastHand = 0
 updateRate = 1
-sweepAngle = 60
+sweepAngle = 300
 
 
 
@@ -42,9 +46,11 @@ maxDist = 200
 
 function grabDist(hand){
 
-	var _scandeg = hand.frame 
+	var _scandeg = (hand.frame-sweepAngle/2)* power(-1,1-hand.id)
+
 	var scanPos = {x:_scandeg *ShipMaster.forward.x+ShipMaster.posx, y: _scandeg*ShipMaster.forward.y+ShipMaster.posy}
-	var normDir = {x:power(-1,hand.id)*cos(ShipMaster.forward.x*pi/2),y:power(-1,hand.id)*cos(ShipMaster.forward.y*pi/2)}
+	var normDir = {x:lengthdir_x(1,ShipMaster.angle+hand.id*180),y:lengthdir_y(1,ShipMaster.angle+hand.id*180)}
+	print(ShipMaster.forward,normDir)
 	
 	var _fidelity = random(grain*fidelity*2)-fidelity
 	
@@ -54,8 +60,8 @@ function grabDist(hand){
 
 	var fail = true
 	for(var i=0; i<maxDist;i++){
-		var sampX = scanPos.x + i*normDir.x
-		var sampY = scanPos.y + i*normDir.y
+		var sampX = scanPos.x - i*normDir.x
+		var sampY = scanPos.y - i*normDir.y
 				
 				
 	
@@ -64,6 +70,9 @@ function grabDist(hand){
 		
 		if(rayPoint.r){
 			hand.dist = i*_grain
+			hand.lastPointPos.x = sampX
+			hand.lastPointPos.y = sampY
+			hand.fail = 0
 			fail = false
 			break
 		}
@@ -72,7 +81,7 @@ function grabDist(hand){
 	}
 	
 	if fail
-		hand.dist = maxDist
+		hand.fail = 1
 
 
 

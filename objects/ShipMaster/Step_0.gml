@@ -12,7 +12,6 @@ var _y = lengthdir_y(1,self.angle-90)
 forward.x = _x
 forward.y = _y
 
-print(forward)
 
 forwardv += (-maxv*shipStatus.sonarLidar.forwardLever - forwardv)*0.005
 if(shipStatus.sonarLidar.forwardLever == 0) forwardv *= 0.95

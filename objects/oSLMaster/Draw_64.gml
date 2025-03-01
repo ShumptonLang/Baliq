@@ -72,7 +72,7 @@ var samp = shader_get_sampler_index(CRTLidar,"u_GlassTex")
 texture_set_stage(samp,sprite_get_texture(SpecularMap,0))
 tex = surface_get_texture(global.lidarSurf)
 if keyboard_check(vk_shift)
-	vertex_submit(lidarBuffer,pr_trianglefan,tex)
+	draw_surface_ext(global.lidarSurf,949,300,0.3,0.3,0,c_white,1)
 //shader_reset()
 
 #endregion

@@ -9,8 +9,8 @@
   "name":"AudioService",
   "overriddenProperties":[],
   "parent":{
-    "name":"Cockpit",
-    "path":"folders/Cockpit.yy",
+    "name":"Kings",
+    "path":"folders/Kings.yy",
   },
   "parentObjectId":null,
   "persistent":true,

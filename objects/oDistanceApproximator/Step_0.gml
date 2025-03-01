@@ -39,8 +39,8 @@ updateRate = max(0,abs(ShipMaster.shipStatus.sonarLidar.rotationWheel)/0.4,abs(S
 updateRate = ceil(updateRate)
 
 //print(0,abs(ShipMaster.shipStatus.sonarLidar.rotationWheel)/0.4,abs(ShipMaster.forwardv),m1Dir,m2Dir)
-hand1.frame = (hand1.frame + 1/4)%sweepAngle
-hand2.frame = (hand2.frame + 1/4)%sweepAngle
+hand1.frame = (hand1.frame + 1.5)%sweepAngle
+hand2.frame = (hand2.frame + 1.5)%sweepAngle
 
 
 hand1.scanA = hand1.a - hand1.frame + sweepAngle/2
