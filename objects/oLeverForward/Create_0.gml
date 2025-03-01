@@ -16,16 +16,21 @@ interaction_width = 200;
 interaction_height = 54;
 interaction_priority = 10
 
+in_interaction = false
+
 // Register with input manager on creation
 
 
 function on_interaction_start() {
-    
+    window_set_cursor(cr_none)
+	in_interaction = true
 }
 
 function on_interaction_update() {
-	var _x = oInputMaster.mouse_x_gui
-	var _y = oInputMaster.mouse_y_gui
+	
+	
+	var _x = global.mouseX
+	var _y = global.mouseY
 	
 	var new_angle = point_direction(x,y,_x,_y)
 	
@@ -42,13 +47,13 @@ function on_interaction_update() {
 	}
 	lastPctPulled = pctPulled
 	master.updateStatus("leverForward", pctPulled)
-	
-	x = _start[0] + pctPulled*_xdiff
-	y = _start[1] + pctPulled * _ydiff
 
 }
 
 	
 function on_interaction_end(){
 	window_mouse_set(x,y)	
+	window_set_cursor(cr_default)
+	master.updateStatus("leverForward", 0)	
+	in_interaction = false
 }

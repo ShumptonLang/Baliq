@@ -1,8 +1,8 @@
-draw_line_width(x,y,hand1.x,hand1.y,2)
-draw_sprite_ext(sDapproxBall,0,hand1.x,hand1.y,0.3,0.3,0,c_white,1)
+//draw_line_width(x,y,hand1.x,hand1.y,2)
+//draw_sprite_ext(sDapproxBall,0,hand1.x,hand1.y,0.3,0.3,0,c_white,1)
 
-draw_line_width(x,y,hand2.x,hand2.y,2)
-draw_sprite_ext(sDapproxBall,0,hand2.x,hand2.y,0.3,0.3,0,c_white,1)
+//draw_line_width(x,y,hand2.x,hand2.y,2)
+//draw_sprite_ext(sDapproxBall,0,hand2.x,hand2.y,0.3,0.3,0,c_white,1)
 
 
 if true{
