@@ -1,19 +1,21 @@
 {
   "$GMObject":"",
-  "%Name":"oMapCP",
+  "%Name":"oMapEraser",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":64,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":4,"eventType":6,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
+    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":75,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"oMapCP",
+  "name":"oMapEraser",
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
     "path":"folders/SonarLidar/MapTest/Objects.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"oInteractable",
+    "path":"objects/oInteractable/oInteractable.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -32,8 +34,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"sMapCP",
-    "path":"sprites/sMapCP/sMapCP.yy",
+    "name":"sEraser",
+    "path":"sprites/sEraser/sEraser.yy",
   },
   "spriteMaskId":null,
   "visible":true,

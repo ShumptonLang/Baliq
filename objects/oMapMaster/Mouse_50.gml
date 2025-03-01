@@ -25,13 +25,8 @@ if (global.mouse_occupied == 0){
 	else {
 		if mouseInRecBounds({x:mapXMin, y:mapYMin},{x:mapXMax, y:mapYMax})
 		{
-			global.mouse_occupied = self
-			lastX = _x 
-			lastY = _y 
-			virtualMouse.x = (lastX - mapXMin) * surface_get_width(global.mapSurf) / mapW 
-			virtualMouse.y = (lastY - mapYMin) * surface_get_height(global.mapSurf) / mapH
-			virtualMouse.lx = (lastX - mapXMin) * surface_get_width(global.mapSurf) / mapW 
-			virtualMouse.ly = (lastY - mapYMin) * surface_get_height(global.mapSurf) / mapH
+
+			
 		}
 	}
 

@@ -11,31 +11,9 @@ if state.magnifyerUp{
 	draw_surface_part(global.mapSurf,state.magnifyerPos.x,state.magnifyerPos.y,magMapW,magMapH,magMapTL.x,magMapTL.y)
 }
 
-var _x = device_mouse_x_to_gui(0)
-var _y = device_mouse_y_to_gui(0)
+draw_set_color(c_black)
+if state.activeTool == "eraser"
+	draw_circle(virtualMouse.tx,virtualMouse.ty,7,1)
+draw_set_color(c_white)
 
 //print(_x,_y)
-switch(state.activeTool){
-	
-	case "protractor":
-		if state.protractorDrawing{
-			switch (state.protractorState){
-				case 1:
-					draw_line_width_color(state.protractorSrc.x,state.protractorSrc.y,_x,_y,2,c_dkgray,c_dkgray)
-					break
-				case 2 :
-					draw_line_width_color(state.protractorSrc.x,state.protractorSrc.y,state.protractorDst.x,state.protractorDst.y,3,c_dkgray,c_dkgray)
-					draw_line_width_color(state.protractorSrc.x,state.protractorSrc.y,_x,_y,2,c_dkgray,c_dkgray)
-					draw_text_color(state.protractorDst.x,_y+1,string(abs(point_direction(state.protractorSrc.x,state.protractorSrc.y,_x,_y)-point_direction(state.protractorSrc.x,state.protractorSrc.y,state.protractorDst.x,state.protractorDst.y))),c_black,c_black,c_black,c_black,1)
-					break
-				
-			}
-		}
-		draw_sprite_ext(sProtractor,0,_x,_y,2,2,0,c_black,0.3)
-		draw_sprite_ext(sProtractor,0,protractorPos.x,protractorPos.y,2,2,0,c_black,0.3)
-		break
-	
-	case "pencil":
-		draw_sprite_ext(sProtractor,0,protractorPos.x,protractorPos.y,2,2,0,c_white,0.9)
-		break
-}

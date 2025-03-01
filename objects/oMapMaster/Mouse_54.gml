@@ -1,4 +1,4 @@
-if state.activeTool == "protractor"{
+if state.activeTool != "pencil"{
 	state.activeTool = "pencil"
 	state.protractorState = 0
 	state.protractorDrawing = false

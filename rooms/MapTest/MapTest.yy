@@ -18,7 +18,7 @@
   "name":"MapTest",
   "parent":{
     "name":"MapTest",
-    "path":"folders/GrayBoxEnvironment/MapTest.yy",
+    "path":"folders/SonarLidar/MapTest.yy",
   },
   "parentRoom":null,
   "physicsSettings":{
