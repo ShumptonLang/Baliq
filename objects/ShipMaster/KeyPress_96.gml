@@ -1,1 +1,0 @@
-shipPower = 1

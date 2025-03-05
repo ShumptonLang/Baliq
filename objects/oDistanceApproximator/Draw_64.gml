@@ -4,33 +4,68 @@
 //draw_line_width(x,y,hand2.x,hand2.y,2)
 //draw_sprite_ext(sDapproxBall,0,hand2.x,hand2.y,0.3,0.3,0,c_white,1)
 
+var minDL = 100000
+var maxDL = -1000000
 
-if true{
-	global.distSurfs[2] = !global.distSurfs[2]
-	var distSurfIter = global.distSurfs[2]
+var minDR = 100000
+var maxDR = -1000000
 
-	surface_set_target(global.distSurfs[distSurfIter])
-	draw_clear(c_black)
-	draw_surface(global.distSurfs[!distSurfIter],0,1)
+
+for (var i = 0; i < pinsPCol; i++){
 	
-	var point = ((1-hand1.dist/maxDist)/2)*surface_get_width(global.distSurfs[0])-3
-	if hand1.frame >= 2 and hand1.dist != 0 and !hand1.fail
-		draw_line(point,0,lastPts[0],1)
-	lastPts[0] = point
-
-	point = (hand2.dist/maxDist/2)*surface_get_width(global.distSurfs[0])+surface_get_width(global.distSurfs[0])/2
-	if hand2.frame >= 2 and hand2.dist != 0 and !hand2.fail
-		draw_line(point,0,lastPts[1],1)
-	lastPts[1] = point
-
-	draw_point_color(surface_get_width(global.distSurfs[0])/2,0,c_dkgray)
+	var currPoint = hand1.dist[i]
+	if currPoint != maxDist{
+		minDL = min(currPoint,minDL)	
+		maxDL = max(currPoint,maxDL)
+	}
 	
-
-	surface_reset_target()
-	
-
+	currPoint = hand2.dist[i]
+	if currPoint != maxDist{
+		minDR = min(currPoint,minDR)	
+		maxDR = max(currPoint,maxDR)
+	}
+		
 }
 
+//Scale factor to normalize between 0 and maxDist
 
-draw_surface(global.distSurfs[global.distSurfs[2]],1000,50)
+var rXScale = maxDist/(maxDR-minDR)
+var lXScale = maxDist/(maxDL-minDL)
+
+surface_set_target(global.distSurfs[0])
+draw_clear(c_black)
+for (var i = 0; i < pinsPCol; i++){
+
+
+		//draw_line(1000-validRowL[i-1],(i-1)*1+100, 1000-validRowL[i],i*1+100)
+	draw_line((hand1.dist[pinsPCol-1-i]-minDL)*lXScale/maxDist*surface_get_width(global.distSurfs[0]),i,surface_get_width(global.distSurfs[0]),i)
+	
+	
+
+		
+	//draw_sprite_ext(Sprite33,0,validRows[i][1] + 1000,i*4+100,-0.5,0.3,0,c_white,0.5 )
+}
+
+surface_reset_target()
+
+surface_set_target(global.distSurfs[1])
+draw_clear(c_black)
+for (var i = 0; i < pinsPCol; i++){
+
+	
+
+	draw_line((hand2.dist[i]-minDR)*rXScale/maxDist*surface_get_width(global.distSurfs[1]),i,surface_get_width(global.distSurfs[1]),i)
+		
+	
+		
+	//draw_sprite_ext(Sprite33,0,validRows[i][1] + 1000,i*4+100,-0.5,0.3,0,c_white,0.5 )
+}
+surface_reset_target()
+
+draw_surface_part_ext(global.distSurfs[0],0,0,surface_get_width(global.distSurfs[0]),pinsPCol,1040,100,-0.5,surface_get_height(global.distSurfs[0])/pinsPCol,c_white,1)
+draw_surface_part_ext(global.distSurfs[1],0,0,surface_get_width(global.distSurfs[1]),pinsPCol,1056,100,0.5,surface_get_height(global.distSurfs[1])/pinsPCol,c_white,1)
+
+
+
+
 

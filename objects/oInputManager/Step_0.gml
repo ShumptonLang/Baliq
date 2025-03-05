@@ -11,17 +11,20 @@ hover_interactable = noone
 var highestPriority = -100000
 var tempInteractable = noone
 
-var temp_queue = ds_priority_create()
-ds_priority_copy(temp_queue,interactables)
+var tqueue = ds_priority_create()
+ds_priority_copy(tqueue,interactables)
+var tSize = ds_priority_size(tqueue)
 
-for (var i = 0; i < ds_priority_size(temp_queue); i++) {
-    var obj = ds_priority_find_min(temp_queue);
-    ds_priority_delete_min(temp_queue);
+
+for (var i = 0; i < tSize; i++) {
+	
+    var obj = ds_priority_find_min(tqueue);
+    ds_priority_delete_min(tqueue);
     
     // Check if object is under cursor and if it's interactive
     if (obj.is_interactive && point_in_interaction_area(obj, mouse_x_gui, mouse_y_gui)) {
         // Get the priority
-		print(obj.interaction_priority)
+
         var priority = obj.interaction_priority;
         
         // Keep track of the highest priority interactable
@@ -33,7 +36,7 @@ for (var i = 0; i < ds_priority_size(temp_queue); i++) {
     
     // Re-add to priority queue
 }
-ds_priority_destroy(temp_queue)
+ds_priority_destroy(tqueue)
 
 hover_interactable = tempInteractable;
 

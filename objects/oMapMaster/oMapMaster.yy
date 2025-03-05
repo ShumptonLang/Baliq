@@ -15,7 +15,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Objects",
-    "path":"folders/SonarLidar/MapTest/Objects.yy",
+    "path":"folders/SonarLidar/Map/Objects.yy",
   },
   "parentObjectId":{
     "name":"oInteractable",

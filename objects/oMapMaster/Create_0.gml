@@ -34,10 +34,7 @@ format = vertex_format_end();
 
 drawingBuffer = vertex_create_buffer();
 
-magMapTL = {x:0,y:193}
-magMapBR = {x:886,y:886}
-magMapH = magMapBR.y - magMapTL.y
-magMapW = magMapBR.x - magMapTL.x
+
 
 mapW = 1000
 mapH = 1000
@@ -63,6 +60,7 @@ vertex_end(drawingBuffer)
 
 instance_create_depth(0,0,0,oMapInk)
 instance_create_depth(0,0,0,oMapEraser)
+instance_create_depth(0,0,0,oMagnifyer)
 
 function on_interaction_update() {
 	var _x = oInputManager.mouse_x_gui
@@ -101,8 +99,8 @@ function on_interaction_update() {
 			
 			
 		case "eraser":
-			var dX = (_x - lastX) * mouseSFactor
-			var dY = (_y - lastY) * mouseSFactor
+			dX = (_x - lastX) * mouseSFactor
+			dY = (_y - lastY) * mouseSFactor
 			
 			if state.magnifyerUp{
 				dX *= 0.25
@@ -154,7 +152,7 @@ function on_interaction_start() {
 }
 
 function on_interaction_end(){
-	window_mouse_set(virtualMouse.tx,virtualMouse.ty)
+	window_mouse_set(virtualMouse.x/4 + mapXMin,virtualMouse.y/4+mapYMin)
 	virtualMouse.tx = -100
 	virtualMouse.ty = -100
 }

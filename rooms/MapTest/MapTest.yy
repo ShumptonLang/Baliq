@@ -17,8 +17,8 @@
   ],
   "name":"MapTest",
   "parent":{
-    "name":"MapTest",
-    "path":"folders/SonarLidar/MapTest.yy",
+    "name":"Map",
+    "path":"folders/SonarLidar/Map.yy",
   },
   "parentRoom":null,
   "physicsSettings":{

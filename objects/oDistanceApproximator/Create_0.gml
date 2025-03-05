@@ -1,10 +1,12 @@
 x = 828
 y = 232
 
+pinsPCol = 100
+
 hand1 = {
 	a:90,
 	scanA:90,
-	dist:0,
+	dist:array_create(pinsPCol,0),
 	x:0,
 	y:0,
 	frame:0,
@@ -16,7 +18,7 @@ hand1 = {
 hand2 = {
 	a:270,
 	scanA:90,
-	dist:0,
+	dist:array_create(pinsPCol,0),
 	x:0,
 	y:0,
 	frame:0,
@@ -26,6 +28,8 @@ hand2 = {
 }
 
 
+
+
 lastPts=[0,0]
 mouseVPos = {x:0,y:0}
 
@@ -33,20 +37,18 @@ lastHand = 0
 updateRate = 1
 sweepAngle = 300
 
+maxPinDist = 100
 
 
-hand1.x = x + lengthdir_x(100,hand1.a+90)
-hand1.y = y + lengthdir_y(100,hand1.a+90)
-hand2.x = x + lengthdir_x(100,hand2.a+90)
-hand2.y = y + lengthdir_y(100,hand2.a+90)
+
 
 fidelity = 0
 grain = 1
-maxDist = 200
+maxDist = 300
 
 function grabDist(hand){
 
-	var _scandeg = (hand.frame-sweepAngle/2)* power(-1,1-hand.id)
+	var _scandeg = ((sweepAngle/pinsPCol*hand.frame)-sweepAngle/2)* power(-1,1-hand.id)
 
 	var scanPos = {x:_scandeg *ShipMaster.forward.x+ShipMaster.posx, y: _scandeg*ShipMaster.forward.y+ShipMaster.posy}
 	var normDir = {x:lengthdir_x(1,ShipMaster.angle+hand.id*180),y:lengthdir_y(1,ShipMaster.angle+hand.id*180)}
@@ -57,8 +59,9 @@ function grabDist(hand){
 
 	
 
-	var fail = true
+	
 	for(var i=0; i<maxDist;i++){
+		var fail = true
 		var sampX = scanPos.x - i*normDir.x
 		var sampY = scanPos.y - i*normDir.y
 				
@@ -68,10 +71,11 @@ function grabDist(hand){
 
 		
 		if(rayPoint.r){
-			hand.dist = i*_grain
+
+			hand.dist[hand.frame] = i*_grain
 			hand.lastPointPos.x = sampX
 			hand.lastPointPos.y = sampY
-			hand.fail = 0
+
 			fail = false
 			break
 		}
@@ -79,9 +83,10 @@ function grabDist(hand){
 		
 	}
 	
-	if fail
-		hand.fail = 1
-
+	if fail  {
+		hand.dist[hand.frame] = maxDist
+	}
+	
 
 
 	

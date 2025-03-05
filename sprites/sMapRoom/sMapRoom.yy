@@ -26,7 +26,7 @@
   "origin":0,
   "parent":{
     "name":"Sprites",
-    "path":"folders/SonarLidar/MapTest/Sprites.yy",
+    "path":"folders/SonarLidar/Map/Sprites.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

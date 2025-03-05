@@ -27,7 +27,7 @@ function interaction_contains_point(x, y) {
     var _x = x - inkBounds.x
 	var _y = y - inkBounds.y
 	
-	print(ceil(_x/ink_dims/palleteDims[1]) == 1 and ceil(_y/ink_dims/palleteDims[0]) == 1)
+	//print(ceil(_x/ink_dims/palleteDims[1]) == 1 and ceil(_y/ink_dims/palleteDims[0]) == 1)
     return ceil(_x/ink_dims/palleteDims[1]) == 1 and ceil(_y/ink_dims/palleteDims[0]) == 1;
 }
 
