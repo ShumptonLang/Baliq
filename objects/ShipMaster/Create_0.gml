@@ -40,18 +40,12 @@ global.sonarSurf = surface_create(camera_get_view_width(view_camera[0]),camera_g
 
 global.mapSurf = surface_create(4000,4000)
 
-distSurf = surface_create(250,250)
-distSurf2= surface_create(250,250)
+global.distSurf = surface_create(128,256)
 
-surface_set_target(distSurf)
+surface_set_target(global.distSurf)
 draw_clear(c_black)
 surface_reset_target()
 
-surface_set_target(distSurf2)
-draw_clear(c_black)
-surface_reset_target()
-
-global.distSurfs = [distSurf,distSurf2,false]
 
 
 

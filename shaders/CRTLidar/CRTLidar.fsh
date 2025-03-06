@@ -1,8 +1,8 @@
 
 varying vec2 v_vTexcoord;
 varying vec4 v_vColour;
-uniform vec2 u_screenSize;
-uniform sampler2D u_GlassTex;
+uniform float u_NoiseOffset;
+uniform sampler2D u_NoiseTex;
 
 float phosphorGlow(sampler2D tex, vec2 uv, float size, float intensity) {
     float sum = 0.0;
@@ -26,25 +26,34 @@ float phosphorGlow(sampler2D tex, vec2 uv, float size, float intensity) {
         return ((sum / 9.0) * intensity);
 }
 
+float rand(vec2 val) {
+	return fract(sin(dot(val,
+                         vec2(12.9898,78.233)))*
+        43758.5453123);
+}
+
 void main()
 {
+	vec2 offset = vec2(u_NoiseOffset,u_NoiseOffset*0.98)/100000.;
 	vec2 uv = v_vTexcoord;
+	float noise = step(0.9, rand(uv+offset));
+	
+	
+	//float noise = step(0.1,texture2D(u_NoiseTex, uv+nOff).r);
+	
 	vec3 aColor = texture2D(gm_BaseTexture, uv).rgb;
-	float intensity = (aColor.r +aColor.g+aColor.b);
-	vec3 color = vec3(intensity,intensity,intensity) *3.;
-	float glass = texture2D(u_GlassTex,uv).r;
+	float gray = 1. - aColor.r;
+	gray = step(0.3,gray) * noise+ step(0.5,gray);
+	//gray = 1. - gray;
 	
-	float colorMask = phosphorGlow(gm_BaseTexture, uv,1.02,1.);//+intensity;
-	float glassMask = phosphorGlow(u_GlassTex,     uv,1.03,5.);
 	
-	float mask = colorMask * glassMask;
 	//color += glassMask;
 
 	//color += phosphorGlow(uv, 0.003) * 1.;
 	
 	//color *= scanlineIntensity(uv, 1.1);
 	
-	gl_FragColor = vec4(color,1.);
+	gl_FragColor = vec4(gray,gray,gray,1.);
     //gl_FragColor = vec4(color,1.);
 }
 
