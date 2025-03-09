@@ -9,7 +9,7 @@ vertex_submit(drawingBuffer,pr_trianglefan,tex)
 
 
 draw_set_color(c_black)
-if state.activeTool == "eraser"
+if ShipMaster.shipStatus.map.activeTool == "eraser"
 	draw_circle(virtualMouse.tx,virtualMouse.ty,7,1)
 draw_set_color(c_white)
 

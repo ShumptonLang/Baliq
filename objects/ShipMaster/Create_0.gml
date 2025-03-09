@@ -77,6 +77,7 @@ shipStatus = {
 		camREnabled: 0,
 		camRState: "dist"
 	}
+	
 }
 
 

@@ -11,12 +11,12 @@ magMapH = magMapBR.y - magMapTL.y
 magMapW = magMapBR.x - magMapTL.x
 
 function on_interaction_start() {
-	oMapMaster.state.magnifyerUp = !oMapMaster.state.magnifyerUp	
+	ShipMaster.shipStatus.map.magnifyerUp = !ShipMaster.shipStatus.map.magnifyerUp	
 }
 
 function interaction_contains_point(x, y) {
     // Custom collision checking (only used if interaction_shape is "custom")
-	if oMapMaster.state.magnifyerUp == false
+	if ShipMaster.shipStatus.map.magnifyerUp == false
 		return mouseInBounds({x:60,y:450},100);
 	else
 		return mouseInBounds({x:1055,y:450},100)
