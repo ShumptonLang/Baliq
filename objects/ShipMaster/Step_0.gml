@@ -15,8 +15,8 @@ global.mouse_occupied_changed = lastMOccupiedInterim != global.mouse_occupied
 global.lastMouseOccupied = lastMOccupiedInterim
 lastMOccupiedInterim = global.mouse_occupied
 
-var _x = lengthdir_x(1,self.angle-90)
-var _y = lengthdir_y(1,self.angle-90)
+var _x = -lengthdir_x(1,self.angle)
+var _y = -lengthdir_y(1,self.angle)
 
 forward.x = _x
 forward.y = _y
@@ -28,9 +28,9 @@ if(shipStatus.sonarLidar.forwardLever == 0) forwardv *= 0.95
 self.posy += _y*forwardv
 self.posx += _x*forwardv
 
-contact = getPixelFromBuffer(global.currMapBuffer,posx-_x*30,posy-_y*30).r
+contact = getPixelFromBuffer(global.currMapBuffer,posx-_x*30,posy-_y*30).r 
 //print(contact)
-if contact {
+if contact and false {
 	contact = false
 	self.posy += _y *5
 	self.posx += _x * 5

@@ -67,6 +67,7 @@
     {"id":{"name":"oNavRotation","path":"objects/oNavRotation/oNavRotation.yy",},},
     {"id":{"name":"oPumpMaster","path":"objects/oPumpMaster/oPumpMaster.yy",},},
     {"id":{"name":"oSamplerMaster","path":"objects/oSamplerMaster/oSamplerMaster.yy",},},
+    {"id":{"name":"oScanner","path":"objects/oScanner/oScanner.yy",},},
     {"id":{"name":"oSLMaster","path":"objects/oSLMaster/oSLMaster.yy",},},
     {"id":{"name":"oSLPowerSwitch","path":"objects/oSLPowerSwitch/oSLPowerSwitch.yy",},},
     {"id":{"name":"oSonarButton","path":"objects/oSonarButton/oSonarButton.yy",},},

@@ -40,6 +40,7 @@ for (var i = 0; i < tSize; i++) {
 ds_priority_destroy(tqueue)
 
 hover_interactable = tempInteractable;
+//print(hover_interactable)
 
 // Handle interaction state changes
 if (mouse_just_pressed && hover_interactable != noone) {

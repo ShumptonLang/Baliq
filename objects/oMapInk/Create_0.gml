@@ -19,7 +19,7 @@ function on_interaction_start() {
 	_x = floor((_x - inkBounds.x)/50)
 	_y = floor((_y - inkBounds.y)/50)
 	
-	oMapMaster.current_color = colors[_x*4+_y]
+	oMapMaster.state.color = colors[_x*4+_y]
 	audio_play_sound(squish,0,0)
 }
 

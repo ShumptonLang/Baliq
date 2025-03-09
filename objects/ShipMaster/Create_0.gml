@@ -7,7 +7,7 @@ global.lastMouseOccupied = 0
 
 gameStarting = true
 
-forward = {x:lengthdir_x(1,self.angle-90),y:lengthdir_y(1,self.angle-90)}
+forward = {x:lengthdir_x(1,self.angle),y:lengthdir_y(1,self.angle)}
 
 #region Map Buffer Creation
 
