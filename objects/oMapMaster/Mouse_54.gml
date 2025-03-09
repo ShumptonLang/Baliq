@@ -6,5 +6,6 @@ if state.activeTool != "pencil"{
 else if state.magnifyerUp {
 	state.magnifyerUp = false	
 }
-else
+else {
 	room_goto(Sonar)
+}

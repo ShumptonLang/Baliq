@@ -1,3 +1,12 @@
+if gameStarting {
+	if instance_exists(oInputManager) and instance_exists(FMODManager)	{
+		gameStarting = false
+		room_goto(Cockpit)
+	}
+}
+
+
+
 self.angle -= shipStatus.sonarLidar.rotationWheel
 self.angle = (self.angle + 360) % 360
 

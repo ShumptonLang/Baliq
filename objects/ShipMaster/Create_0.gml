@@ -5,6 +5,8 @@ global.mouse_occupied_changed = false
 lastMOccupiedInterim = 0
 global.lastMouseOccupied = 0
 
+gameStarting = true
+
 forward = {x:lengthdir_x(1,self.angle-90),y:lengthdir_y(1,self.angle-90)}
 
 #region Map Buffer Creation
@@ -70,6 +72,10 @@ shipStatus = {
 		ignitionState : "sleeping",
 		ignitionSwitchStates : [4,3,4,2,1],
 		waterVolume : 0.0
+	},
+	eyeCast: {
+		camREnabled: 0,
+		camRState: "dist"
 	}
 }
 
@@ -100,3 +106,4 @@ function startTimer(shipStatusTimer, timerGoal, goalFunc,updFunc = nil){
 
 
 randomize()
+

@@ -9,7 +9,7 @@
 
 //draw_surface_ext(screenSurf,0,0,1,1,0,c_white,1)
 
-draw_sprite(sSonarHud,0,0,0)
+draw_sprite(sNuSonarHud,0,0,0)
 
 
 #region Draw Sonar CRT

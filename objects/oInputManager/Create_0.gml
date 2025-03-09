@@ -6,21 +6,30 @@ mouse_was_pressed = false
 mouse_is_pressed = false
 mouse_just_pressed = false
 mouse_just_released = false
+wireframeDebug = false
+depth = -10000
 
 mouse_x_gui = 0
 mouse_y_gui = 0
+show_debug_overlay(1)
 
 function point_in_interaction_area(obj, x, y) {
     // Check different collision shapes based on the object's interaction_shape property
     switch (obj.interaction_shape) {
         case "rectangle":
+		if wireframeDebug
+			draw_rectangle(obj.x, 
+                obj.y,
+                obj.x + obj.interaction_width, 
+                obj.y + obj.interaction_height, 1)
             return point_in_rectangle(x, y, 
-                obj.x - obj.interaction_width/2, 
-                obj.y - obj.interaction_height/2,
-                obj.x + obj.interaction_width/2, 
-                obj.y + obj.interaction_height/2);
+                obj.x, 
+                obj.y,
+                obj.x + obj.interaction_width, 
+                obj.y + obj.interaction_height);
             
         case "circle":
+			draw_circle(obj.x, obj.y,obj.interaction_radius,1)
             return point_distance(x, y, obj.x, obj.y) < obj.interaction_radius;
             
         case "custom":
@@ -60,3 +69,4 @@ function unregister_interactable(obj) {
     
     ds_priority_destroy(temp_queue);
 }
+

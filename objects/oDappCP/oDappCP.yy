@@ -1,16 +1,15 @@
 {
   "$GMObject":"",
-  "%Name":"oMapCP",
+  "%Name":"oDappCP",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":64,"eventType":8,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"oMapCP",
+  "name":"oDappCP",
   "overriddenProperties":[],
   "parent":{
-    "name":"Objects",
-    "path":"folders/SonarLidar/Map/Objects.yy",
+    "name":"DAprox",
+    "path":"folders/SonarLidar/DAprox.yy",
   },
   "parentObjectId":{
     "name":"oInteractable",
@@ -33,10 +32,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"sMapCP",
-    "path":"sprites/sMapCP/sMapCP.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }
