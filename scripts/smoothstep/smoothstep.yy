@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"smoothstep",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"smoothstep",
+  "parent":{
+    "name":"Scripts",
+    "path":"folders/Scripts.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

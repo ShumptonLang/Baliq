@@ -11,43 +11,37 @@ if state.scanningState == "prune" {
 	
 	navPath = equalNavPath
 	state.scanningState = "travelStart"
+	startingAngle = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,navPath[0].x,navPath[0].y))
 }
 
 
 if state.scanningState == "travelStart" and array_length(navPath) > 0{
 	var target = navPath[0]
-	var angleDiff = angleDifference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,target.x,target.y))	
-	print(angleDiff)
-	if angleDiff.angle > 30 {
-		rotateV += (rotateMaxV - rotateV)/2
-	} 
-	if angleDiff.angle < 30  {
-		rotateV = (0 + rotateV)/2
-	}
-	if point_distance(ShipMaster.posx,ShipMaster.posy,target.x,target.y) < 20 {
-		state.scanningState = "preOrient"
+	var pctDone = ShipMaster.orientToPoint(target.x,target.y,startingAngle)
+	
+	if pctDone >=0.99 {
+		ShipMaster.navToPoint(target.x,target.y)	
 	}
 	
-	if angleDiff.angle < 60 {
-		ShipMaster.shipStatus.sonarLidar.forwardLever = (ShipMaster.shipStatus.sonarLidar.forwardLever + 1)/2
-	}
-	
-	ShipMaster.angle += rotateV
 }
 
 if state.scanningState == "preOrient" {
 	var target = navPath[0]
 	var target2 = navPath[1]
-	var angleDiff = angleDifference(ShipMaster.angle , point_direction(target.x,target.y,target2.x,target2.y))	
-	print("PreOrient", angleDiff, array_length(navPath))
-	if angleDiff.angle > 1 {
-		if true
-			ShipMaster.angle += 1
-		else
-			ShipMaster.angle -= 1
-	}
-
-
-	ShipMaster.shipStatus.sonarLidar.forwardLever = (ShipMaster.shipStatus.sonarLidar.forwardLever)/2
+	//var angleDiff = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,target.x,target.y))
+	var angleDiff = angle_difference(ShipMaster.angle , point_direction(target.x,target.y,target2.x,target2.y))
+	var distToTarget = point_distance(ShipMaster.posx,ShipMaster.posy,target.x,target.y)
+	print(angleDiff)
+	
+	var time2Pos = distToTarget/maxV
+	var time2Rot = abs(angleDiff)/rotateMaxV
+	
+	var scaler = max(time2Pos,time2Rot)
+	
+	v = distToTarget/scaler
+	rotateV = angleDiff/scaler*sign(angleDiff)
+	
+	ShipMaster.shipStatus.sonarLidar.forwardLever /= 2
+	ShipMaster.angle += rotateV
 	
 }

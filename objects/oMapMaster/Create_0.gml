@@ -4,6 +4,8 @@ is_interactive = true;
 interaction_priority = 0;
 interaction_shape = "custom";
 
+startingAngle = 0
+
 
 if !variable_struct_exists(ShipMaster.shipStatus, "map")
 	ShipMaster.shipStatus.map = {
@@ -21,7 +23,9 @@ magMapH = magMapBR.y - magMapTL.y
 magMapW = magMapBR.x - magMapTL.x
 
 wasDragging = false
-rotateMaxV = 1
+maxV = 1
+v = 0
+rotateMaxV = 2
 rotateV = 0
 
 lastX = device_mouse_x_to_gui(0)
@@ -210,4 +214,6 @@ function on_interaction_end(){
 	
 	virtualMouse.tx = -100
 	virtualMouse.ty = -100
+	
+	window_set_cursor(cr_default)
 }

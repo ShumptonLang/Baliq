@@ -99,6 +99,7 @@
     {"id":{"name":"screen2clip","path":"scripts/screen2clip/screen2clip.yy",},},
     {"id":{"name":"screen2uv","path":"scripts/screen2uv/screen2uv.yy",},},
     {"id":{"name":"screenPos","path":"scripts/screenPos/screenPos.yy",},},
+    {"id":{"name":"smoothstep","path":"scripts/smoothstep/smoothstep.yy",},},
     {"id":{"name":"uv2clip","path":"scripts/uv2clip/uv2clip.yy",},},
     {"id":{"name":"worldPos","path":"scripts/worldPos/worldPos.yy",},},
     {"id":{"name":"yamc","path":"scripts/yamc/yamc.yy",},},

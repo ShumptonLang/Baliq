@@ -1,13 +1,21 @@
 //The Job of the ShipMaster is to hold all statuses of each object
 global.debug = true
-global.mouse_occupied = 0
-global.mouse_occupied_changed = false
-lastMOccupiedInterim = 0
-global.lastMouseOccupied = 0
+
 
 gameStarting = true
 
 forward = {x:lengthdir_x(1,self.angle),y:lengthdir_y(1,self.angle)}
+
+#region Navigation Parameters
+forwardPct = 0
+forwardV = 0
+maxForwardV = 1
+
+rotationPct = 0
+minRotV = 0.1
+rotationV = 0
+maxRotationV = 1
+#endregion
 
 #region Map Buffer Creation
 
@@ -103,7 +111,60 @@ function startTimer(shipStatusTimer, timerGoal, goalFunc,updFunc = nil){
 }
 
 
+function setMovement(newForward=forwardV,newRotation=rotationV) {
+	forwardV = newForward
+	rotationV = newRotation
+}
 
+function offsetMovement(newForward=0,newRotation=0) {
+	forwardV += newForward
+	rotationV += newRotation
+	
+	forwardV = min(forwardV,maxForwardV)
+	rotationV = min(rotationV,maxRotationV)
+}
+
+function navToPoint(targetX,targetY) {
+
+	var angleDiff = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,targetX,targetY))
+	//var angleDiff = angle_difference(ShipMaster.angle , point_direction(target.x,target.y,target2.x,target2.y))
+	var distToTarget = point_distance(ShipMaster.posx,ShipMaster.posy,targetX,targetY)
+
+	
+	var time2Pos = distToTarget/maxForwardV
+	var time2Rot = abs(angleDiff)/maxRotationV
+	
+	var scaler = max(time2Pos,time2Rot)
+	
+
+	setMovement(distToTarget/scaler, angleDiff/scaler*sign(angleDiff)*-1)
+	
+}
+
+function orientToPoint(targetX,targetY,startingAngleDiff){
+	
+	
+	
+	var currDiff = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,targetX,targetY))
+	var pctComplete = currDiff/startingAngleDiff
+	var rotDir = -sign(currDiff)
+	var rotSpeed = 0
+	
+	if pctComplete < 0.5 {
+		rotSpeed = smoothstep(0,1,pctComplete*2)*rotDir*maxRotationV
+	} 
+	else
+	{
+		rotSpeed = smoothstep(0,1,1-(pctComplete-0.5)*2)*rotDir*maxRotationV
+	}
+	
+	rotSpeed = rotSpeed + minRotV*rotDir*abs(pctComplete*2-1)
+
+	
+	setMovement(,rotSpeed)
+	
+	return 1 - pctComplete
+}
 
 
 randomize()
