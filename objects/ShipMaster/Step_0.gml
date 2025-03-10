@@ -5,31 +5,30 @@ if gameStarting {
 	}
 }
 
-
-
-
-
-
-
 var _x = lengthdir_x(1,self.angle)
 var _y = lengthdir_y(1,self.angle)
 
 
 //forwardV += (-maxForwardV*forwardV- forwardV)
-
+forwardA = forwardV +forwardFrict*forwardA
 
 self.posy += _y*forwardV
 self.posx += _x*forwardV
+
+forwardV *=0.95
+rotationV *=0.95
 
 self.angle += rotationV
 
 contact = getPixelFromBuffer(global.currMapBuffer,posx-_x*30,posy-_y*30).r 
 //print(contact)
-if contact and false {
+if contact  {
 	contact = false
-	self.posy += _y *5
-	self.posx += _x * 5
-	forwardV = -forwardV	
+	oMapMaster.state.scanningState = "off"
+	
+	self.posy -= _y *5
+	self.posx -= _x * 5
+	forwardV = -forwardV*2	
 	audio_play_sound(collision,1,0,abs(forwardV)*5,0,1)
 }
 
@@ -58,5 +57,3 @@ if keyboard_check_pressed(vk_numpad0)
 	shipStatus.digestive.running = true
 //print(rotv)
 
-forwardPct -= 0.01
-rotationPct -= 0.001

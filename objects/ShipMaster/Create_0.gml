@@ -6,14 +6,22 @@ gameStarting = true
 
 forward = {x:lengthdir_x(1,self.angle),y:lengthdir_y(1,self.angle)}
 
+
 #region Navigation Parameters
+forwardForces = array_create(0)
+rotationForces = array_create(0)
+
 forwardPct = 0
 forwardV = 0
+forwardA = 0
+forwardFrict = 0.85
 maxForwardV = 1
 
 rotationPct = 0
 minRotV = 0.1
 rotationV = 0
+rotationA = 0
+rotationFrict = 0.05
 maxRotationV = 1
 #endregion
 
@@ -111,6 +119,15 @@ function startTimer(shipStatusTimer, timerGoal, goalFunc,updFunc = nil){
 }
 
 
+function register_force(force, isRot=false){
+	if isRot
+		array_insert(rotationForces,0,force)
+	else 
+		array_insert(forwardForces,0,force)
+}
+
+
+
 function setMovement(newForward=forwardV,newRotation=rotationV) {
 	forwardV = newForward
 	rotationV = newRotation
@@ -138,6 +155,8 @@ function navToPoint(targetX,targetY) {
 	
 
 	setMovement(distToTarget/scaler, angleDiff/scaler*sign(angleDiff)*-1)
+	
+	return distToTarget
 	
 }
 

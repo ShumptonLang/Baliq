@@ -1,47 +1,49 @@
 if state.scanningState == "prune" {
-	var equalNavPath = array_create(1,navPath[0])
-	var currentPoint = navPath[0]
-	
-	for (var i = 0; i < array_length(navPath); i++) {
-		if point_distance(currentPoint.x,currentPoint.y,navPath[i].x,navPath[i].y) > 50 {
-			array_insert(equalNavPath,0,navPath[i])
-			currentPoint = navPath[i]
-		}
+	if array_length(navPath) < 2 {
+		state.scanningState = "off"	
 	}
+	else 
+	{
+		var equalNavPath = array_create(1,navPath[0])
+		var currentPoint = navPath[0]
 	
-	navPath = equalNavPath
-	state.scanningState = "travelStart"
-	startingAngle = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,navPath[0].x,navPath[0].y))
+		for (var i = 0; i < array_length(navPath); i++) {
+			if point_distance(currentPoint.x,currentPoint.y,navPath[i].x,navPath[i].y) > 50 {
+				array_insert(equalNavPath,0,navPath[i])
+				currentPoint = navPath[i]
+			}
+		}
+	
+		navPath = equalNavPath
+		state.scanningState = "travelStart"
+		startingAngle = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,navPath[0].x,navPath[0].y))
+	}
 }
 
 
 if state.scanningState == "travelStart" and array_length(navPath) > 0{
 	var target = navPath[0]
 	var pctDone = ShipMaster.orientToPoint(target.x,target.y,startingAngle)
+	var dist = 10000
+	
 	
 	if pctDone >=0.99 {
-		ShipMaster.navToPoint(target.x,target.y)	
+		dist = ShipMaster.navToPoint(target.x,target.y)	
+	}
+	
+	if dist < 20 {
+		state.scanningState = "orient"
+		startingAngle = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,navPath[1].x,navPath[1].y))
 	}
 	
 }
 
-if state.scanningState == "preOrient" {
-	var target = navPath[0]
-	var target2 = navPath[1]
-	//var angleDiff = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,target.x,target.y))
-	var angleDiff = angle_difference(ShipMaster.angle , point_direction(target.x,target.y,target2.x,target2.y))
-	var distToTarget = point_distance(ShipMaster.posx,ShipMaster.posy,target.x,target.y)
-	print(angleDiff)
+if state.scanningState == "orient" {
+	print("orient")
+	var target = navPath[1]
+	var pctDone = ShipMaster.orientToPoint(target.x,target.y,startingAngle)
 	
-	var time2Pos = distToTarget/maxV
-	var time2Rot = abs(angleDiff)/rotateMaxV
-	
-	var scaler = max(time2Pos,time2Rot)
-	
-	v = distToTarget/scaler
-	rotateV = angleDiff/scaler*sign(angleDiff)
-	
-	ShipMaster.shipStatus.sonarLidar.forwardLever /= 2
-	ShipMaster.angle += rotateV
+	if pctDone >= 0.99
+		state.scanningState = "off"
 	
 }
