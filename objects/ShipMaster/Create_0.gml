@@ -66,7 +66,7 @@ surface_set_target(global.distSurf)
 draw_clear(c_black)
 surface_reset_target()
 
-
+instance_create_depth(0,0,0,StateService)
 
 
 timers = array_create(0)

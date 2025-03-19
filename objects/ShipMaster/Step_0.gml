@@ -27,6 +27,8 @@ if contact  {
 	try {
 	oMapMaster.state.scanningState = "off"
 	oScanner.resetState()
+	ds_queue_clear(movementQueue)
+	
 	} catch (_exception){
 		
 	}
@@ -48,7 +50,7 @@ if ds_queue_size(movementQueue) != 0 {
 	}
 		
 }
-print("-----")
+
 
 
 

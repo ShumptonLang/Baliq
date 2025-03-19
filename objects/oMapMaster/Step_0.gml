@@ -35,7 +35,7 @@ if state.scanningState == "travelStart" {
 			state.scanningState = "off"
 		}
 }
-print(state.scanningState)
+
 	
 mapYOffset = oScanner.mapOffset
 
