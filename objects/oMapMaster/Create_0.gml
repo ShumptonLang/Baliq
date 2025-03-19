@@ -6,7 +6,7 @@ interaction_shape = "custom";
 
 startingAngle = 0
 
-
+#region Ship Init
 if !variable_struct_exists(ShipMaster.shipStatus, "map")
 	ShipMaster.shipStatus.map = {
 		activeTool: "pencil",
@@ -16,17 +16,15 @@ if !variable_struct_exists(ShipMaster.shipStatus, "map")
 		scanningState: "off"
 	}
 state = ShipMaster.shipStatus.map
+#endregion
 
-magMapTL = {x:0,y:193}
-magMapBR = {x:886,y:886}
-magMapH = magMapBR.y - magMapTL.y
-magMapW = magMapBR.x - magMapTL.x
+magMapOrigin = {x:0,y:193}
+magMapH = 693
+magMapW = 886
+
+
 
 wasDragging = false
-maxV = 1
-v = 0
-rotateMaxV = 2
-rotateV = 0
 
 lastX = device_mouse_x_to_gui(0)
 lastY = device_mouse_y_to_gui(0)
@@ -35,37 +33,24 @@ mouseSFactor = 0.5
 
 navPath = array_create(0)
 
-#region Map Vertexes
+mapXOrigin = 231
+mapYOrigin = 58
+currMapX = 231
+currMapY = 58
+
+mapW = 1000
+mapH = 1000
+
 vertex_format_begin();
 vertex_format_add_position_3d();
 vertex_format_add_color()
 vertex_format_add_texcoord()
 format = vertex_format_end();
 
-drawingBuffer = vertex_create_buffer();
 
 
-
-mapW = 1000
-mapH = 1000
-
-mapXMin = 231
-mapYMin = 58
-mapXMax = mapXMin + mapW
-mapYMax = mapYMin + mapH
-
-
-vertex_begin(drawingBuffer,format);
-
-vertex_position_3d(drawingBuffer,   mapXMin, mapYMin, 0); vertex_color(drawingBuffer, c_white, 1); vertex_texcoord(drawingBuffer, 0,0)
-vertex_position_3d(drawingBuffer,   mapXMax, mapYMin, 0); vertex_color(drawingBuffer, c_white, 1); vertex_texcoord(drawingBuffer, 1,0);
-vertex_position_3d(drawingBuffer,   mapXMax, mapYMax, 0); vertex_color(drawingBuffer, c_white, 1); vertex_texcoord(drawingBuffer, 1, 1);
-vertex_position_3d(drawingBuffer,	mapXMin, mapYMax, 0); vertex_color(drawingBuffer, c_white, 1); vertex_texcoord(drawingBuffer, 0, 1);
-
-vertex_position_3d(drawingBuffer,   mapXMin, mapYMin, 0); vertex_color(drawingBuffer, c_white, 1); vertex_texcoord(drawingBuffer, 0,0)
-
-vertex_end(drawingBuffer)
-#endregion
+mapXOffset = 0
+mapYOffset = 0
 
 instance_create_depth(0,0,0,oMapInk)
 instance_create_depth(0,0,0,oMapEraser)
@@ -163,57 +148,42 @@ function on_interaction_update() {
 }
 
 function interaction_contains_point(x, y) {
-    if state.magnifyerUp {
-		
-		return mouseInRecBounds(magMapTL,magMapBR) or mouseInRecBounds({x:mapXMin, y:mapYMin},{x:mapXMax, y:mapYMax})
-		
-	}
 	
-    return mouseInRecBounds({x:mapXMin, y:mapYMin},{x:mapXMax, y:mapYMax});
+    return mouseInRecBounds({x:mapXOrigin, y:mapYOrigin},{x:mapXOrigin+mapW, y:mapYOrigin+mapH});
 }
 
 function on_interaction_start() {
 
-	wasDragging = mouseInRecBounds({x:mapXMin, y:mapYMin},{x:mapXMax, y:mapYMax}) and not mouseInRecBounds(magMapTL,magMapBR) and state.magnifyerUp
 	
 	window_set_cursor(cr_none)
 	
-	if state.magnifyerUp {
-		lastX = oInputManager.mouse_x_gui 
-		lastY = oInputManager.mouse_y_gui
-		virtualMouse.x = (lastX - magMapTL.x)
-		virtualMouse.y = (lastY - magMapTL.y)
-		virtualMouse.lx = (lastX - magMapTL.x)
-		virtualMouse.ly = (lastY - magMapTL.y)
-		virtualMouse.tx = lastX
-		virtualMouse.ty = lastY
-	} else {
-	    lastX = oInputManager.mouse_x_gui 
-		lastY = oInputManager.mouse_y_gui
-		virtualMouse.x = (lastX - mapXMin) * surface_get_width(global.mapSurf) / mapW 
-		virtualMouse.y = (lastY - mapYMin) * surface_get_height(global.mapSurf) / mapH
-		virtualMouse.lx = (lastX - mapXMin) * surface_get_width(global.mapSurf) / mapW 
-		virtualMouse.ly = (lastY - mapYMin) * surface_get_height(global.mapSurf) / mapH
-		virtualMouse.tx = lastX
-		virtualMouse.ty = lastY
-	}
+	
+	lastX = oInputManager.mouse_x_gui 
+	lastY = oInputManager.mouse_y_gui
+	virtualMouse.x = (lastX - currMapX) * surface_get_width(global.mapSurf) / mapW 
+	virtualMouse.y = (lastY - currMapY) * surface_get_height(global.mapSurf) / mapH
+	virtualMouse.lx = (lastX - currMapY) * surface_get_width(global.mapSurf) / mapW 
+	virtualMouse.ly = (lastY - currMapY) * surface_get_height(global.mapSurf) / mapH
+	virtualMouse.tx = lastX
+	virtualMouse.ty = lastY
+	
 	
 	window_mouse_set_locked(1)
 }
 
 function on_interaction_end(){
 	window_mouse_set_locked(0)
-	if state.magnifyerUp and ! wasDragging
-		window_mouse_set(virtualMouse.x + magMapTL.x,virtualMouse.y+magMapTL.y)
-	else
-		window_mouse_set(virtualMouse.x/4 + mapXMin,virtualMouse.y/4+mapYMin)
-	if wasDragging {
-		window_mouse_set(lastX,lastY)
-	}
-	wasDragging = false
+	
+	window_mouse_set(virtualMouse.x/4 + currMapX,virtualMouse.y/4+currMapY)
+
 	
 	virtualMouse.tx = -100
 	virtualMouse.ty = -100
 	
 	window_set_cursor(cr_default)
+}
+	
+function finalizeOrientation(){
+	ShipMaster.shipStatus.ship.navigationState = "followingPath"
+	oScanner.resetState()
 }

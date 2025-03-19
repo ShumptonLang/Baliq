@@ -16,8 +16,7 @@ function on_interaction_start() {
 
 function interaction_contains_point(x, y) {
     // Custom collision checking (only used if interaction_shape is "custom")
-	if ShipMaster.shipStatus.map.magnifyerUp == false
-		return mouseInBounds({x:60,y:450},100);
-	else
-		return mouseInBounds({x:1055,y:450},100)
+
+	return mouseInBounds({x:x,y:y},100,100);
+
 }

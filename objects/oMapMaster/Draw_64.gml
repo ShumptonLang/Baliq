@@ -1,6 +1,6 @@
 draw_sprite(sMapRoom,0,0,0)
 
-draw_sprite_ext(mapy,0,mapXMin,mapYMin,mapW/sprite_get_width(mapy),mapH/sprite_get_height(mapy),0,c_white,1)
+draw_sprite_ext(mapy,0,currMapX,currMapY,mapW/sprite_get_width(mapy),mapH/sprite_get_height(mapy),0,c_white,1)
 
 surface_set_target(global.mapSurf)
 draw_set_color(c_black)
@@ -20,6 +20,28 @@ for (var i = 1; i < array_length(navPath); i++) {
 	draw_line_width(navPath[i].x,navPath[i].y,navPath[i-1].x,navPath[i-1].y,3)
 }
 surface_reset_target()
+
+
+#region Map Vertexes
+
+var mapXMin = currMapX
+var mapYMin = currMapY
+var mapXMax = mapXMin + mapW
+var mapYMax = mapYMin + mapH
+
+var drawingBuffer = vertex_create_buffer();
+
+vertex_begin(drawingBuffer,format);
+
+vertex_position_3d(drawingBuffer,   mapXMin, mapYMin, 0); vertex_color(drawingBuffer, c_white, 1); vertex_texcoord(drawingBuffer, 0,0)
+vertex_position_3d(drawingBuffer,   mapXMax, mapYMin, 0); vertex_color(drawingBuffer, c_white, 1); vertex_texcoord(drawingBuffer, 1,0);
+vertex_position_3d(drawingBuffer,   mapXMax, mapYMax, 0); vertex_color(drawingBuffer, c_white, 1); vertex_texcoord(drawingBuffer, 1, 1);
+vertex_position_3d(drawingBuffer,	mapXMin, mapYMax, 0); vertex_color(drawingBuffer, c_white, 1); vertex_texcoord(drawingBuffer, 0, 1);
+
+vertex_position_3d(drawingBuffer,   mapXMin, mapYMin, 0); vertex_color(drawingBuffer, c_white, 1); vertex_texcoord(drawingBuffer, 0,0)
+
+vertex_end(drawingBuffer)
+#endregion
 
 
 var tex = surface_get_texture(global.mapSurf)

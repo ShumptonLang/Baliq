@@ -1,6 +1,6 @@
 if state.scanningState == "prune" {
 	if array_length(navPath) < 2 {
-		state.scanningState = "off"	
+		state.scananingState = "off"	
 	}
 	else 
 	{
@@ -17,33 +17,27 @@ if state.scanningState == "prune" {
 		navPath = equalNavPath
 		state.scanningState = "travelStart"
 		startingAngle = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,navPath[0].x,navPath[0].y))
+		
+		var target = navPath[0]
+		ShipMaster.queueMovement(ShipMaster.orientToPoint,[target.x,target.y,startingAngle], 0.99,1)
+		ShipMaster.queueMovement(ShipMaster.navToPoint,[target.x,target.y], 0,20)
+
 	}
 }
 
-
-if state.scanningState == "travelStart" and array_length(navPath) > 0{
-	var target = navPath[0]
-	var pctDone = ShipMaster.orientToPoint(target.x,target.y,startingAngle)
-	var dist = 10000
-	
-	
-	if pctDone >=0.99 {
-		dist = ShipMaster.navToPoint(target.x,target.y)	
-	}
-	
-	if dist < 20 {
-		state.scanningState = "orient"
-		startingAngle = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,navPath[1].x,navPath[1].y))
-	}
-	
+if state.scanningState == "travelStart" {
+		if point_distance(ShipMaster.posx,ShipMaster.posy,navPath[0].x,navPath[0].y) < 20 {
+			
+			var target = navPath[1]
+			startingAngle = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,navPath[1].x,navPath[1].y))
+			ShipMaster.queueMovement(ShipMaster.orientToPoint,[target.x,target.y,startingAngle], 0.99,1, finalizeOrientation)	
+			
+			state.scanningState = "off"
+		}
 }
+print(state.scanningState)
+	
+mapYOffset = oScanner.mapOffset
 
-if state.scanningState == "orient" {
-	print("orient")
-	var target = navPath[1]
-	var pctDone = ShipMaster.orientToPoint(target.x,target.y,startingAngle)
-	
-	if pctDone >= 0.99
-		state.scanningState = "off"
-	
-}
+currMapX = mapXOrigin + mapXOffset
+currMapY = mapYOrigin + mapYOffset

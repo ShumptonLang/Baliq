@@ -1,3 +1,6 @@
+currPos.x = _xdiff*pctPulled+_start.x
+currPos.y = _ydiff*pctPulled+_start.y
+
 if !in_interaction {
 	pctPulled = 0.9*pctPulled
 	
@@ -11,7 +14,6 @@ if !in_interaction {
 }
 
 
-x = _start[0] + pctPulled*_xdiff
-y = _start[1] + pctPulled * _ydiff
 	
 	
+

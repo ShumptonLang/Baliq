@@ -6,6 +6,8 @@ gameStarting = true
 
 forward = {x:lengthdir_x(1,self.angle),y:lengthdir_y(1,self.angle)}
 
+movementQueue = ds_queue_create()
+
 
 #region Navigation Parameters
 forwardForces = array_create(0)
@@ -67,7 +69,6 @@ surface_reset_target()
 
 
 
-instance_create_depth(0,0,0,AudioService)
 timers = array_create(0)
 
 shipStatus = {
@@ -92,6 +93,9 @@ shipStatus = {
 	eyeCast: {
 		camREnabled: 0,
 		camRState: "dist"
+	},
+	ship: {
+		navigationState: "none"	
 	}
 	
 }
@@ -102,7 +106,7 @@ function getValue(roomid, value){
 		return variable_struct_get(variable_struct_get(shipStatus,roomid),value)
 }
 	
-	function nil(){
+function nil(){
 		
 	}
 
@@ -183,6 +187,10 @@ function orientToPoint(targetX,targetY,startingAngleDiff){
 	setMovement(,rotSpeed)
 	
 	return 1 - pctComplete
+}
+	
+function queueMovement(movementFunc,args,exitValMin,exitValMax,finFunc=nil){
+	ds_queue_enqueue(movementQueue,[movementFunc,args,exitValMin,exitValMax,finFunc])
 }
 
 

@@ -1,5 +1,5 @@
 if gameStarting {
-	if instance_exists(oInputManager) and instance_exists(FMODManager)	{
+	if instance_exists(oInputManager)	{
 		gameStarting = false
 		room_goto(Cockpit)
 	}
@@ -9,7 +9,7 @@ var _x = lengthdir_x(1,self.angle)
 var _y = lengthdir_y(1,self.angle)
 
 
-//forwardV += (-maxForwardV*forwardV- forwardV)
+
 forwardA = forwardV +forwardFrict*forwardA
 
 self.posy += _y*forwardV
@@ -21,10 +21,15 @@ rotationV *=0.95
 self.angle += rotationV
 
 contact = getPixelFromBuffer(global.currMapBuffer,posx-_x*30,posy-_y*30).r 
-//print(contact)
+
 if contact  {
 	contact = false
+	try {
 	oMapMaster.state.scanningState = "off"
+	oScanner.resetState()
+	} catch (_exception){
+		
+	}
 	
 	self.posy -= _y *5
 	self.posx -= _x * 5
@@ -32,8 +37,18 @@ if contact  {
 	audio_play_sound(collision,1,0,abs(forwardV)*5,0,1)
 }
 
-
-//print(room_get_name(room))
+if ds_queue_size(movementQueue) != 0 {
+	var currentQueuedMovement = ds_queue_head(movementQueue)
+	var currVal = script_execute_ext(currentQueuedMovement[0],currentQueuedMovement[1])
+	print(ds_queue_size(movementQueue),currVal,currentQueuedMovement[2],currentQueuedMovement[3])
+	
+	if median(currVal,currentQueuedMovement[2],currentQueuedMovement[3]) == currVal	{
+		var deadMovement = ds_queue_dequeue(movementQueue)
+		deadMovement[4]()
+	}
+		
+}
+print("-----")
 
 
 
@@ -50,8 +65,7 @@ for (var i = 0; i < array_length(timers); i++){
 }
 
 
-//print(shipStatus.sonarLidar)
-//print(AudioService.activeServices)
+
 
 if keyboard_check_pressed(vk_numpad0)
 	shipStatus.digestive.running = true

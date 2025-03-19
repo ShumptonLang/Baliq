@@ -1,19 +1,25 @@
 event_inherited()
 
-_start = [1186,673]
-_end = [1283,1042]
 
-_xdiff = _end[0] - _start[0]
-_ydiff = _end[1] - _start[1]
+
+_start = {x:1033,y:670}
+_end = {x:1033,y:1042}
+
+
+x = _start.x
+y = _start.y
+
+_xdiff = _end.x - _start.x
+_ydiff = _end.y - _start.y
 
 lastPctPulled = 0
 
-x = _start[0]
-y = _start[1]
+currPos = {x:1186,y:673}
 
-interaction_shape = "rectangle";
-interaction_width = 200;
-interaction_height = 54;
+
+interaction_shape = "custom";
+interaction_width = 400;
+interaction_height = 100;
 interaction_priority = 10
 
 in_interaction = false
@@ -22,23 +28,14 @@ in_interaction = false
 
 
 function on_interaction_start() {
-    window_set_cursor(cr_none)
+    //window_set_cursor(cr_none)
 	in_interaction = true
 }
 
 function on_interaction_update() {
 	
 	
-	var _x = global.mouseX
-	var _y = global.mouseY
-	
-	var new_angle = point_direction(x,y,_x,_y)
-	
-	var pull_dir = sqr(dcos(new_angle+90))
-	var delta_pulled = (_y-y)*abs(pull_dir)
-
-	pctPulled += delta_pulled*0.001
-	pctPulled = clamp(pctPulled,0,1)
+	getPositionPulled()
 	
 	if pctPulled - (pctPulled % 0.10) > lastPctPulled - (lastPctPulled % 0.10) {
 		
@@ -46,7 +43,7 @@ function on_interaction_update() {
 			
 	}
 	lastPctPulled = pctPulled
-	master.updateStatus("leverForward", pctPulled)
+	ShipMaster.offsetMovement(0.04*pctPulled)
 
 }
 
@@ -56,4 +53,9 @@ function on_interaction_end(){
 	window_set_cursor(cr_default)
 	master.updateStatus("leverForward", 0)	
 	in_interaction = false
+}
+
+function interaction_contains_point(x, y) {
+	if point_distance(currPos.x,currPos.y,x,y) < 100 and ShipMaster.shipStatus.ship.navigationState == "followingPath"
+		return true
 }

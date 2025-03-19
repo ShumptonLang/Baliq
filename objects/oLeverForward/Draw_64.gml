@@ -1,1 +1,5 @@
-draw_sprite_ext(sForwardHandle,0, x,y,1,1,0,c_white,1)
+// Inherit the parent event
+if ShipMaster.shipStatus.ship.navigationState == "followingPath"
+	draw_sprite_ext(sprite_index,0,currPos.x,currPos.y,0.6,0.6,0,c_white,1)
+
+

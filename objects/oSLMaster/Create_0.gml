@@ -13,8 +13,8 @@ master = ShipMaster
 //Create Room Objects
 //instance_create_depth(0,0,-5,oSonarButton,{master:oSLMaster})
 //instance_create_depth(438,184,-5,oLeverAperture,{master:oSLMaster})
-//instance_create_depth(0,0,-5,oNavRotation,{master:oSLMaster})
-//instance_create_depth(0,0,-5,oLeverForward,{master:oSLMaster})
+instance_create_depth(0,0,-5,oNavRotation,{master:oSLMaster})
+instance_create_depth(0,0,-5,oLeverForward,{master:oSLMaster})
 //instance_create_depth(0,0,-5,oSLPowerSwitch,{master:oSLMaster})
 instance_create_depth(0,0,-5,oMapCP,{master:oSLMaster})
 //instance_create_depth(0,0,-5,oDistanceApproximator)
