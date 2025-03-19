@@ -29,7 +29,7 @@ function on_interaction_update() {
 }
 
 function interaction_contains_point(x, y) {
-	if point_distance(self.x,self.y,x,y) < 100 and ShipMaster.shipStatus.ship.navigationState == "followingPath"
+	if point_distance(self.x,self.y,x,y) < 100 and ControllerService.shipStatus.ship.navigationState == "followingPath"
 		return true
 }
 

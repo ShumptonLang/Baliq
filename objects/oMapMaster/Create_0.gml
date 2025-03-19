@@ -6,32 +6,12 @@ interaction_shape = "custom";
 
 startingAngle = 0
 
-#region Ship Init
-if !variable_struct_exists(ShipMaster.shipStatus, "map")
-	ShipMaster.shipStatus.map = {
-		activeTool: "pencil",
-		magnifyerUp: false,
-		magnifyerPos: {x:1000,y:2000},
-		color: c_black,
-		scanningState: "off"
-	}
-state = ShipMaster.shipStatus.map
-#endregion
-
-magMapOrigin = {x:0,y:193}
-magMapH = 693
-magMapW = 886
-
-
-
-wasDragging = false
 
 lastX = device_mouse_x_to_gui(0)
 lastY = device_mouse_y_to_gui(0)
 virtualMouse = {x:0,y:0,lx:0,ly:0,tx:-100,ty:-100}
 mouseSFactor = 0.5
 
-navPath = array_create(0)
 
 mapXOrigin = 231
 mapYOrigin = 58
@@ -54,28 +34,19 @@ mapYOffset = 0
 
 instance_create_depth(0,0,0,oMapInk)
 instance_create_depth(0,0,0,oMapEraser)
-instance_create_depth(0,0,0,oMagnifyer)
+//instance_create_depth(0,0,0,oMagnifyer)
 instance_create_depth(0,0,-1,oScanner)
 
 function on_interaction_update() {
 
-	if wasDragging {
-		var dX = window_mouse_get_delta_x() * mouseSFactor
-		var dY = window_mouse_get_delta_y() * mouseSFactor
-	
-		state.magnifyerPos.x -= dX
-		state.magnifyerPos.y -= dY
-		
-	}
-	else {
-    switch (state.activeTool){
+	switch (ControllerService.shipStatus.map.activeTool){
 		
 		case "pencil":
 			
 			var dX = window_mouse_get_delta_x() * mouseSFactor
 			var dY = window_mouse_get_delta_y() * mouseSFactor
 			
-			if state.magnifyerUp{
+			if ControllerService.shipStatus.map.magnifyerUp{
 				dX *= 0.25
 				dY *= 0.25
 			}
@@ -86,16 +57,16 @@ function on_interaction_update() {
 			if surface_exists(global.mapSurf) {
 				surface_set_target(global.mapSurf)
 				//print(virtualMouse, _x, _y)
-				if state.magnifyerUp {
-					if state.color == c_red
-						array_insert(navPath,0,{x:virtualMouse.x+state.magnifyerPos.x,y:virtualMouse.y+state.magnifyerPos.y})
-					draw_line_width_color(virtualMouse.lx+state.magnifyerPos.x,virtualMouse.ly+state.magnifyerPos.y,virtualMouse.x+state.magnifyerPos.x,virtualMouse.y+state.magnifyerPos.y,3,state.color,state.color)
+				if ControllerService.shipStatus.map.magnifyerUp {
+					if ControllerService.shipStatus.map.color == c_red
+						array_insert(ControllerService.shipStatus.map.navPath,0,{x:virtualMouse.x+ControllerService.shipStatus.map.magnifyerPos.x,y:virtualMouse.y+ControllerService.shipStatus.map.magnifyerPos.y})
+					draw_line_width_color(virtualMouse.lx+ControllerService.shipStatus.map.magnifyerPos.x,virtualMouse.ly+ControllerService.shipStatus.map.magnifyerPos.y,virtualMouse.x+ControllerService.shipStatus.map.magnifyerPos.x,virtualMouse.y+ControllerService.shipStatus.map.magnifyerPos.y,3,ControllerService.shipStatus.map.color,ControllerService.shipStatus.map.color)
 				}
 				else
 				{
-					if state.color == c_red
-						array_insert(navPath,0,{x:virtualMouse.x,y:virtualMouse.y})
-					draw_line_width_color(virtualMouse.lx,virtualMouse.ly,virtualMouse.x,virtualMouse.y,7,state.color,state.color)
+					if ControllerService.shipStatus.map.color == c_red
+						array_insert(ControllerService.shipStatus.map.navPath,0,{x:virtualMouse.x,y:virtualMouse.y})
+					draw_line_width_color(virtualMouse.lx,virtualMouse.ly,virtualMouse.x,virtualMouse.y,7,ControllerService.shipStatus.map.color,ControllerService.shipStatus.map.color)
 				}
 				
 				surface_reset_target()
@@ -114,7 +85,7 @@ function on_interaction_update() {
 			virtualMouse.tx += dX
 			virtualMouse.ty += dY
 			
-			if state.magnifyerUp{
+			if ControllerService.shipStatus.map.magnifyerUp{
 				dX *= 0.25
 				dY *= 0.25
 			}
@@ -131,8 +102,8 @@ function on_interaction_update() {
 				gpu_set_blendmode(bm_subtract)
 				draw_set_alpha(0.70 + random(0.1))
 				//print(virtualMouse, _x, _y)
-				if state.magnifyerUp
-					draw_line_width_color(virtualMouse.lx+state.magnifyerPos.x,virtualMouse.ly+state.magnifyerPos.y,virtualMouse.x+state.magnifyerPos.x,virtualMouse.y+state.magnifyerPos.y,12,c_black,c_black)
+				if ControllerService.shipStatus.map.magnifyerUp
+					draw_line_width_color(virtualMouse.lx+ControllerService.shipStatus.map.magnifyerPos.x,virtualMouse.ly+ControllerService.shipStatus.map.magnifyerPos.y,virtualMouse.x+ControllerService.shipStatus.map.magnifyerPos.x,virtualMouse.y+ControllerService.shipStatus.map.magnifyerPos.y,12,c_black,c_black)
 				else
 					draw_line_width_color(virtualMouse.lx,virtualMouse.ly,virtualMouse.x,virtualMouse.y,28,c_black,c_black)
 				gpu_set_blendmode(bm_normal)
@@ -144,7 +115,7 @@ function on_interaction_update() {
 			virtualMouse.ly = virtualMouse.y
 			break
 	}
-	}
+	
 }
 
 function interaction_contains_point(x, y) {
@@ -184,6 +155,8 @@ function on_interaction_end(){
 }
 	
 function finalizeOrientation(){
-	ShipMaster.shipStatus.ship.navigationState = "followingPath"
-	oScanner.resetState()
+	ControllerService.shipStatus.ship.navigationState = "followingPath"
+	ControllerService.shipStatus.map.stateMachine.changeState("scanOut")
+	ControllerService.shipStatus.map.isScanning = false
+
 }

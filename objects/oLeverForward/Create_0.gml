@@ -24,6 +24,8 @@ interaction_priority = 10
 
 in_interaction = false
 
+pctPulled = ControllerService.shipStatus.forwardLever.pctPulled
+
 // Register with input manager on creation
 
 
@@ -37,13 +39,14 @@ function on_interaction_update() {
 	
 	getPositionPulled()
 	
-	if pctPulled - (pctPulled % 0.10) > lastPctPulled - (lastPctPulled % 0.10) {
+	if ControllerService.shipStatus.forwardLever.pctPulled - (ControllerService.shipStatus.forwardLever.pctPulled % 0.10) > lastPctPulled - (lastPctPulled % 0.10) {
 		
 		audio_play_sound(click,1,0, 0.1)
 			
 	}
-	lastPctPulled = pctPulled
-	ShipMaster.offsetMovement(0.04*pctPulled)
+	lastPctPulled = ControllerService.shipStatus.forwardLever.pctPulled
+	ShipMaster.offsetMovement(0.04*ControllerService.shipStatus.forwardLever.pctPulled)
+	ControllerService.shipStatus.forwardLever.pctPulled = pctPulled
 
 }
 
@@ -51,11 +54,11 @@ function on_interaction_update() {
 function on_interaction_end(){
 	window_mouse_set(x,y)	
 	window_set_cursor(cr_default)
-	master.updateStatus("leverForward", 0)	
+	ControllerService.shipStatus.forwardLever.pctPulled = 0
 	in_interaction = false
 }
 
 function interaction_contains_point(x, y) {
-	if point_distance(currPos.x,currPos.y,x,y) < 100 and ShipMaster.shipStatus.ship.navigationState == "followingPath"
+	if point_distance(currPos.x,currPos.y,x,y) < 100 and ControllerService.shipStatus.ship.navigationState == "followingPath"
 		return true
 }

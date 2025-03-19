@@ -13,11 +13,11 @@ draw_circle(ShipMaster.posx,ShipMaster.posy, 10,0)
 draw_line_width(ShipMaster.posx,ShipMaster.posy,ShipMaster.posx + lengthdir_x(100,ShipMaster.angle),ShipMaster.posy + lengthdir_y(100,ShipMaster.angle),4)
 
 
-for (var i = 1; i < array_length(navPath); i++) {
+for (var i = 1; i < array_length(ControllerService.shipStatus.map.navPath); i++) {
 	if i == 0
-		draw_circle(navPath[i].x,navPath[i].y,20,0)
-	draw_circle(navPath[i].x,navPath[i].y,5,0)
-	draw_line_width(navPath[i].x,navPath[i].y,navPath[i-1].x,navPath[i-1].y,3)
+		draw_circle(ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y,20,0)
+	draw_circle(ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y,5,0)
+	draw_line_width(ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y,ControllerService.shipStatus.map.navPath[i-1].x,ControllerService.shipStatus.map.navPath[i-1].y,3)
 }
 surface_reset_target()
 

@@ -99,7 +99,7 @@
     {"id":{"name":"screen2uv","path":"scripts/screen2uv/screen2uv.yy",},},
     {"id":{"name":"screenPos","path":"scripts/screenPos/screenPos.yy",},},
     {"id":{"name":"smoothstep","path":"scripts/smoothstep/smoothstep.yy",},},
-    {"id":{"name":"stateMachine","path":"scripts/stateMachine/stateMachine.yy",},},
+    {"id":{"name":"state_Machine","path":"scripts/state_Machine/state_Machine.yy",},},
     {"id":{"name":"uv2clip","path":"scripts/uv2clip/uv2clip.yy",},},
     {"id":{"name":"worldPos","path":"scripts/worldPos/worldPos.yy",},},
     {"id":{"name":"yamc","path":"scripts/yamc/yamc.yy",},},

@@ -5,7 +5,6 @@ scaley = 600
 view_width = surface_get_width(global.lidarSurf)
 view_height = surface_get_height(global.lidarSurf)
 
-master = ShipMaster
 
 
 

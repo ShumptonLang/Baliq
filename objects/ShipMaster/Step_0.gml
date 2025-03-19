@@ -24,14 +24,12 @@ contact = getPixelFromBuffer(global.currMapBuffer,posx-_x*30,posy-_y*30).r
 
 if contact  {
 	contact = false
-	try {
-	oMapMaster.state.scanningState = "off"
-	oScanner.resetState()
+
+	ControllerService.shipStatus.map.scanningState = "off"
+	ControllerService.shipStatus.map.stateMachine.changeState("scanOut")
+	ControllerService.shipStatus.map.isScanning = false
 	ds_queue_clear(movementQueue)
 	
-	} catch (_exception){
-		
-	}
 	
 	self.posy -= _y *5
 	self.posx -= _x * 5
@@ -54,17 +52,7 @@ if ds_queue_size(movementQueue) != 0 {
 
 
 
-for (var i = 0; i < array_length(timers); i++){
-	var timer = array_shift(timers)
-	timer.timerCurrentValue += delta_time / 1000000
-	if timer.timerCurrentValue >= timer.goal {
-		timer.timerCurrentValue = 0
-		timer.goalFunc()
-	} else {
-		array_push(timers,timer)
-		timer.update(timer.timerCurrentValue)
-	}
-}
+
 
 
 

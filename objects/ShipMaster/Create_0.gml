@@ -67,60 +67,11 @@ draw_clear(c_black)
 surface_reset_target()
 
 instance_create_depth(0,0,0,StateService)
-
-
-timers = array_create(0)
-
-shipStatus = {
-	sonarLidar: {
-		sonarScanning : false,
-		sonarLidarSwitchEngaged : false,
-		sonarScanTime : 0,
-		lidarScanning: false,
-		lidarScanTime: 0,
-		lidarStatus : "idle",
-		forwardLever: 0,
-		rotationWheel: 0,
-		compassDeg:35
-	}, 
-	digestive: {
-		running: 1,
-		compSwitchPositions : [0,0,0,0],
-		ignitionState : "sleeping",
-		ignitionSwitchStates : [4,3,4,2,1],
-		waterVolume : 0.0
-	},
-	eyeCast: {
-		camREnabled: 0,
-		camRState: "dist"
-	},
-	ship: {
-		navigationState: "none"	
-	}
-	
-}
+instance_create_depth(0,0,0,ControllerService)
 
 
 
-function getValue(roomid, value){
-		return variable_struct_get(variable_struct_get(shipStatus,roomid),value)
-}
-	
-function nil(){
-		
-	}
 
-/**
- * Creates a timer that is handled by the ShipMaster. 
- * @param {any*} shipStatusTimer The ShipMaster Status to reference.
- * @param {any*} timerGoal The amount of time the timer will exist for.
- * @param {any*} goalFunc A function that is called when the timer reaches its goal
- * @param {function} [updFunc]=nil An optional function that is called every timer tick. The update function is passed the current time of the timer.
- */
-function startTimer(shipStatusTimer, timerGoal, goalFunc,updFunc = nil){
-	
-	array_insert(timers,0,{timerCurrentValue: shipStatusTimer, goal:timerGoal, goalFunc:goalFunc, update:updFunc})	
-}
 
 
 function register_force(force, isRot=false){
@@ -189,7 +140,7 @@ function orientToPoint(targetX,targetY,startingAngleDiff){
 	return 1 - pctComplete
 }
 	
-function queueMovement(movementFunc,args,exitValMin,exitValMax,finFunc=nil){
+function queueMovement(movementFunc,args,exitValMin,exitValMax,finFunc=function(){}){
 	ds_queue_enqueue(movementQueue,[movementFunc,args,exitValMin,exitValMax,finFunc])
 }
 

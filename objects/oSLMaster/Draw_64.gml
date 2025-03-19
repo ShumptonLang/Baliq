@@ -13,7 +13,7 @@ draw_sprite(sNuSonarHud,0,0,0)
 
 
 #region Draw Sonar CRT
-if (surface_exists(global.sonarSurf)) and master.getValue("sonarLidar", "sonarLidarSwitchEngaged") {
+if (surface_exists(global.sonarSurf)) {
 		
         surface_set_target(global.sonarSurf);
 		
@@ -82,7 +82,7 @@ if keyboard_check(vk_shift)
 
 
 //show_debug_message("Sonar: Starting draw")
-if !global.debug and master.getValue("sonarLidar", "lidarScanning") || master.getValue("sonarLidar", "sonarScanning"){//fmod_studio_event_instance_get_playback_state(ShipMaster.eventLidarEngagedI) == FMOD_STUDIO_PLAYBACK_STATE.PLAYING {
+if !global.debug {
 	draw_sprite_ext(sSonarHud,1+irandom(1),0,0,1,1,0,c_white,1)
 } else if !global.debug{
 	

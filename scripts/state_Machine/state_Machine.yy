@@ -1,9 +1,9 @@
 {
   "$GMScript":"v1",
-  "%Name":"stateMachine",
+  "%Name":"state_Machine",
   "isCompatibility":false,
   "isDnD":false,
-  "name":"stateMachine",
+  "name":"state_Machine",
   "parent":{
     "name":"StateMachine",
     "path":"folders/Scripts/StateMachine.yy",
