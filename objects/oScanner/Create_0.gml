@@ -7,8 +7,15 @@ interaction_radius = 32
 x = 1300
 y = 800
 
+state = "off"
+
 function on_interaction_end(){
-	if oMapMaster.state.scanningState == "off"
-		oMapMaster.state.scanningState = "prune"	
+	state = "scanIn"
+	
+	//if oMapMaster.state.scanningState == "off"
+	//	oMapMaster.state.scanningState = "prune"	
 }
+
+timer = 0
+timerG1 = 1200
 
