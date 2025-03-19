@@ -66,8 +66,10 @@ surface_set_target(global.distSurf)
 draw_clear(c_black)
 surface_reset_target()
 
+instance_create_depth(0,0,0,FMODManager)
 instance_create_depth(0,0,0,StateService)
 instance_create_depth(0,0,0,ControllerService)
+instance_create_depth(0,0,0,AudioService)
 
 
 

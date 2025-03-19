@@ -17,6 +17,10 @@
 //	ShipMaster.shipStatus.sonarLidar.compassDeg %= 360
 //}
 
+rotv += (rotMaxV*pullDirection-rotv)*0.03
+ControllerService.shipStatus.sonarLidar.rotationWheel += rotv
+
+fmod_studio_system_set_parameter_by_name("rotationVelocity",rotv/rotMaxV)
 
 
 

@@ -5,7 +5,7 @@ scaley = 600
 view_width = surface_get_width(global.lidarSurf)
 view_height = surface_get_height(global.lidarSurf)
 
-
+pathingError = 0
 
 
 
@@ -98,28 +98,7 @@ vertex_end(lidarBuffer)
 #endregion
 
 
-function lidarTimerSuccess(){
-	ShipMaster.shipStatus.sonarLidar.lidarScanning = 0
-	ShipMaster.shipStatus.sonarLidar.lidarStatus = "idle"
-	if instance_exists(oLeverAperture)
-		oLeverAperture.status = "idle"
-}
 
-function sonarTimerSuccess(){
-	ShipMaster.shipStatus.sonarLidar.sonarScanning = 0
-}
-	
-function startUpScreen(currTime){
-	if currTime > 3 {
-		if global.sonarSurf != -1 {
-			surface_set_target(global.sonarSurf)
-			draw_clear_alpha(c_black,0)
-			var screen = startup
-			draw_sprite_ext(screen,0,sprite_get_width(screen)/2,sprite_get_height(screen)/2 - 50,1.2,1.3,0,c_white,0.5)
-			surface_reset_target()
-		}
-	}
-}
 
 
 function startUpSL(){

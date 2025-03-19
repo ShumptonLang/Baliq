@@ -92,6 +92,6 @@ if !global.debug {
 
 
 
-
+draw_text(1000,1000,string(pathingError))
 	
 
