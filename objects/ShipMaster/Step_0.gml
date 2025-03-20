@@ -37,6 +37,31 @@ if contact  {
 	audio_play_sound(collision,1,0,abs(forwardV)*5,0,1)
 }
 
+if isNavvingPath {
+	pathNavCurr += pathNavSpeed
+	print(pathNavCurr,pathNavDistGoal)
+	
+	var currNodeIdx = floor(pathNavCurr/50)
+	var currLinePct = frac(pathNavCurr/50)
+	
+	var currNode = ControllerService.shipStatus.map.navPath[currNodeIdx]
+	var nextNode = ControllerService.shipStatus.map.navPath[currNodeIdx+1]
+	
+	if currNodeIdx == array_length(ControllerService.shipStatus.map.navPath)-2{
+		isNavvingPath = false
+		ControllerService.shipStatus.ship.navigationState = "waitingForPlayer"
+		ControllerService.shipStatus.map.stateMachine.changeState("scanOut")
+		ControllerService.shipStatus.map.isScanning = false
+	}
+	
+	var lineAngle = point_direction(currNode.x,currNode.y,nextNode.x,nextNode.y)
+	posx = currNode.x + lengthdir_x(50*currLinePct,lineAngle)
+	posy = currNode.y + lengthdir_y(50*currLinePct,lineAngle)
+	angle = lineAngle
+	
+
+}
+
 if ds_queue_size(movementQueue) != 0 {
 	var currentQueuedMovement = ds_queue_head(movementQueue)
 	var currVal = script_execute_ext(currentQueuedMovement[0],currentQueuedMovement[1])

@@ -22,7 +22,8 @@ if ControllerService.shipStatus.map.scanningState == "prune" {
 		var target2 = ControllerService.shipStatus.map.navPath[1]
 		ShipMaster.queueMovement(ShipMaster.orientToPoint,[target.x,target.y], 0,10)
 		ShipMaster.queueMovement(ShipMaster.navToPoint,[target.x,target.y], 0,20)
-		ShipMaster.queueMovement(ShipMaster.orientToPoint,[target2.x,target2.y], 0,10, finalizeOrientation)	
+		ShipMaster.queueMovement(ShipMaster.orientToPoint,[target2.x,target2.y], 0,10,ShipMaster.navPath)	
+
 
 	}
 }

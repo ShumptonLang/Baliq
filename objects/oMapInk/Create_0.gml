@@ -6,7 +6,7 @@ interaction_priority = 10;
 interaction_shape = "custom"; // or "circle" or "custom"
 
 
-inkBounds = {x:1267,y:68,_x : 1317,_y:118}
+inkBounds = {x:1267,y:168,_x : 1317,_y:218}
 ink_dims = 50
 colors = [c_green,c_blue,c_yellow,c_red,c_orange,c_aqua,c_fuchsia,c_black]
 

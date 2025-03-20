@@ -71,7 +71,10 @@ instance_create_depth(0,0,0,StateService)
 instance_create_depth(0,0,0,ControllerService)
 instance_create_depth(0,0,0,AudioService)
 
-
+isNavvingPath = false
+pathNavCurr = 0
+pathNavDistGoal = 0
+pathNavSpeed = 1
 
 
 
@@ -115,6 +118,13 @@ function navToPoint(targetX,targetY) {
 	
 	return distToTarget
 	
+}
+	
+function navPath(){
+	isNavvingPath = true
+	pathNavCurr = 0
+	//Need to get rid of the floating 50, it's the distance between points
+	pathNavDistGoal = array_length(ControllerService.shipStatus.map.navPath) * 50
 }
 
 //function orientToPoint(targetX,targetY,startingAngleDiff){

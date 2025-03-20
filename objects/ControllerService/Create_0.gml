@@ -42,6 +42,10 @@ shipStatus = {
 		color: c_black,
 		scanningState: "off",
 		navPath: array_create(0)
+	},
+	balasts: {
+		bLeftVolume:100,
+		bRightVolume:100
 	}
 }
 
