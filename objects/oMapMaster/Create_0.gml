@@ -154,9 +154,4 @@ function on_interaction_end(){
 	window_set_cursor(cr_default)
 }
 	
-function finalizeOrientation(){
-	ControllerService.shipStatus.ship.navigationState = "waitingForPlayer"
-	ControllerService.shipStatus.map.stateMachine.changeState("scanOut")
-	ControllerService.shipStatus.map.isScanning = false
 
-}

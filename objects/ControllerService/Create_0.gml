@@ -33,14 +33,12 @@ shipStatus = {
 	},
 	map: {
 		printerOffset: 0,
-		isScanning : false,
 		isErrored: false,
 		stateMachine: new StateMachine(oScanner),
 		activeTool: "pencil",
 		magnifyerUp: false,
 		magnifyerPos: {x:1000,y:2000},
 		color: c_black,
-		scanningState: "off",
 		navPath: array_create(0)
 	},
 	balasts: {
@@ -52,13 +50,10 @@ shipStatus = {
 
 
 
-
 timers = array_create(0)
-
+stateMachines = array_create(0)
 	
-function nil(){
-		
-	}
+
 
 /**
  * Creates a timer that is handled by the ShipMaster. 
@@ -66,7 +61,7 @@ function nil(){
  * @param {any*} goalFunc A function that is called when the timer reaches its goal
  * @param {function} [updFunc]=nil An optional function that is called every timer tick. The update function is passed the current time of the timer.
  */
-function registerTimer(duration, goalFunc,updFunc = nil, args = []){
+function registerTimer(duration, goalFunc,updFunc = function(){}, args = []){
 	var timer = {
 		startTime: current_time,
 		duration: duration * 1000,
@@ -76,3 +71,131 @@ function registerTimer(duration, goalFunc,updFunc = nil, args = []){
 		
 	array_push(timers,timer)
 }
+	
+	
+
+#region Scanner State Machine
+debugMapAnimated = false
+
+// Time in seconds to input the map
+timerScanIn = 1
+timerWait1 = 1
+timerScanScan = 3
+timerWait2 = 2
+timerScanOut = 1
+
+maxMapOffset = -1000
+
+
+var idleState = new State("off")
+var navState = new State("navigating")
+navState.enter = function(){
+	ShipMaster.navPath()	
+}
+
+var scanInState = new State("scanIn")
+scanInState.enter = function() {
+	audio_play_sound(printer,1,0)
+	ControllerService.registerTimer(timerScanIn,function() {
+		shipStatus.map.stateMachine.changeState("wait1")	
+	}, function(elapsed) {
+		if (debugMapAnimated)
+            ControllerService.shipStatus.map.printerOffset = (elapsed/1000) / timerScanIn * maxMapOffset;
+	})
+}
+
+
+var wait1State = new State("wait1")
+wait1State.enter = function(){
+	ControllerService.registerTimer(timerWait1, function(){
+		shipStatus.map.stateMachine.changeState("scanScan")	
+	})
+}
+
+
+var scanScanState = new State("scanScan")
+scanScanState.enter = function(){
+	audio_play_sound(sonarlaser,1,0,1,0,2)
+	ControllerService.registerTimer(timerScanScan, function(){
+		shipStatus.map.stateMachine.changeState("wait2")	
+	})
+}
+
+
+var wait2State = new State("wait2")
+wait2State.enter = function(){
+	audio_stop_sound(sonarlaser)
+	if array_length(ControllerService.shipStatus.map.navPath) >= 2 {
+		ControllerService.shipStatus.map.isErrored = false
+		shipStatus.map.stateMachine.changeState("waitPlayer")
+		ShipMaster.pruneNavPath()
+		
+	} else {
+		ControllerService.shipStatus.map.isErrored = true
+		ControllerService.registerTimer(timerWait2, function(){
+			shipStatus.map.stateMachine.changeState("scanOut")	
+		})
+	}
+}
+
+//Waits for the player to enter the mapping area before opening the priming tools
+var waitForPlayer = new State("waitPlayer")
+waitForPlayer.execute = function() {
+	if room == Sonar {
+		shipStatus.map.stateMachine.changeState("waitIgnition")	
+		
+		audio_play_sound(metalbend,1,1,1,0,0.6)
+	
+		ControllerService.registerTimer(2,function(){
+			audio_stop_sound(metalbend)
+			audio_play_sound(click,1,0,1,0,0.5)
+		},
+		function(elapsed) {
+			ControllerService.shipStatus.sonarLidar.emergingToolAlpha = elapsed/2/1000
+		})
+	}
+}
+
+var waitForIgnition = new State("waitIgnition")
+waitForIgnition.execute = function(){
+	if ControllerService.shipStatus.sonarLidar.rotationWheel >= 0.99
+	and ControllerService.shipStatus.sonarLidar.forwardLever >= 0.99 {
+			shipStatus.map.stateMachine.changeState("navigating")
+			ControllerService.registerTimer(2,function(){
+			audio_stop_sound(metalbend)
+			audio_play_sound(click,1,0,1,0,0.5)
+		},
+		function(elapsed) {
+			ControllerService.shipStatus.sonarLidar.emergingToolAlpha = 1-(elapsed/2/1000)
+		})
+	}
+}
+
+var scanOutState = new State("scanOut")
+scanOutState.enter = function() {
+	audio_play_sound(printer,1,0)
+
+	ControllerService.registerTimer(timerScanOut,function() {
+		shipStatus.map.stateMachine.changeState("off")	
+	}, function(elapsed) {
+		if (debugMapAnimated)
+            ControllerService.shipStatus.map.printerOffset = (1-(elapsed/1000) / timerScanOut) * maxMapOffset;
+	})
+}
+
+
+shipStatus.map.stateMachine.addState("off",idleState)
+shipStatus.map.stateMachine.addState("navigating",navState)
+shipStatus.map.stateMachine.addState("scanIn",scanInState)
+shipStatus.map.stateMachine.addState("wait1",wait1State)
+shipStatus.map.stateMachine.addState("scanScan", scanScanState)
+shipStatus.map.stateMachine.addState("waitPlayer", waitForPlayer)
+shipStatus.map.stateMachine.addState("waitIgnition", waitForIgnition)
+shipStatus.map.stateMachine.addState("wait2",wait2State)
+shipStatus.map.stateMachine.addState("scanOut",scanOutState)
+
+shipStatus.map.stateMachine.changeState("off")
+
+array_push(stateMachines,shipStatus.map.stateMachine)
+
+#endregion

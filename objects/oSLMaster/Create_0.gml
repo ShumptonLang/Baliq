@@ -6,27 +6,19 @@ view_width = surface_get_width(global.lidarSurf)
 view_height = surface_get_height(global.lidarSurf)
 
 pathingError = 0
-if ControllerService.shipStatus.ship.navigationState == "waitingForPlayer" {
-	audio_play_sound(metalbend,1,1,1,0,0.6)
+
+
+
 	
-	ControllerService.registerTimer(2,function(){
-		ControllerService.shipStatus.ship.navigationState = "followingPath"	
-		audio_stop_sound(metalbend)
-		audio_play_sound(click,1,0,1,0,0.5)
-	},
-	function(elapsed) {
-		
-		ControllerService.shipStatus.sonarLidar.emergingToolAlpha = elapsed/2/1000
-	})
-}
+
 
 debugTargetPoint = {x:0,y:0}
 
 //Create Room Objects
 //instance_create_depth(0,0,-5,oSonarButton,{master:oSLMaster})
 //instance_create_depth(438,184,-5,oLeverAperture,{master:oSLMaster})
-//instance_create_depth(0,0,-5,oNavRotation,{master:oSLMaster})
-//instance_create_depth(0,0,-5,oLeverForward,{master:oSLMaster})
+instance_create_depth(0,0,-5,oNavRotation,{master:oSLMaster})
+instance_create_depth(0,0,-5,oLeverForward,{master:oSLMaster})
 //instance_create_depth(0,0,-5,oSLPowerSwitch,{master:oSLMaster})
 instance_create_depth(0,0,-5,oMapCP,{master:oSLMaster})
 //instance_create_depth(0,0,-5,oDistanceApproximator)

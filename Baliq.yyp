@@ -77,7 +77,6 @@
     {"id":{"name":"oSwitchSampler","path":"objects/oSwitchSampler/oSwitchSampler.yy",},},
     {"id":{"name":"ShipMaster","path":"objects/ShipMaster/ShipMaster.yy",},},
     {"id":{"name":"Sonar_CP","path":"objects/Sonar_CP/Sonar_CP.yy",},},
-    {"id":{"name":"StateService","path":"objects/StateService/StateService.yy",},},
     {"id":{"name":"testpoint","path":"objects/testpoint/testpoint.yy",},},
     {"id":{"name":"Cockpit","path":"rooms/Cockpit/Cockpit.yy",},},
     {"id":{"name":"Digestive","path":"rooms/Digestive/Digestive.yy",},},

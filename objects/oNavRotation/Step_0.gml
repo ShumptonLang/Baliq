@@ -18,7 +18,7 @@
 //}
 
 rotv += (rotMaxV*pullDirection-rotv)*0.03
-ControllerService.shipStatus.sonarLidar.rotationWheel += rotv
+//ControllerService.shipStatus.sonarLidar.rotationWheel += rotv
 
 AudioService.updateWheelSound(AudioService.eventRotWheelInst)
 

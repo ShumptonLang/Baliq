@@ -12,7 +12,6 @@ currPos.y = _ydiff*pctPulled+_start.y
 //	lastPctPulled = ControllerService.shipStatus.forwardLever.pctPulled
 	
 //}
-ShipMaster.offsetMovement(0.04*ControllerService.shipStatus.forwardLever.pctPulled)
 
 
 

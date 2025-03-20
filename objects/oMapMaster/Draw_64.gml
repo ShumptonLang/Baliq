@@ -9,10 +9,12 @@ if keyboard_check_pressed(vk_control){
 	draw_clear_alpha(c_black,0)	
 }
 
+//DEBUG: Draws the Ship and orietation on the map
 draw_circle(ShipMaster.posx,ShipMaster.posy, 10,0)
 draw_line_width(ShipMaster.posx,ShipMaster.posy,ShipMaster.posx + lengthdir_x(100,ShipMaster.angle),ShipMaster.posy + lengthdir_y(100,ShipMaster.angle),4)
 
 
+//DEBUG: Draws the NavPath
 for (var i = 1; i < array_length(ControllerService.shipStatus.map.navPath); i++) {
 	if i == 0
 		draw_circle(ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y,20,0)

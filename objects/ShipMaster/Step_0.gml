@@ -25,10 +25,9 @@ contact = getPixelFromBuffer(global.currMapBuffer,posx-_x*30,posy-_y*30).r
 if contact  {
 	contact = false
 
-	ControllerService.shipStatus.map.scanningState = "off"
-	ControllerService.shipStatus.map.stateMachine.changeState("scanOut")
-	ControllerService.shipStatus.map.isScanning = false
+	stopNavPath(true)
 	ds_queue_clear(movementQueue)
+	ControllerService.shipStatus.map.navPath = array_create(0)
 	
 	
 	self.posy -= _y *5
@@ -36,6 +35,8 @@ if contact  {
 	forwardV = -forwardV*2	
 	audio_play_sound(collision,1,0,abs(forwardV)*5,0,1)
 }
+
+
 
 if isNavvingPath {
 	pathNavCurr += pathNavSpeed
@@ -48,10 +49,7 @@ if isNavvingPath {
 	var nextNode = ControllerService.shipStatus.map.navPath[currNodeIdx+1]
 	
 	if currNodeIdx == array_length(ControllerService.shipStatus.map.navPath)-2{
-		isNavvingPath = false
-		ControllerService.shipStatus.ship.navigationState = "waitingForPlayer"
-		ControllerService.shipStatus.map.stateMachine.changeState("scanOut")
-		ControllerService.shipStatus.map.isScanning = false
+		stopNavPath(true)
 	}
 	
 	var lineAngle = point_direction(currNode.x,currNode.y,nextNode.x,nextNode.y)

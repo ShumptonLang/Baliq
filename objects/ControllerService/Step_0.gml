@@ -7,3 +7,12 @@ for (var i = 0; i < array_length(timers); i++){
 		timer.update(current_time-timer.startTime)
 	}
 }
+
+for (var i = 0; i < array_length(stateMachines); i++){
+	var currMachine = stateMachines[i]
+	currMachine.update()
+}
+
+print(shipStatus.map.stateMachine.currentState.name)
+print(ControllerService.shipStatus.sonarLidar.rotationWheel,
+	ControllerService.shipStatus.sonarLidar.forwardLever)

@@ -24,7 +24,7 @@ interaction_priority = 10
 
 in_interaction = false
 
-pctPulled = ControllerService.shipStatus.forwardLever.pctPulled
+pctPulled = ControllerService.shipStatus.sonarLidar.forwardLever
 
 // Register with input manager on creation
 
@@ -36,17 +36,20 @@ function on_interaction_start() {
 
 function on_interaction_update() {
 	
+	if ControllerService.shipStatus.sonarLidar.forwardLever < 0.99
+		getPositionPulled()
 	
-	getPositionPulled()
-	
-	if ControllerService.shipStatus.forwardLever.pctPulled - (ControllerService.shipStatus.forwardLever.pctPulled % 0.10) > lastPctPulled - (lastPctPulled % 0.10) {
+	if ControllerService.shipStatus.sonarLidar.forwardLever >= 0.9
+	and lastPctPulled < 0.99{
 		
 		audio_play_sound(click,1,0, 0.1)
 			
 	}
-	lastPctPulled = ControllerService.shipStatus.forwardLever.pctPulled
 	
-	ControllerService.shipStatus.forwardLever.pctPulled = pctPulled
+	
+	lastPctPulled = pctPulled
+	
+	ControllerService.shipStatus.sonarLidar.forwardLever = pctPulled
 
 }
 
@@ -59,6 +62,8 @@ function on_interaction_end(){
 }
 
 function interaction_contains_point(x, y) {
-	if point_distance(currPos.x,currPos.y,x,y) < 100 and ControllerService.shipStatus.ship.navigationState == "followingPath"
+	if point_distance(currPos.x,currPos.y,x,y) < 100 
+	and ControllerService.shipStatus.map.stateMachine.currentState.name == "waitIgnition"
+	and ControllerService.shipStatus.sonarLidar.forwardLever < 0.99
 		return true
 }

@@ -67,10 +67,11 @@ draw_clear(c_black)
 surface_reset_target()
 
 instance_create_depth(0,0,0,FMODManager)
-instance_create_depth(0,0,0,StateService)
+//instance_create_depth(0,0,0,StateService)
 instance_create_depth(0,0,0,ControllerService)
 instance_create_depth(0,0,0,AudioService)
 
+//Can be either orient or path
 isNavvingPath = false
 pathNavCurr = 0
 pathNavDistGoal = 0
@@ -121,10 +122,49 @@ function navToPoint(targetX,targetY) {
 }
 	
 function navPath(){
+	var target = ControllerService.shipStatus.map.navPath[0]
+	var target2 = ControllerService.shipStatus.map.navPath[1]
+	ShipMaster.queueMovement(ShipMaster.orientToPoint,[target.x,target.y], 0,10)
+	ShipMaster.queueMovement(ShipMaster.navToPoint,[target.x,target.y], 0,20)
+	ShipMaster.queueMovement(ShipMaster.orientToPoint,[target2.x,target2.y], 0,10,ShipMaster.navPathFixed)
+	
+	
+}
+
+function navPathFixed(){
 	isNavvingPath = true
 	pathNavCurr = 0
 	//Need to get rid of the floating 50, it's the distance between points
 	pathNavDistGoal = array_length(ControllerService.shipStatus.map.navPath) * 50
+}
+
+function stopNavPath(success){
+	isNavvingPath = false
+	pathNavCurr = 0
+	ControllerService.shipStatus.map.navPath = array_create(0)
+	ControllerService.shipStatus.map.stateMachine.changeState("scanOut")
+}
+
+function pruneNavPath(){
+
+	
+	var equalNavPath = array_create(1,ControllerService.shipStatus.map.navPath[0])
+	var currentPoint = ControllerService.shipStatus.map.navPath[0]
+	
+	for (var i = 0; i < array_length(ControllerService.shipStatus.map.navPath); i++) {
+		if point_distance(currentPoint.x,currentPoint.y,ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y) > 50 {
+			array_insert(equalNavPath,0,ControllerService.shipStatus.map.navPath[i])
+			currentPoint = ControllerService.shipStatus.map.navPath[i]
+		}
+	}
+	
+	ControllerService.shipStatus.map.navPath = equalNavPath
+		
+		
+		
+
+
+	
 }
 
 //function orientToPoint(targetX,targetY,startingAngleDiff){
@@ -166,6 +206,7 @@ function orientToPoint(targetX,targetY){
 function queueMovement(movementFunc,args,exitValMin,exitValMax,finFunc=function(){}){
 	ds_queue_enqueue(movementQueue,[movementFunc,args,exitValMin,exitValMax,finFunc])
 }
+
 
 
 randomize()

@@ -17,9 +17,15 @@ function on_interaction_update() {
 	var new_angle = point_direction(x,y,_x,_y)
 	pullDirection = dcos(new_angle)
 
+	var oldRot = ControllerService.shipStatus.sonarLidar.rotationWheel
+	var newRot = ControllerService.shipStatus.sonarLidar.rotationWheel + pullDirection*0.01
+	if oldRot < 0.99 and newRot >= 0.99
+		audio_play_sound(click,1,0)
 
-
-	ShipMaster.offsetMovement(,-pullDirection/75)
+	ControllerService.shipStatus.sonarLidar.rotationWheel = newRot
+	ControllerService.shipStatus.sonarLidar.rotationWheel = clamp(ControllerService.shipStatus.sonarLidar.rotationWheel,0,1)
+	
+	print(ControllerService.shipStatus.sonarLidar.rotationWheel)
 	
 }
 
@@ -28,7 +34,10 @@ function on_interaction_end(){
 }
 
 function interaction_contains_point(x, y) {
-	if point_distance(self.x,self.y,x,y) < 100 and ControllerService.shipStatus.ship.navigationState == "followingPath"
+	if point_distance(self.x,self.y,x,y) < 100 
+	and ControllerService.shipStatus.map.stateMachine.currentState.name == "waitIgnition"
+	and ControllerService.shipStatus.sonarLidar.rotationWheel < 0.99
+	
 		return true
 }
 
