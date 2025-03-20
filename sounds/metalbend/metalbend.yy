@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"car_engine_start_outside_72279",
+  "%Name":"metalbend",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,8 +9,8 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":56.184,
-  "name":"car_engine_start_outside_72279",
+  "duration":31.529781,
+  "name":"metalbend",
   "parent":{
     "name":"Sounds",
     "path":"folders/Sounds.yy",
@@ -19,7 +19,7 @@
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"car_engine_start_outside_72279.mp3",
-  "type":1,
+  "soundFile":"metalbend.mp3",
+  "type":0,
   "volume":1.0,
 }

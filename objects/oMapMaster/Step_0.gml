@@ -16,11 +16,13 @@ if ControllerService.shipStatus.map.scanningState == "prune" {
 	
 		ControllerService.shipStatus.map.navPath = equalNavPath
 		ControllerService.shipStatus.map.scanningState = "travelStart"
-		startingAngle = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,ControllerService.shipStatus.map.navPath[0].x,ControllerService.shipStatus.map.navPath[0].y))
+		
 		
 		var target = ControllerService.shipStatus.map.navPath[0]
-		ShipMaster.queueMovement(ShipMaster.orientToPoint,[target.x,target.y,startingAngle], 0.99,1)
+		var target2 = ControllerService.shipStatus.map.navPath[1]
+		ShipMaster.queueMovement(ShipMaster.orientToPoint,[target.x,target.y], 0,10)
 		ShipMaster.queueMovement(ShipMaster.navToPoint,[target.x,target.y], 0,20)
+		ShipMaster.queueMovement(ShipMaster.orientToPoint,[target2.x,target2.y], 0,10, finalizeOrientation)	
 
 	}
 }
@@ -28,9 +30,7 @@ if ControllerService.shipStatus.map.scanningState == "prune" {
 if ControllerService.shipStatus.map.scanningState == "travelStart" {
 		if point_distance(ShipMaster.posx,ShipMaster.posy,ControllerService.shipStatus.map.navPath[0].x,ControllerService.shipStatus.map.navPath[0].y) < 20 {
 			
-			var target = ControllerService.shipStatus.map.navPath[1]
-			startingAngle = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,ControllerService.shipStatus.map.navPath[1].x,ControllerService.shipStatus.map.navPath[1].y))
-			ShipMaster.queueMovement(ShipMaster.orientToPoint,[target.x,target.y,startingAngle], 0.99,1, finalizeOrientation)	
+			
 			
 			ControllerService.shipStatus.map.scanningState = "off"
 		}

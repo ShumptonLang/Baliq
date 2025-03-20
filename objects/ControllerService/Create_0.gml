@@ -11,7 +11,8 @@ shipStatus = {
 		lidarStatus : "idle",
 		forwardLever: 0,
 		rotationWheel: 0,
-		compassDeg:35
+		compassDeg:35,
+		emergingToolAlpha: 0
 	},
 	forwardLever: {
 		pctPulled:0

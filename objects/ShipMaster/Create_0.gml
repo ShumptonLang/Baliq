@@ -117,29 +117,40 @@ function navToPoint(targetX,targetY) {
 	
 }
 
-function orientToPoint(targetX,targetY,startingAngleDiff){
+//function orientToPoint(targetX,targetY,startingAngleDiff){
+	
+	
+	
+//	var currDiff = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,targetX,targetY))
+//	var pctComplete = currDiff/startingAngleDiff
+//	var rotDir = -sign(currDiff)
+//	var rotSpeed = 0
+	
+//	if pctComplete < 0.5 {
+//		rotSpeed = smoothstep(0,1,pctComplete*2)*rotDir*maxRotationV
+//	} 
+//	else
+//	{
+//		rotSpeed = smoothstep(0,1,1-(pctComplete-0.5)*2)*rotDir*maxRotationV
+//	}
+	
+//	rotSpeed = rotSpeed + minRotV*rotDir*abs(pctComplete*2-1)
+
+	
+//	setMovement(,rotSpeed)
+	
+//	return 1 - pctComplete
+//}
+
+function orientToPoint(targetX,targetY){
 	
 	
 	
 	var currDiff = angle_difference(ShipMaster.angle , point_direction(ShipMaster.posx,ShipMaster.posy,targetX,targetY))
-	var pctComplete = currDiff/startingAngleDiff
-	var rotDir = -sign(currDiff)
-	var rotSpeed = 0
 	
-	if pctComplete < 0.5 {
-		rotSpeed = smoothstep(0,1,pctComplete*2)*rotDir*maxRotationV
-	} 
-	else
-	{
-		rotSpeed = smoothstep(0,1,1-(pctComplete-0.5)*2)*rotDir*maxRotationV
-	}
+	setMovement(,1)
 	
-	rotSpeed = rotSpeed + minRotV*rotDir*abs(pctComplete*2-1)
-
-	
-	setMovement(,rotSpeed)
-	
-	return 1 - pctComplete
+	return currDiff
 }
 	
 function queueMovement(movementFunc,args,exitValMin,exitValMax,finFunc=function(){}){

@@ -70,11 +70,26 @@ if (surface_exists(global.sonarSurf)) {
 #region Draw Lidar CRT
 
 //shader_set(CRTLidar)
-var samp = shader_get_sampler_index(CRTLidar,"u_GlassTex")
-texture_set_stage(samp,sprite_get_texture(SpecularMap,0))
-tex = surface_get_texture(global.lidarSurf)
-if keyboard_check(vk_shift)
-	draw_surface_ext(global.lidarSurf,949,300,0.3,0.3,0,c_white,1)
+
+
+if keyboard_check(vk_shift){
+	draw_sprite_general(mapy,0,ShipMaster.posx-oSLMaster.view_width/2,ShipMaster.posy-oSLMaster.view_height/2,oSLMaster.view_width,oSLMaster.view_height,949,300,0.3,0.3,0,c_white,c_white,c_white,c_white,1)
+
+	draw_surface_general(global.mapSurf,ShipMaster.posx-oSLMaster.view_width/2,ShipMaster.posy-oSLMaster.view_height/2,oSLMaster.view_width,oSLMaster.view_height,949,300,0.3,0.3,0,c_white,c_white,c_white,c_white,1)
+	surface_set_target(global.mapSurf)
+	draw_clear_alpha(c_blue,0)
+	draw_circle(ShipMaster.posx,ShipMaster.posy, 10,0)
+	draw_line_width(ShipMaster.posx,ShipMaster.posy,ShipMaster.posx + lengthdir_x(100,ShipMaster.angle),ShipMaster.posy + lengthdir_y(100,ShipMaster.angle),4)
+	draw_circle_color(debugTargetPoint.x,debugTargetPoint.y,10,c_blue,c_blue,0)
+
+for (var i = 1; i < array_length(ControllerService.shipStatus.map.navPath); i++) {
+	if i == 0
+		draw_circle(ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y,20,0)
+	draw_circle(ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y,5,0)
+	draw_line_width(ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y,ControllerService.shipStatus.map.navPath[i-1].x,ControllerService.shipStatus.map.navPath[i-1].y,3)
+}
+	surface_reset_target()
+}
 //shader_reset()
 
 #endregion
@@ -91,7 +106,7 @@ if !global.debug {
 }
 
 
-
-draw_text(1000,1000,string(pathingError))
+if ControllerService.shipStatus.ship.navigationState == "followingPath"
+	draw_text(750,1000,string(pathingError))
 	
 

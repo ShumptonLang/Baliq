@@ -155,7 +155,7 @@ function on_interaction_end(){
 }
 	
 function finalizeOrientation(){
-	ControllerService.shipStatus.ship.navigationState = "followingPath"
+	ControllerService.shipStatus.ship.navigationState = "waitingForPlayer"
 	ControllerService.shipStatus.map.stateMachine.changeState("scanOut")
 	ControllerService.shipStatus.map.isScanning = false
 

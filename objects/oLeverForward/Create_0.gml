@@ -45,16 +45,16 @@ function on_interaction_update() {
 			
 	}
 	lastPctPulled = ControllerService.shipStatus.forwardLever.pctPulled
-	ShipMaster.offsetMovement(0.04*ControllerService.shipStatus.forwardLever.pctPulled)
+	
 	ControllerService.shipStatus.forwardLever.pctPulled = pctPulled
 
 }
 
 	
 function on_interaction_end(){
-	window_mouse_set(x,y)	
+	window_mouse_set(currPos.x,currPos.y)	
 	window_set_cursor(cr_default)
-	ControllerService.shipStatus.forwardLever.pctPulled = 0
+	//ControllerService.shipStatus.forwardLever.pctPulled = 0
 	in_interaction = false
 }
 

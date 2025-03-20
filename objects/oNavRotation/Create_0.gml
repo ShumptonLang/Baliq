@@ -19,7 +19,7 @@ function on_interaction_update() {
 
 
 
-	ShipMaster.offsetMovement(,pullDirection/75)
+	ShipMaster.offsetMovement(,-pullDirection/75)
 	
 }
 

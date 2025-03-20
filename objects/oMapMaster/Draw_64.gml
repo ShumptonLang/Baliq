@@ -19,8 +19,13 @@ for (var i = 1; i < array_length(ControllerService.shipStatus.map.navPath); i++)
 	draw_circle(ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y,5,0)
 	draw_line_width(ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y,ControllerService.shipStatus.map.navPath[i-1].x,ControllerService.shipStatus.map.navPath[i-1].y,3)
 }
-surface_reset_target()
 
+
+surface_reset_target()
+if ControllerService.shipStatus.map.stateMachine.currentState.name == "scanScan"
+	draw_sprite(sPrinterHead,irandom(1),0,0)
+else
+	draw_sprite(sPrinterHead,0,0,0)
 
 #region Map Vertexes
 

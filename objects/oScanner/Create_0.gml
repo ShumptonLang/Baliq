@@ -2,10 +2,10 @@
 event_inherited();
 interaction_priority = 10
 interaction_shape = "circle"
-interaction_radius = 32
+interaction_radius = 16
 
-x = 1300
-y = 800
+x = 1198
+y = 45
 
 
 
