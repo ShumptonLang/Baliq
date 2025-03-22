@@ -10,7 +10,10 @@ shipStatus = {
 		lidarScanTime: 0,
 		lidarStatus : "idle",
 		forwardLever: 0,
-		rotationWheel: 0,
+		rotationWheel: {
+		one:0,
+		two:0
+		},
 		compassDeg:35,
 		emergingToolAlpha: 0
 	},
@@ -75,7 +78,7 @@ function registerTimer(duration, goalFunc,updFunc = function(){}, args = []){
 	
 
 #region Scanner State Machine
-debugMapAnimated = false
+debugMapAnimated = true
 
 // Time in seconds to input the map
 timerScanIn = 1
@@ -115,7 +118,8 @@ wait1State.enter = function(){
 
 var scanScanState = new State("scanScan")
 scanScanState.enter = function(){
-	audio_play_sound(sonarlaser,1,0,1,0,2)
+	audio_play_sound(shortHiBeep,1,0)
+	audio_play_sound(sonarlaser,1,0,0.5,0,0.2)
 	ControllerService.registerTimer(timerScanScan, function(){
 		shipStatus.map.stateMachine.changeState("wait2")	
 	})
@@ -128,6 +132,7 @@ wait2State.enter = function(){
 	if array_length(ControllerService.shipStatus.map.navPath) >= 2 {
 		ControllerService.shipStatus.map.isErrored = false
 		shipStatus.map.stateMachine.changeState("waitPlayer")
+		audio_play_sound(repeatedBeep,1,1,0.5)
 		ShipMaster.pruneNavPath()
 		
 	} else {
@@ -144,7 +149,7 @@ waitForPlayer.execute = function() {
 	if room == Sonar {
 		shipStatus.map.stateMachine.changeState("waitIgnition")	
 		
-		audio_play_sound(metalbend,1,1,1,0,0.6)
+		
 	
 		ControllerService.registerTimer(2,function(){
 			audio_stop_sound(metalbend)
@@ -158,12 +163,14 @@ waitForPlayer.execute = function() {
 
 var waitForIgnition = new State("waitIgnition")
 waitForIgnition.execute = function(){
-	if ControllerService.shipStatus.sonarLidar.rotationWheel >= 0.99
+	if ControllerService.shipStatus.sonarLidar.rotationWheel.one >= 0.99
+	and ControllerService.shipStatus.sonarLidar.rotationWheel.two >= 0.99
 	and ControllerService.shipStatus.sonarLidar.forwardLever >= 0.99 {
 			shipStatus.map.stateMachine.changeState("navigating")
 			ControllerService.registerTimer(2,function(){
 			audio_stop_sound(metalbend)
-			audio_play_sound(click,1,0,1,0,0.5)
+			audio_stop_sound(repeatedBeep)
+			audio_play_sound(linuxBeep,1,0,0.5,0,2)
 		},
 		function(elapsed) {
 			ControllerService.shipStatus.sonarLidar.emergingToolAlpha = 1-(elapsed/2/1000)
@@ -174,7 +181,9 @@ waitForIgnition.execute = function(){
 var scanOutState = new State("scanOut")
 scanOutState.enter = function() {
 	audio_play_sound(printer,1,0)
-
+	ControllerService.shipStatus.sonarLidar.rotationWheel.one = 0
+	ControllerService.shipStatus.sonarLidar.rotationWheel.two = 0
+	ControllerService.shipStatus.sonarLidar.forwardLever = 0
 	ControllerService.registerTimer(timerScanOut,function() {
 		shipStatus.map.stateMachine.changeState("off")	
 	}, function(elapsed) {

@@ -11,8 +11,8 @@
   "name":"oLeverForward",
   "overriddenProperties":[],
   "parent":{
-    "name":"SonarLidar",
-    "path":"folders/SonarLidar.yy",
+    "name":"Objects",
+    "path":"folders/SonarLidar/IgnitionPanel/Objects.yy",
   },
   "parentObjectId":{
     "name":"oPositionalSwitch",

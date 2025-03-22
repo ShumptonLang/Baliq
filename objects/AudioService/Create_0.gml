@@ -88,7 +88,7 @@ function updateWheelSound(event) {
 	if fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
 		fmod_studio_event_instance_start(event)
 
-	var rot = ControllerService.shipStatus.sonarLidar.rotationWheel
+	var rot = ControllerService.shipStatus.sonarLidar.rotationWheel.one
 	//if abs(rot/10) > 0.3 and fmod_studio_event_instance_get_playback_state(AudioService.eventGroanInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
 	//	fmod_studio_event_instance_start(AudioService.eventGroanInst)
 

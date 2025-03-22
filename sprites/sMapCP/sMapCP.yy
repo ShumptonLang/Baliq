@@ -4,7 +4,7 @@
   "bboxMode":0,
   "bbox_bottom":255,
   "bbox_left":0,
-  "bbox_right":255,
+  "bbox_right":511,
   "bbox_top":0,
   "collisionKind":1,
   "collisionTolerance":0,
@@ -19,6 +19,7 @@
   "height":256,
   "HTile":false,
   "layers":[
+    {"$GMImageLayer":"","%Name":"0edc7ea2-65c7-4d0f-87ca-13c44310a7f2","blendMode":0,"displayName":"Layer 1","isLocked":false,"name":"0edc7ea2-65c7-4d0f-87ca-13c44310a7f2","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
     {"$GMImageLayer":"","%Name":"86c605ee-1c45-4e2c-aee8-bff7a0329602","blendMode":0,"displayName":"default","isLocked":false,"name":"86c605ee-1c45-4e2c-aee8-bff7a0329602","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"sMapCP",
@@ -86,5 +87,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":256,
+  "width":512,
 }

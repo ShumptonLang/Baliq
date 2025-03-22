@@ -5,7 +5,7 @@
 
 draw_sprite(sViewport,0,0,0)
 
-if ControllerService.shipStatus.eyeCast.camREnabled or true{
+if ControllerService.shipStatus.eyeCast.camREnabled{
 	draw_sprite_ext(sViewport,1,0,0,1,1,0,c_white,0.1)
 
 	var noiseTex = sprite_get_texture(noiseTexture,0)

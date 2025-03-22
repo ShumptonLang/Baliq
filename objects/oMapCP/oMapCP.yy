@@ -38,5 +38,5 @@
     "path":"sprites/sMapCP/sMapCP.yy",
   },
   "spriteMaskId":null,
-  "visible":false,
+  "visible":true,
 }

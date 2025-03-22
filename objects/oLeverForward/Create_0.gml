@@ -2,8 +2,8 @@ event_inherited()
 
 
 
-_start = {x:1033,y:670}
-_end = {x:1033,y:1042}
+_start = {x:728,y:151}
+_end = {x:728,y:827}
 
 
 x = _start.x

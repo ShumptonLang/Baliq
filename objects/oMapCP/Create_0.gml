@@ -10,6 +10,8 @@ interaction_height = sprite_height;
 interaction_radius = sprite_width / 2;
 
 tlBound = {x: 133,y:209}
+x = tlBound.x
+y = tlBound.y
 brBound = {x:822,y: 639}
 
 // Register with input manager on creation

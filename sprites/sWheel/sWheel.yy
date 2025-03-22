@@ -19,6 +19,7 @@
   "height":300,
   "HTile":false,
   "layers":[
+    {"$GMImageLayer":"","%Name":"9bc96844-0b2b-4a4e-bcd8-513aebbcc9d8","blendMode":0,"displayName":"Layer 1","isLocked":false,"name":"9bc96844-0b2b-4a4e-bcd8-513aebbcc9d8","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
     {"$GMImageLayer":"","%Name":"2740940d-c86f-4ac2-9e8e-e998a64ef256","blendMode":0,"displayName":"default","isLocked":false,"name":"2740940d-c86f-4ac2-9e8e-e998a64ef256","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
   ],
   "name":"sWheel",
@@ -75,8 +76,8 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":150,
-    "yorigin":144,
+    "xorigin":158,
+    "yorigin":150,
   },
   "swatchColours":null,
   "swfPrecision":0.5,

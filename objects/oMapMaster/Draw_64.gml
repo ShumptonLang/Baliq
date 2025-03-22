@@ -1,6 +1,6 @@
 draw_sprite(sMapRoom,0,0,0)
 
-draw_sprite_ext(mapy,0,currMapX,currMapY,mapW/sprite_get_width(mapy),mapH/sprite_get_height(mapy),0,c_white,1)
+draw_sprite_ext(mapy,0,currMapX,currMapY,mapW/sprite_get_width(mapy),mapH/sprite_get_height(mapy),0,c_ltgray,1)
 
 surface_set_target(global.mapSurf)
 draw_set_color(c_black)
