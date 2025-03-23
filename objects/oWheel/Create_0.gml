@@ -22,7 +22,8 @@ function on_interaction_update() {
 	if oldRot < 0.99 and newRot >= 0.99
 		audio_play_sound(click,1,0)
 
-
+	if idx == "one"
+		ControllerService.shipStatus.sonarLidar.rotationWheel.delta = (newRot-oldRot)*360
 	variable_struct_set(ControllerService.shipStatus.sonarLidar.rotationWheel, idx, newRot)
 	variable_struct_set(ControllerService.shipStatus.sonarLidar.rotationWheel, idx, clamp(variable_struct_get(ControllerService.shipStatus.sonarLidar.rotationWheel, idx),0,1))
 	//ControllerService.shipStatus.sonarLidar.rotationWheel = clamp(ControllerService.shipStatus.sonarLidar.rotationWheel,0,1)

@@ -1,12 +1,25 @@
 //The Job of the ShipMaster is to hold all statuses of each object
 global.debug = true
 
+lastPosX = posx
+lastPosY = posy
 
-gameStarting = true
 
 forward = {x:lengthdir_x(1,self.angle),y:lengthdir_y(1,self.angle)}
 
 movementQueue = ds_queue_create()
+
+avtUpdateRate = 1
+artUpdateRate = 1
+
+avgVelocityTimer = 0
+avgVelocityAmt = 5
+avgVelocityHistory = array_create(avgVelocityAmt,0)
+
+
+avgRotationTimer = 0
+avgRotationAmt = 5
+avgRotationHistory = array_create(avgRotationAmt,0)
 
 
 #region Navigation Parameters
@@ -155,6 +168,9 @@ function stopNavPath(success){
 
 
 
+//Works fine now, but should be updated later
+//New version needs this: Pass one, smoothing. Pass two, angle based pointing.
+//The new Pass 2 should also traverse the lines itself, not the nodes
 function pruneNavPath(){
 	print("Pre-Prune Count: ", array_length(ControllerService.shipStatus.map.navPath))
 	
@@ -276,3 +292,4 @@ function queueMovement(movementFunc,args,exitValMin,exitValMax,finFunc=function(
 
 randomize()
 
+room_goto(Cockpit)

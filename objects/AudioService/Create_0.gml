@@ -36,63 +36,19 @@ function playStep(service){
 
 
 #region Object Services
-#region Lidar Audio Service
-function updateLidarSound(event) {
-		if ControllerService.shipStatus.sonarLidar.lidarScanning{
-			if fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED {
-				fmod_studio_event_instance_start(event)
-			}
-			fmod_studio_event_instance_set_parameter_by_name(event, "lidarEngaged", 1)
-		}
-		else
-			fmod_studio_event_instance_set_parameter_by_name(event, "lidarEngaged", 0)
-			
-}
 
-function killLidarSound(event) {
-		return false
-}
-	
-AudioService.play(AudioService.eventLidarEngagedI,updateLidarSound,killLidarSound)
-#endregion
-#region Ambience Audio Service
-function updateAmbience(event) {
-	if ControllerService.shipStatus.digestive.running and ControllerService.shipStatus.sonarLidar.sonarLidarSwitchEngaged and fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
-		fmod_studio_event_instance_start(event)
-	if ControllerService.shipStatus.sonarLidar.sonarLidarSwitchEngaged and fmod_studio_event_instance_get_paused(event) == true
-		fmod_studio_event_instance_set_paused(event,0)
-	var distanceToWind = point_distance(ShipMaster.posx,ShipMaster.posy,2000,624)/1400
-	var distanceToHall = point_distance(ShipMaster.posx,ShipMaster.posy,2400,3500)/2800
-	if distanceToWind < distanceToHall{
-		fmod_studio_event_instance_set_parameter_by_name(event,"Location", 0)
-		fmod_studio_event_instance_set_parameter_by_name(event,"dtOutside", distanceToWind)
-	}else {
-		fmod_studio_event_instance_set_parameter_by_name(event,"Location", 1)
-		fmod_studio_event_instance_set_parameter_by_name(event,"dtOutside", distanceToWind)
-}
-			
-}
-
-function killAmbience(event) {
-	
-		if !(ControllerService.shipStatus.digestive.running and ControllerService.shipStatus.sonarLidar.sonarLidarSwitchEngaged){
-			fmod_studio_event_instance_set_paused(event,1)
-			return false
-		}
-}
-
-AudioService.play(AudioService.eventBasilicaAmbience,updateAmbience, killAmbience)
-#endregion
 #region Wheel Audio Service
 function updateWheelSound(event) {
 	if fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
 		fmod_studio_event_instance_start(event)
 
-	var rot = ControllerService.shipStatus.sonarLidar.rotationWheel.one
+	var rot = ControllerService.shipStatus.sonarLidar.rotationWheel.delta
 	//if abs(rot/10) > 0.3 and fmod_studio_event_instance_get_playback_state(AudioService.eventGroanInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
 	//	fmod_studio_event_instance_start(AudioService.eventGroanInst)
 
-	fmod_studio_system_set_parameter_by_name("rotationVelocity",rot/10)
+	fmod_studio_system_set_parameter_by_name("rotationVelocity",rot)
+	print(AudioService.eventRotWheelInst,
+fmod_studio_event_instance_get_parameter_by_name(AudioService.eventRotWheelInst, "rotationVelocity"),ControllerService.shipStatus.sonarLidar.rotationWheel.delta)
 	
 			
 }
@@ -102,6 +58,7 @@ function killWheel(event) {
 		return false
 }
 AudioService.play(AudioService.eventRotWheelInst,updateWheelSound, killWheel)
+fmod_studio_event_instance_start(AudioService.eventRotWheelInst);
 #endregion
 #endregion
 

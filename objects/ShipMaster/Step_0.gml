@@ -1,9 +1,3 @@
-if gameStarting {
-	if instance_exists(oInputManager)	{
-		gameStarting = false
-		room_goto(Cockpit)
-	}
-}
 
 var _x = lengthdir_x(1,self.angle)
 var _y = lengthdir_y(1,self.angle)
@@ -77,15 +71,45 @@ if ds_queue_size(movementQueue) != 0 {
 		
 }
 
+var dX = posx-lastPosX
+var dY = posy-lastPosY
+
+if avgVelocityTimer >= avtUpdateRate {
+	
+	var currVelocity = sqrt(sqr(dX)+sqr(dY))
+	array_shift(avgVelocityHistory)
+	array_push(avgVelocityHistory,currVelocity)
+	
+	avgVelocityTimer = 0
+}
+
+
+
+if avgRotationTimer >= artUpdateRate {
+	
+	avgRotationTimer = 0
+}
+
+
+
+avgRotationTimer += delta_time/1000000
+avgVelocityTimer += delta_time/1000000
 
 
 
 
 
+var sum = 0
+for (var i = 0; i < array_length(avgVelocityHistory); i++) {
+	sum += avgVelocityHistory[i]	
+}
 
+//print(avgVelocityHistory,sum/avgVelocityAmt)
 
 
 if keyboard_check_pressed(vk_numpad0)
 	shipStatus.digestive.running = true
 //print(rotv)
 
+lastPosX = posx
+lastPosY = posy

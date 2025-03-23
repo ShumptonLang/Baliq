@@ -3,7 +3,7 @@ var _flags_core = FMOD_INIT.NORMAL;
 var _flags_studio = FMOD_STUDIO_INIT.LIVEUPDATE;
 
 #macro USE_FMOD_STUDIO true // Are we using FMOD studio (true) or just core (false)?
-#macro USE_DEBUG_CALLBACKS false // Should debugging be initialised?
+#macro USE_DEBUG_CALLBACKS true // Should debugging be initialised?
 
 /* If we enable debug callbacks in the macro above set them ON */
 if (USE_DEBUG_CALLBACKS)

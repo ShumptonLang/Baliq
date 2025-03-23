@@ -12,7 +12,8 @@ shipStatus = {
 		forwardLever: 0,
 		rotationWheel: {
 		one:0,
-		two:0
+		two:0,
+		delta:0
 		},
 		compassDeg:35,
 		emergingToolAlpha: 0
@@ -146,7 +147,7 @@ wait2State.enter = function(){
 //Waits for the player to enter the mapping area before opening the priming tools
 var waitForPlayer = new State("waitPlayer")
 waitForPlayer.execute = function() {
-	if room == Sonar {
+	if room == Sonar or room == Ignition{
 		shipStatus.map.stateMachine.changeState("waitIgnition")	
 		
 		
