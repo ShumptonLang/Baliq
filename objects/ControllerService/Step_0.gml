@@ -13,6 +13,6 @@ for (var i = 0; i < array_length(stateMachines); i++){
 	currMachine.update()
 }
 
-print(shipStatus.map.stateMachine.currentState.name)
-print(ControllerService.shipStatus.sonarLidar.rotationWheel,
-	ControllerService.shipStatus.sonarLidar.forwardLever)
+//print(shipStatus.map.stateMachine.currentState.name)
+//print(ControllerService.shipStatus.sonarLidar.rotationWheel,
+//	ControllerService.shipStatus.sonarLidar.forwardLever)

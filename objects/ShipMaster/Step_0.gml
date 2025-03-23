@@ -39,11 +39,15 @@ if contact  {
 
 
 if isNavvingPath {
-	pathNavCurr += pathNavSpeed
-	print(pathNavCurr,pathNavDistGoal)
+	var pathNodeCount = array_length(ControllerService.shipStatus.map.navPath)
 	
-	var currNodeIdx = floor(pathNavCurr/50)
-	var currLinePct = frac(pathNavCurr/50)
+	pathNavCurr += pathNavSpeed
+	
+	
+	var currNodeIdx = floor(pathNodeCount*pathNavCurr)
+	var currLinePct = frac(pathNodeCount*pathNavCurr)
+	
+	print(pathNavCurr,pathDist,pathNavSpeed)
 	
 	var currNode = ControllerService.shipStatus.map.navPath[currNodeIdx]
 	var nextNode = ControllerService.shipStatus.map.navPath[currNodeIdx+1]
@@ -53,8 +57,9 @@ if isNavvingPath {
 	}
 	
 	var lineAngle = point_direction(currNode.x,currNode.y,nextNode.x,nextNode.y)
-	posx = currNode.x + lengthdir_x(50*currLinePct,lineAngle)
-	posy = currNode.y + lengthdir_y(50*currLinePct,lineAngle)
+	var lineDist = point_distance(currNode.x,currNode.y,nextNode.x,nextNode.y)
+	posx = currNode.x + lengthdir_x(lineDist*currLinePct,lineAngle)
+	posy = currNode.y + lengthdir_y(lineDist*currLinePct,lineAngle)
 	angle = lineAngle
 	
 

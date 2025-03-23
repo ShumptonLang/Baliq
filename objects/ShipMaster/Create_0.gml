@@ -74,10 +74,18 @@ instance_create_depth(0,0,0,AudioService)
 //Can be either orient or path
 isNavvingPath = false
 pathNavCurr = 0
-pathNavDistGoal = 0
-pathNavSpeed = 1
+pathDist = 0
+pathNavSpeed = 0.01
+avgPathSpeed = 50
+//Needs to move at 50/s
+//framerate is 60/s
 
+//TotalDist / 50 gives time of journey
 
+//60*x= time
+//time / 60?
+
+//total dist / 50 / 60?
 
 
 function register_force(force, isRot=false){
@@ -135,7 +143,7 @@ function navPathFixed(){
 	isNavvingPath = true
 	pathNavCurr = 0
 	//Need to get rid of the floating 50, it's the distance between points
-	pathNavDistGoal = array_length(ControllerService.shipStatus.map.navPath) * 50
+
 }
 
 function stopNavPath(success){
@@ -145,20 +153,77 @@ function stopNavPath(success){
 	ControllerService.shipStatus.map.stateMachine.changeState("scanOut")
 }
 
-function pruneNavPath(){
 
+
+function pruneNavPath(){
+	print("Pre-Prune Count: ", array_length(ControllerService.shipStatus.map.navPath))
 	
-	var equalNavPath = array_create(1,ControllerService.shipStatus.map.navPath[0])
-	var currentPoint = ControllerService.shipStatus.map.navPath[0]
 	
-	for (var i = 0; i < array_length(ControllerService.shipStatus.map.navPath); i++) {
-		if point_distance(currentPoint.x,currentPoint.y,ControllerService.shipStatus.map.navPath[i].x,ControllerService.shipStatus.map.navPath[i].y) > 50 {
-			array_insert(equalNavPath,0,ControllerService.shipStatus.map.navPath[i])
-			currentPoint = ControllerService.shipStatus.map.navPath[i]
+	var pathNodeCount = array_length(ControllerService.shipStatus.map.navPath)
+	
+	var smallNavPath = array_create(0)
+	array_insert(smallNavPath,0,ControllerService.shipStatus.map.navPath[0])
+	for (var i = 1; i < pathNodeCount; i++) {
+		
+		var currentPoint = smallNavPath[0]
+		var nextPoint = ControllerService.shipStatus.map.navPath[i]
+		
+		var nextDist = point_distance(currentPoint.x,currentPoint.y,nextPoint.x,nextPoint.y)
+		if nextDist > 50 {
+			
+
+			array_insert(smallNavPath,0,nextPoint)
 		}
 	}
 	
+	//Prune Path
+	pathNodeCount = array_length(smallNavPath)
+	var equalNavPath = array_create(1,smallNavPath[0])
+	array_insert(equalNavPath,0,smallNavPath[1])
+	for (var i = 1; i < pathNodeCount; i++) {
+		//if i % pruneRate == 0 {
+		//	array_insert(equalNavPath,0,ControllerService.shipStatus.map.navPath[i])
+		//	currentPoint = ControllerService.shipStatus.map.navPath[i]
+		//}
+		
+		var currentPoint = equalNavPath[array_length(equalNavPath)-1]
+		var nextPoint = smallNavPath[i]
+		
+
+		var prevPoint = equalNavPath[array_length(equalNavPath)-2]
+			
+		var nextAngle = point_direction(currentPoint.x,currentPoint.y,nextPoint.x,nextPoint.y)
+
+		var comparisonAngle = point_direction(prevPoint.x,prevPoint.y,currentPoint.x,currentPoint.y)
+			
+		var angleVariance = angle_difference(nextAngle,comparisonAngle)
+
+		//print(comparisonAngle,nextAngle,angleVariance)
+			
+		if abs(angleVariance) > 3 {
+			
+			print("Too far!! Rerouting")
+				array_push(equalNavPath,smallNavPath[i])
+		}
+		
+		
+	}
+	
 	ControllerService.shipStatus.map.navPath = equalNavPath
+	
+	//Calculate Path Distance
+	for (var i = 0; i < array_length(ControllerService.shipStatus.map.navPath)-1; i++) {
+		
+		var currentPoint = ControllerService.shipStatus.map.navPath[i]
+		var nextPoint = ControllerService.shipStatus.map.navPath[i+1]
+		
+		pathDist += point_distance(currentPoint.x,currentPoint.y,nextPoint.x,nextPoint.y)
+		
+	}
+	
+	pathNavSpeed = avgPathSpeed / pathDist / 60
+	
+	print("Post-Prune Count: ", array_length(ControllerService.shipStatus.map.navPath))
 		
 		
 		

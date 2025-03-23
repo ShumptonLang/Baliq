@@ -78,7 +78,7 @@ function registerTimer(duration, goalFunc,updFunc = function(){}, args = []){
 	
 
 #region Scanner State Machine
-debugMapAnimated = true
+debugMapAnimated = false
 
 // Time in seconds to input the map
 timerScanIn = 1
