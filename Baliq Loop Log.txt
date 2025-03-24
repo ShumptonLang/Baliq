@@ -4,3 +4,29 @@
 	
 	
 	
+231 58
+231 1016
+1194 58
+1194 1016
+
+963 963
+
+963/8000
+3.762
+
+
+clicking on the eyecast causes it to blush.
+need to implement the eyecast. Allows control over the two viewports. Viewports can either show distance approximations or 2.5d views of the outside. 2.5d is the default
+
+133,209
+822,639
+
+mapnav mostly in place. Need to move actual ship movement to ShipMaster or a new object. Need to look into realistic movement for velocity curves.
+
+function setMovement(newForward,newRotation) {
+	forwardV = newForward
+	rotationV = newRotation
+}
+
+1033,670
+1033,1042

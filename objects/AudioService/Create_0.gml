@@ -57,8 +57,31 @@ function killWheel(event) {
 	
 		return false
 }
-AudioService.play(AudioService.eventRotWheelInst,updateWheelSound, killWheel)
+//AudioService.play(AudioService.eventRotWheelInst,updateWheelSound, killWheel)
 fmod_studio_event_instance_start(AudioService.eventRotWheelInst);
+#endregion
+
+#region MovementVelocity
+function updateMovementSound(event) {
+	if fmod_studio_event_instance_get_playback_state(event) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+		fmod_studio_event_instance_start(event)
+
+	var vel = ControllerService.shipStatus.ship.velocity
+	//if abs(rot/10) > 0.3 and fmod_studio_event_instance_get_playback_state(AudioService.eventGroanInst) == FMOD_STUDIO_PLAYBACK_STATE.STOPPED
+	//	fmod_studio_event_instance_start(AudioService.eventGroanInst)
+
+	fmod_studio_system_set_parameter_by_name("shipVelocity",vel)
+	//print(AudioService.eventRotWheelInst,fmod_studio_event_instance_get_parameter_by_name(AudioService.eventRotWheelInst, "rotationVelocity"),ControllerService.shipStatus.sonarLidar.rotationWheel.delta)
+	
+			
+}
+
+function killMovement(event) {
+	
+		return false
+}
+AudioService.play(AudioService.eventGroanInst,updateMovementSound, killMovement)
+fmod_studio_event_instance_start(AudioService.eventGroanInst);
 #endregion
 #endregion
 

@@ -33,7 +33,8 @@ shipStatus = {
 		camRState: "dist"
 	},
 	ship: {
-		navigationState: "none"	
+		navigationState: "none",
+		velocity : 0
 	},
 	map: {
 		printerOffset: 0,
