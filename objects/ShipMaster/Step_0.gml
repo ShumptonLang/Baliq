@@ -16,6 +16,7 @@ self.angle += rotationV
 
 contact = getPixelFromBuffer(global.currMapBuffer,posx-_x*30,posy-_y*30).r 
 
+
 if contact  {
 	contact = false
 
@@ -27,7 +28,7 @@ if contact  {
 	self.posy -= _y *5
 	self.posx -= _x * 5
 	forwardV = -forwardV*2	
-	audio_play_sound(collision,1,0,abs(forwardV)*5,0,1)
+	audio_play_sound(collision,1,0,ControllerService.shipStatus.ship.velocity*3,0,1)
 }
 
 
@@ -35,13 +36,17 @@ if contact  {
 if isNavvingPath {
 	var pathNodeCount = array_length(ControllerService.shipStatus.map.navPath)
 	
-	pathNavCurr += pathNavSpeed
+	pathNavCurr += pathNavSpeed / 60
+	
+	var pctDone = pathNavCurr/pathDist
 	
 	
-	var currNodeIdx = floor(pathNodeCount*pathNavCurr)
-	var currLinePct = frac(pathNodeCount*pathNavCurr)
+	var currNodeIdx = floor(pathNodeCount*pctDone)
+	var currLinePct = frac(pathNodeCount*pctDone)
 	
-	print(pathNavCurr,pathDist,pathNavSpeed)
+	ControllerService.shipStatus.ship.velocity = 1 - abs(pathCDF[currNodeIdx])
+	
+	print(pathNavCurr,pathDist,pctDone, ControllerService.shipStatus.ship.velocity)
 	
 	var currNode = ControllerService.shipStatus.map.navPath[currNodeIdx]
 	var nextNode = ControllerService.shipStatus.map.navPath[currNodeIdx+1]
@@ -57,6 +62,9 @@ if isNavvingPath {
 	angle = lineAngle
 	
 
+}
+else {
+	ControllerService.shipStatus.ship.velocity = 0
 }
 
 if ds_queue_size(movementQueue) != 0 {
@@ -80,7 +88,7 @@ if avgVelocityTimer >= avtUpdateRate {
 	array_shift(avgVelocityHistory)
 	array_push(avgVelocityHistory,currVelocity)
 	
-	avgVelocityTimer = 0
+	avgVelocityTimer %= avtUpdateRate
 }
 
 
@@ -96,14 +104,24 @@ avgRotationTimer += delta_time/1000000
 avgVelocityTimer += delta_time/1000000
 
 
+//if keyboard_check_released(vk_space){
+//	ControllerService.shipStatus.map.navPath = chaikin(ControllerService.shipStatus.map.navPath)	
+//}
 
+//if keyboard_check_released(vk_backspace){
+//	ControllerService.shipStatus.map.navPath = anglePrune(ControllerService.shipStatus.map.navPath,5)	
+//}
 
 
 var sum = 0
 for (var i = 0; i < array_length(avgVelocityHistory); i++) {
 	sum += avgVelocityHistory[i]	
 }
-ControllerService.shipStatus.ship.velocity = sum/avgVelocityAmt
+//ControllerService.shipStatus.ship.velocity = sum/avgVelocityAmt/avtUpdateRate
+
+
+
+
 //print(avgVelocityHistory,sum/avgVelocityAmt)
 
 

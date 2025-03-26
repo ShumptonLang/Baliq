@@ -56,18 +56,16 @@ function on_interaction_update() {
 
 			if surface_exists(global.mapSurf) {
 				surface_set_target(global.mapSurf)
-				//print(virtualMouse, _x, _y)
-				if ControllerService.shipStatus.map.magnifyerUp {
-					if ControllerService.shipStatus.map.color == c_red
-						array_insert(ControllerService.shipStatus.map.navPath,0,{x:virtualMouse.x+ControllerService.shipStatus.map.magnifyerPos.x,y:virtualMouse.y+ControllerService.shipStatus.map.magnifyerPos.y})
-					draw_line_width_color(virtualMouse.lx+ControllerService.shipStatus.map.magnifyerPos.x,virtualMouse.ly+ControllerService.shipStatus.map.magnifyerPos.y,virtualMouse.x+ControllerService.shipStatus.map.magnifyerPos.x,virtualMouse.y+ControllerService.shipStatus.map.magnifyerPos.y,3,ControllerService.shipStatus.map.color,ControllerService.shipStatus.map.color)
-				}
-				else
-				{
-					if ControllerService.shipStatus.map.color == c_red
-						array_insert(ControllerService.shipStatus.map.navPath,0,{x:virtualMouse.x,y:virtualMouse.y})
-					draw_line_width_color(virtualMouse.lx,virtualMouse.ly,virtualMouse.x,virtualMouse.y,7,ControllerService.shipStatus.map.color,ControllerService.shipStatus.map.color)
-				}
+				if array_length(ControllerService.shipStatus.map.navPath) == 0 and ControllerService.shipStatus.map.color == c_red
+					array_push(ControllerService.shipStatus.map.navPath,{x:virtualMouse.x,y:virtualMouse.y})
+
+					
+				var prevPoint = array_last(ControllerService.shipStatus.map.navPath)
+				
+				if ControllerService.shipStatus.map.color == c_red  and point_distance(virtualMouse.x,virtualMouse.y,prevPoint.x,prevPoint.y) > 50
+					array_push(ControllerService.shipStatus.map.navPath,{x:virtualMouse.x,y:virtualMouse.y})
+				draw_line_width_color(virtualMouse.lx,virtualMouse.ly,virtualMouse.x,virtualMouse.y,7,ControllerService.shipStatus.map.color,ControllerService.shipStatus.map.color)
+				
 				
 				surface_reset_target()
 			}

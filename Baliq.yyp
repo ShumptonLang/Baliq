@@ -95,6 +95,7 @@
     {"id":{"name":"clip2screen","path":"scripts/clip2screen/clip2screen.yy",},},
     {"id":{"name":"clipscreen2screen","path":"scripts/clipscreen2screen/clipscreen2screen.yy",},},
     {"id":{"name":"compareColor","path":"scripts/compareColor/compareColor.yy",},},
+    {"id":{"name":"d3d_set_projection_ortho","path":"scripts/d3d_set_projection_ortho/d3d_set_projection_ortho.yy",},},
     {"id":{"name":"drawDrawable","path":"scripts/drawDrawable/drawDrawable.yy",},},
     {"id":{"name":"ExtBufferIO","path":"scripts/ExtBufferIO/ExtBufferIO.yy",},},
     {"id":{"name":"Fmod_Definitions","path":"scripts/Fmod_Definitions/Fmod_Definitions.yy",},},

@@ -1,0 +1,1 @@
+d3d_set_projection_ortho(0, 0, room_width, room_height, dsin(current_time/3)*2)
