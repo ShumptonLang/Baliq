@@ -16,6 +16,15 @@ self.angle += rotationV
 
 contact = getPixelFromBuffer(global.currMapBuffer,posx-_x*30,posy-_y*30).r 
 
+var dX = posx-lastPosX
+var dY = posy-lastPosY
+var currVelocity = sqrt(sqr(dX)+sqr(dY))
+
+var ballastDifference = ControllerService.shipStatus.balasts.rVolume - ControllerService.shipStatus.balasts.lVolume
+
+if abs(ballastDifference) > 0.05 {
+	offsetMovement(0.1,0.05*sign(ballastDifference))	
+}
 
 if contact  {
 	contact = false
@@ -27,7 +36,7 @@ if contact  {
 	
 	self.posy -= _y *5
 	self.posx -= _x * 5
-	forwardV = -forwardV*2	
+	forwardV = -currVelocity	
 	audio_play_sound(collision,1,0,ControllerService.shipStatus.ship.velocity*3,0,1)
 }
 
@@ -79,12 +88,9 @@ if ds_queue_size(movementQueue) != 0 {
 		
 }
 
-var dX = posx-lastPosX
-var dY = posy-lastPosY
 
 if avgVelocityTimer >= avtUpdateRate {
-	
-	var currVelocity = sqrt(sqr(dX)+sqr(dY))
+
 	array_shift(avgVelocityHistory)
 	array_push(avgVelocityHistory,currVelocity)
 	

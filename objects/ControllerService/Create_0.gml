@@ -47,11 +47,14 @@ shipStatus = {
 		navPath: array_create(0)
 	},
 	balasts: {
-		bLeftVolume:100,
-		bRightVolume:100
+		rStateMachine: new StateMachine(oBallastMaster),
+		rVolume:1,
+		lVolume:1
 	}
 }
 
+roomStack = array_create(1,room)
+offlimitRooms = [MapTest]
 
 
 
@@ -208,5 +211,22 @@ shipStatus.map.stateMachine.addState("scanOut",scanOutState)
 shipStatus.map.stateMachine.changeState("off")
 
 array_push(stateMachines,shipStatus.map.stateMachine)
+
+#endregion
+#region Ballast State Machine
+
+var closedState = new State("closed")
+var openState = new State("open")
+openState.execute = function(){
+	ControllerService.shipStatus.balasts.rVolume -= 0.02/60
+}
+
+shipStatus.balasts.rStateMachine.addState("closed",closedState)
+shipStatus.balasts.rStateMachine.addState("open",openState)
+
+shipStatus.balasts.rStateMachine.changeState("closed")
+
+array_push(stateMachines,shipStatus.balasts.rStateMachine)
+
 
 #endregion

@@ -13,6 +13,12 @@ for (var i = 0; i < array_length(stateMachines); i++){
 	currMachine.update()
 }
 
+
+
+if array_last(roomStack) != room
+	array_push(roomStack,room)
+	
+
 //print(shipStatus.map.stateMachine.currentState.name)
 //print(ControllerService.shipStatus.sonarLidar.rotationWheel,
 //	ControllerService.shipStatus.sonarLidar.forwardLever)
