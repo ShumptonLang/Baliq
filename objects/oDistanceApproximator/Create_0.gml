@@ -2,6 +2,19 @@ x = 828
 y = 232
 
 pinsPCol = 100
+if random(1.) < 0.1 * ControllerService.shipStatus.distApp.timesVisited and not ControllerService.shipStatus.distApp.hasLaughed {
+	ControllerService.shipStatus.ship.ambienceLaugh = 1
+	ControllerService.shipStatus.distApp.hasLaughed = true
+	ControllerService.roomLock = true
+}
+
+	
+	
+	
+ControllerService.shipStatus.distApp.timesVisited += 1
+
+dSurf = ControllerService.shipStatus.distApp.distanceSurface
+
 
 hand1 = {
 	a:90,

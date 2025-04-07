@@ -11,9 +11,9 @@ shipStatus = {
 		lidarStatus : "idle",
 		forwardLever: 0,
 		rotationWheel: {
-		one:0,
-		two:0,
-		delta:0
+			one:0,
+			two:0,
+			delta:0
 		},
 		compassDeg:35,
 		emergingToolAlpha: 0
@@ -34,7 +34,8 @@ shipStatus = {
 	},
 	ship: {
 		navigationState: "none",
-		velocity : 0
+		velocity : 0,
+		ambienceLaugh: 0
 	},
 	map: {
 		printerOffset: 0,
@@ -50,11 +51,17 @@ shipStatus = {
 		rStateMachine: new StateMachine(oBallastMaster),
 		rVolume:1,
 		lVolume:1
+	},
+	distApp: {
+		distanceSurface: surface_create(128,256),
+		timesVisited: 0,
+		hasLaughed: false
 	}
 }
 
 roomStack = array_create(1,room)
-offlimitRooms = [MapTest]
+offlimitRooms = [MapTest,Cockpit]
+roomLock = false
 
 
 

@@ -110,27 +110,29 @@ function startUpSL(){
 }
 	
 function updateLidar(){
-	surface_set_target(global.lidarSurf)
+	if surface_exists(global.lidarSurf){
+		surface_set_target(global.lidarSurf)
 	
-	draw_clear_alpha(c_black,0)
+		draw_clear_alpha(c_black,0)
 
-	draw_sprite_general(spr_start,0,ShipMaster.posx-oSLMaster.view_width/2,ShipMaster.posy-oSLMaster.view_height/2,oSLMaster.view_width,oSLMaster.view_height,0,0,1,1,0,c_white,c_white,c_white,c_white,0.5)
-	//draw_sprite_part(spr_start,0,sin(current_time/1000)*100,0,view_width*2,view_height*2,0,0)
+		draw_sprite_general(spr_start,0,ShipMaster.posx-oSLMaster.view_width/2,ShipMaster.posy-oSLMaster.view_height/2,oSLMaster.view_width,oSLMaster.view_height,0,0,1,1,0,c_white,c_white,c_white,c_white,0.5)
+		//draw_sprite_part(spr_start,0,sin(current_time/1000)*100,0,view_width*2,view_height*2,0,0)
 		
-	//draw_circle(view_width/2,view_height/2,10,0)
-	//draw_circle(view_width/2 + (oDistanceApproximator.hand1.frame*oDistanceApproximator.sweepAngle/oDistanceApproximator.pinsPCol - oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.x,view_height/2 + (oDistanceApproximator.hand1.frame*oDistanceApproximator.sweepAngle/oDistanceApproximator.pinsPCol- oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.y,10,0)
-	//draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(1000,ShipMaster.angle+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+90),5)
+		//draw_circle(view_width/2,view_height/2,10,0)
+		//draw_circle(view_width/2 + (oDistanceApproximator.hand1.frame*oDistanceApproximator.sweepAngle/oDistanceApproximator.pinsPCol - oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.x,view_height/2 + (oDistanceApproximator.hand1.frame*oDistanceApproximator.sweepAngle/oDistanceApproximator.pinsPCol- oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.y,10,0)
+		//draw_line_width(view_width/2,view_height/2,view_width/2+lengthdir_x(1000,ShipMaster.angle+90),view_height/2+lengthdir_y(1000,ShipMaster.angle+90),5)
 	
-	//draw_circle(oDistanceApproximator.hand1.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand1.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,5,0)
-	//if !oDistanceApproximator.hand1.fail
-		//draw_line_width(view_width/2 + (oDistanceApproximator.hand1.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.x,view_height/2 + (oDistanceApproximator.hand1.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.y,oDistanceApproximator.hand1.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand1.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,3)
+		//draw_circle(oDistanceApproximator.hand1.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand1.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,5,0)
+		//if !oDistanceApproximator.hand1.fail
+			//draw_line_width(view_width/2 + (oDistanceApproximator.hand1.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.x,view_height/2 + (oDistanceApproximator.hand1.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.y,oDistanceApproximator.hand1.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand1.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,3)
 	
-	//draw_circle(oDistanceApproximator.hand2.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand2.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,5,0)
-	//if !oDistanceApproximator.hand2.fail
-		//draw_line_width(view_width/2 + (oDistanceApproximator.hand2.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.x,view_height/2 + (oDistanceApproximator.hand2.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.y,oDistanceApproximator.hand2.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand2.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,3)
+		//draw_circle(oDistanceApproximator.hand2.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand2.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,5,0)
+		//if !oDistanceApproximator.hand2.fail
+			//draw_line_width(view_width/2 + (oDistanceApproximator.hand2.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.x,view_height/2 + (oDistanceApproximator.hand2.frame-oDistanceApproximator.sweepAngle/2)*ShipMaster.forward.y,oDistanceApproximator.hand2.lastPointPos.x - ShipMaster.posx+oSLMaster.view_width/2,oDistanceApproximator.hand2.lastPointPos.y - ShipMaster.posy+oSLMaster.view_height/2,3)
 	
 
-	surface_reset_target()
+		surface_reset_target()
+	}
 }
 
 function updateStatus(statusid,status){
