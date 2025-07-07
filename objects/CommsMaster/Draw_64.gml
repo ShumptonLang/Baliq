@@ -58,7 +58,7 @@ if powerDialIdx {
 		shader_reset()
 		
 		shader_set(CRTBloom)
-		shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_strength"), 100)
+		shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_strength"), 1)
 		shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_direction"), oInputManager.mouse_x_gui / 1440, oInputManager.mouse_y_gui / 1080)
 		draw_surface(crtBleedSurface,0,0)
 		shader_reset()

@@ -14,18 +14,18 @@ void main()
 
 	
 	int stepSize = u_strength;
-	vec2 blurAngle = normalize(-v_vTexcoord + u_direction);	
+	vec2 blurAngle = normalize(-v_vTexcoord + u_direction)/1000.;	
 	
 	vec4 valueSample = vec4(0);
 	vec4 finVal = vec4(0);
 	bool killFlag = false;
-	for (int i = 0; i < stepSize; i++){
+	for (int i = 0; i < 100; i++){
 		if (!killFlag){
 			valueSample = texture2D(gm_BaseTexture, v_vTexcoord + vec2(float(i)*blurAngle.x,float(i)*blurAngle.y));
 			if (valueSample.r > 0.1) {
 				killFlag = true;
-				finVal = vec4((500-i)*255/500);
-				finVal.a = 1.;
+				finVal = vec4(1);
+				finVal.a = 1./pow(length(vec2(float(i)*blurAngle.x,float(i)*blurAngle.y))*100.,2.);
 			}
 		}
 	}
