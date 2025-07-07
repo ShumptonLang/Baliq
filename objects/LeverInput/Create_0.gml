@@ -22,7 +22,7 @@ pctPulled = 0
 function on_interaction_update(){
 	getPositionPulled()
 	ControllerService.shipStatus.comms.leverState = pctPulled
-	ControllerService.shipStatus.comms.crtAstigma.y += pctPulled - 0.5
+	ControllerService.shipStatus.comms.crtAstigma.y += (pctPulled - 0.5)*0.01
 }
 
 function on_interaction_end() {
