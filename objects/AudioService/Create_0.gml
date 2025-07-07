@@ -107,7 +107,7 @@ function shipAmbienceController(event) {
 			
 }
 
-AudioService.play(AudioService.ShipAmbienceInst,shipAmbienceController)
+//AudioService.play(AudioService.ShipAmbienceInst,shipAmbienceController)
 #endregion
 
 #endregion

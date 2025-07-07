@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"CRTBloom_1",
+  "name":"CRTBloom_1",
+  "parent":{
+    "name":"FunShaders",
+    "path":"folders/FunShaders.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

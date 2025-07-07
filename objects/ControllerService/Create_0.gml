@@ -56,6 +56,14 @@ shipStatus = {
 		distanceSurface: surface_create(128,256),
 		timesVisited: 0,
 		hasLaughed: false
+	},
+	comms: {
+		leverState: 0,
+		intro: true,
+		bigDialState: 0,
+		PowerDialState: 0,
+		smallSwitchState: 0,
+		crtAstigma: {x:0,y:0,f:0}
 	}
 }
 
