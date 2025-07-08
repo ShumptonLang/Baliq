@@ -6,7 +6,7 @@ var bigDialIDX = ControllerService.shipStatus.comms.bigDialState
 var powerDialIdx = ControllerService.shipStatus.comms.PowerDialState
 var smallDialIDX = ControllerService.shipStatus.comms.smallSwitchState
 
-draw_sprite_ext(CRTFrame,0,0,0,0.5,0.5,0,c_white,powerDialIdx*random_range(0.5,0.6))
+draw_sprite_ext(CRTFrame,0,0,0,0.5,0.5,0,c_white,powerDialIdx*random_range(0.5,lerp(1,0.6,smoothstep(0,1,astigmaDifference))))
 
 if powerDialIdx {
 		
@@ -73,7 +73,7 @@ if powerDialIdx {
 		surface_reset_target()
 		
 		shader_set(CRTAberr)
-		shader_set_uniform_f(shader_get_uniform(CRTAberr, "u_strength"), 0.2)
+		shader_set_uniform_f(shader_get_uniform(CRTAberr, "u_strength"), lerp(chromaAtCenter,chromaAtEdge,smoothstep(0,1,astigmaDifference)))
 		shader_set_uniform_f(shader_get_uniform(CRTAberr, "u_direction"), chromaCenter.x, chromaCenter.y)
 		draw_surface(crtTempSurface,0,0)
 		shader_reset()

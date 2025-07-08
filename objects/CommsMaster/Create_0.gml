@@ -25,6 +25,9 @@ holeStrAtCenter = 0.5
 intensityAtEdge = 0.0000035
 intensityAtCenter = 0.0001
 
+chromaAtEdge = 0.2
+chromaAtCenter = 0.5
+
 astigmaDifference = 0
 
 
