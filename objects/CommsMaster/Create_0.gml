@@ -16,7 +16,16 @@ format = vertex_format_end();
 chromaStr = 0.1
 chromaCenter = {x:0.5,y:0.5}
 
+holeSizeAtEdge = 1.1
+holeSizeAtCenter = 0.2
 
+holeStrAtEdge = 0.3
+holeStrAtCenter = 0.5
+
+intensityAtEdge = 0.0000035
+intensityAtCenter = 0.0001
+
+astigmaDifference = 0
 
 
 

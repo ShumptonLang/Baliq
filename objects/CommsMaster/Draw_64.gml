@@ -15,6 +15,8 @@ if powerDialIdx {
 		if surface_exists(crtScreenSurface) {
 			chromaCenter.x = astigmatism.x
 			chromaCenter.y = astigmatism.y
+			print(astigmatism)
+			
 			surface_set_target(crtScreenSurface)
 			//shader_set(CommCRT)
 			//shader_set_uniform_f(shader_get_uniform(CommCRT, "u_strength"), chromaStr)
@@ -53,8 +55,8 @@ if powerDialIdx {
 			shader_set(CommCRTNormalizer)
 
 			shader_set_uniform_f(shader_get_uniform(CommCRTNormalizer, "u_center"), chromaCenter.x, chromaCenter.y)
-			shader_set_uniform_f(shader_get_uniform(CommCRTNormalizer, "u_holeStrength"), 0.5)
-			shader_set_uniform_f(shader_get_uniform(CommCRTNormalizer, "u_holeRadius"), 0.9)
+			shader_set_uniform_f(shader_get_uniform(CommCRTNormalizer, "u_holeStrength"), lerp(holeStrAtCenter,holeStrAtEdge,smoothstep(0,1,astigmaDifference)))
+			shader_set_uniform_f(shader_get_uniform(CommCRTNormalizer, "u_holeRadius"), lerp(holeSizeAtCenter,holeSizeAtEdge,smoothstep(0,1,astigmaDifference)))
 			vertex_submit(vb,pr_trianglefan,_tex)
 			shader_reset()
 		surface_reset_target()
@@ -64,7 +66,8 @@ if powerDialIdx {
 			draw_clear_alpha(c_black,0)
 			shader_set(CRTBloom)
 			shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_strength"), 1)
-			shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_direction"), chromaCenter.x, chromaCenter.y)
+			shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_intensity"), lerp(intensityAtCenter,intensityAtEdge,smoothstep(0,1,astigmaDifference)))
+			shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_direction"), 0.5 + 0.12*chromaCenter.x, 0.0556 + 0.2*chromaCenter.y)
 			draw_surface(crtBleedSurface,0,0)
 			shader_reset()
 		surface_reset_target()
@@ -77,7 +80,7 @@ if powerDialIdx {
 		
 		gpu_set_blendmode(bm_normal);
 		
-		//print(oInputManager.mouse_x_gui / 1440, oInputManager.mouse_y_gui / 1080)
+		
 		vertex_delete_buffer(vb);
 
 

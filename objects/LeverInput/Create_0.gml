@@ -2,7 +2,7 @@
 event_inherited();
 
 _start = {x:1204, y:864}
-_end = {x:1267, y:908}
+_end = {x:1307, y:1008}
 
 x = _start.x
 y = _start.y
@@ -30,6 +30,6 @@ function on_interaction_end() {
 }
 
 function interaction_contains_point(x, y) {
-	if point_distance(currPos.x,currPos.y,x,y) < 50 
+	if point_distance(currPos.x,currPos.y,x,y) < 100
 		return true
 }
