@@ -58,12 +58,16 @@ shipStatus = {
 		hasLaughed: false
 	},
 	comms: {
+		startupState: new StateMachine(CommsMaster),
 		leverState: 0,
-		intro: true,
+		introState: 0,
 		bigDialState: 0,
 		PowerDialState: 0,
 		smallSwitchState: 0,
-		crtAstigma: {x:0,y:0,f:0}
+		introSpriteStates:{
+			engine:0	
+		},
+		crtAstigma: {x:1,y:1,focus:0,xv:0,yv:0}
 	}
 }
 
@@ -79,7 +83,7 @@ stateMachines = array_create(0)
 
 
 /**
- * Creates a timer that is handled by the ShipMaster. 
+ * Creates a timer that is handled by the ControllerService. 
  * @param {any*} timerGoal The amount of time the timer will exist for.
  * @param {any*} goalFunc A function that is called when the timer reaches its goal
  * @param {function} [updFunc]=nil An optional function that is called every timer tick. The update function is passed the current time of the timer.
@@ -245,3 +249,57 @@ array_push(stateMachines,shipStatus.balasts.rStateMachine)
 
 
 #endregion
+
+#region Comms Startup
+var off = new State("off")
+var sleep = new State("sleep")
+var firstEnable = new State("firstEnable")
+var enable = new State("enable")
+var transition = new State("transition")
+firstEnable.enter = function(){
+	audio_play_sound(CommFirstStartup_PowerClickOn,1,0)
+	audio_play_sound(CommFirstStartup_FanLoop,1,1)
+	ControllerService.registerTimer(3, 
+					function(){audio_play_sound(CommFirstStartup_TVStartup,1,0)})
+	ControllerService.registerTimer(5, 
+					function(){shipStatus.comms.startupState.changeState("enable")
+								fmod_studio_event_instance_start(AudioService.commsStartupI)})				
+					
+}
+
+enable.enter = function(){
+	audio_play_sound(CommFirstStartup_PowerClickOn,1,0)
+	fmod_studio_event_instance_set_paused(AudioService.commsStartupI,0)
+					
+}
+firstEnable.stop = function() {
+	audio_stop_sound(CommFirstStartup_FanLoop)
+	audio_play_sound(CommFirstStartup_PowerClickOff,1,0,2)
+}
+sleep.enter = function(){
+	audio_play_sound(CommFirstStartup_PowerClickOff,1,0,2)
+	audio_stop_sound(CommFirstStartup_TVLoop)
+	fmod_studio_event_instance_set_paused(AudioService.commsStartupI,1)
+
+}
+transition.enter = function(){
+	ControllerService.registerTimer(3,
+		function(){
+			//Needs to set the astigmatism somewhere else
+			shipStatus.comms.crtAstigma.x = irandom(1)
+			shipStatus.comms.crtAstigma.y = random(1)
+			shipStatus.comms.startupState.changeState("enable")
+		},
+		function(time){})	
+}
+
+
+
+shipStatus.comms.startupState.addState("off",off)
+shipStatus.comms.startupState.addState("sleep",sleep)
+shipStatus.comms.startupState.addState("firstEnable",firstEnable)
+shipStatus.comms.startupState.addState("enable",enable)
+
+shipStatus.comms.startupState.changeState("off")
+
+array_push(stateMachines,shipStatus.balasts.rStateMachine)

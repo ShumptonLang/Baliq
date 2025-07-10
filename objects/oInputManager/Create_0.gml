@@ -6,7 +6,9 @@ mouse_was_pressed = false
 mouse_is_pressed = false
 mouse_just_pressed = false
 mouse_just_released = false
+positionDebug = false
 wireframeDebug = false
+wireframes = []
 depth = -10000
 
 mouse_x_gui = 0
@@ -18,10 +20,12 @@ function point_in_interaction_area(obj, x, y) {
     switch (obj.interaction_shape) {
         case "rectangle":
 		if wireframeDebug
-			draw_rectangle(obj.x, 
+			array_push(wireframes, 
+			[obj.x, 
                 obj.y,
                 obj.x + obj.interaction_width, 
-                obj.y + obj.interaction_height, 1)
+                obj.y + obj.interaction_height]
+				)
             return point_in_rectangle(x, y, 
                 obj.x, 
                 obj.y,
@@ -29,7 +33,7 @@ function point_in_interaction_area(obj, x, y) {
                 obj.y + obj.interaction_height);
             
         case "circle":
-			draw_circle(obj.x, obj.y,obj.interaction_radius,1)
+			array_push(wireframes,[obj.x, obj.y,obj.interaction_radius])
             return point_distance(x, y, obj.x, obj.y) < obj.interaction_radius;
             
         case "custom":
@@ -70,3 +74,10 @@ function unregister_interactable(obj) {
     ds_priority_destroy(temp_queue);
 }
 
+function draw_wireframe(args) {
+	if array_length(args) == 4 {
+		draw_rectangle(args[0],args[1],args[2],args[3],1)	
+	} else {
+		draw_circle(args[0],args[1],args[2],1)	
+	}
+}

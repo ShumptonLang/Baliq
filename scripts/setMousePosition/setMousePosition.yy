@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"setMousePosition",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"setMousePosition",
+  "parent":{
+    "name":"Interactions",
+    "path":"folders/Scripts/Interactions.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

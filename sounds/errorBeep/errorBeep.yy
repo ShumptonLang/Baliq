@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.750188,
+  "duration":1.7502041,
   "name":"errorBeep",
   "parent":{
     "name":"Beeps",

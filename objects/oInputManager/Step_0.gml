@@ -3,7 +3,9 @@ mouse_y_gui = device_mouse_y_to_gui(0)
 mouse_is_pressed = mouse_check_button(mb_left);
 mouse_just_pressed = mouse_check_button_pressed(mb_left);
 mouse_just_released = mouse_check_button_released(mb_left);
+
 wireframeDebug = keyboard_check(vk_space)
+positionDebug = mouse_check_button(mb_middle)
 
 hover_interactable = noone
 

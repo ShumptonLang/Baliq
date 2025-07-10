@@ -25,8 +25,8 @@ void main()
 	//Start-2
 	//Dramatic-50
 	//Ancestral-200
-	for (int i = 0; i < 200; i++){
-		if (!killFlag){
+	for (int i = 0; i < 500; i++){
+		if (!killFlag && i < u_strength){
 			valueSample = texture2D(gm_BaseTexture, v_vTexcoord + vec2(float(i)*blurAngle.x,float(i)*blurAngle.y));
 			if (valueSample.r > 0.1) {
 				killFlag = true;

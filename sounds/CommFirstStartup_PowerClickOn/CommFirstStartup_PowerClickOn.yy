@@ -1,6 +1,6 @@
 {
   "$GMSound":"",
-  "%Name":"linuxBeep",
+  "%Name":"CommFirstStartup_PowerClickOn",
   "audioGroupId":{
     "name":"audiogroup_default",
     "path":"audiogroups/audiogroup_default",
@@ -9,17 +9,17 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.44408163,
-  "name":"linuxBeep",
+  "duration":1.8750113,
+  "name":"CommFirstStartup_PowerClickOn",
   "parent":{
-    "name":"Beeps",
-    "path":"folders/Sounds/Beeps.yy",
+    "name":"Sounds",
+    "path":"folders/Sounds.yy",
   },
   "preload":false,
   "resourceType":"GMSound",
   "resourceVersion":"2.0",
   "sampleRate":44100,
-  "soundFile":"linuxBeep.mp3",
+  "soundFile":"CommFirstStartup_PowerClickOn.wav",
   "type":0,
   "volume":1.0,
 }

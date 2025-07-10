@@ -22,6 +22,9 @@ eventGroanInst = fmod_studio_event_description_create_instance(eventGroan);
 eventShipAmbience = fmod_studio_system_get_event("event:/shipAmbience");
 ShipAmbienceInst = fmod_studio_event_description_create_instance(eventShipAmbience);
 
+commsStartup = fmod_studio_system_get_event("event:/commsStartup");
+commsStartupI = fmod_studio_event_description_create_instance(commsStartup);
+
 activeServices = array_create(0)
 #endregion
 
@@ -36,7 +39,7 @@ activeServices = array_create(0)
 function play(audioEvent,updateFunc, stateFunc = function(){return false}){
 		
 		array_insert(activeServices,0,{event:audioEvent,update:updateFunc,state:stateFunc})
-		fmod_studio_event_instance_start(audioEvent)
+		//fmod_studio_event_instance_start(audioEvent)
 }
 
 function playStep(service){
@@ -108,6 +111,22 @@ function shipAmbienceController(event) {
 }
 
 //AudioService.play(AudioService.ShipAmbienceInst,shipAmbienceController)
+#endregion
+
+#region Comms Startup
+function commsStartupController(event) {
+
+	
+
+	
+	fmod_studio_event_instance_set_parameter_by_name(event,"stage",ControllerService.shipStatus.comms.introState)
+	
+	
+	
+			
+}
+
+AudioService.play(AudioService.commsStartupI,commsStartupController)
 #endregion
 
 #endregion
