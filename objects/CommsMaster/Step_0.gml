@@ -1,19 +1,28 @@
-astigmaDifference = sqrt( sqr(chromaCenter.x-0.5) + sqr(chromaCenter.y-0.5))/2
+astigmaDifference = sqrt( sqr(chromaCenter.x-0.5) + sqr(chromaCenter.y-0.5))
 fmod_studio_event_instance_set_parameter_by_name(AudioService.commsStartupI,"astigmatismDifference",1-astigmaDifference)
 
-if astigmaDifference > 0.5 {
-	ControllerService.shipStatus.comms.crtAstigma.xv *= 0.98
-	ControllerService.shipStatus.comms.crtAstigma.yv *= 0.98
-} else if astigmaDifference > 0.25 {
-	ControllerService.shipStatus.comms.crtAstigma.xv *= 0.96
-	ControllerService.shipStatus.comms.crtAstigma.yv *= 0.96
-} else {
-	ControllerService.shipStatus.comms.crtAstigma.xv *= 0.92
-	ControllerService.shipStatus.comms.crtAstigma.yv *= 0.92
-}
-
-
-
+var frict = lerp(0.8,0.9999,smoothstep(0,1,astigmaDifference))
+ControllerService.shipStatus.comms.crtAstigma.xv *= frict
+ControllerService.shipStatus.comms.crtAstigma.yv *= frict
 
 ControllerService.shipStatus.comms.crtAstigma.x += ControllerService.shipStatus.comms.crtAstigma.xv
 ControllerService.shipStatus.comms.crtAstigma.y += ControllerService.shipStatus.comms.crtAstigma.yv
+
+ControllerService.shipStatus.comms.crtAstigma.x = clamp(ControllerService.shipStatus.comms.crtAstigma.x,-0.1,1.1)
+ControllerService.shipStatus.comms.crtAstigma.y = clamp(ControllerService.shipStatus.comms.crtAstigma.y,-0.1,1.1)
+
+
+var currentStage = ControllerService.shipStatus.comms.introState
+
+if ControllerService.shipStatus.comms.startupState.currentState.name != "transition" and ControllerService.shipStatus.comms.startupState.currentState.name != "finale" {
+	holeStr = lerp(holeStrAtCenter,holeStrAtEdge,smoothstep(0,1,astigmaDifference))
+	holeSize = lerp(holeSizeAtCenter,holeSizeAtEdge,smoothstep(0,1,astigmaDifference))
+	rayLength = lerp(rayLengthAtCenter,rayLengthAtEdge,smoothstep(0,0.5,astigmaDifference))
+	rayIntensity =  lerp(intensityAtCenter[currentStage],intensityAtEdge,smoothstep(0,0.5,astigmaDifference))
+	chroma = lerp(chromaAtCenter[currentStage],chromaAtEdge,smoothstep(0,0.5,astigmaDifference))
+}
+
+if astigmaDifference < 0.05 and ControllerService.shipStatus.comms.startupState.currentState.name != "transition" and ControllerService.shipStatus.comms.startupState.currentState.name != "finale" {
+	print(astigmaDifference, "triggering Transition",ControllerService.shipStatus.comms.startupState.currentState.name )
+	escalateStage()	
+}

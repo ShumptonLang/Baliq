@@ -26,7 +26,8 @@ function on_interaction_start(){
 function on_interaction_update(){
 	getPositionPulled()
 	ControllerService.shipStatus.comms.leverState = pctPulled
-	ControllerService.shipStatus.comms.crtAstigma.yv += (pctPulled - 0.5)*0.0004
+	if ControllerService.shipStatus.comms.startupState.currentState.name == "enable"
+		ControllerService.shipStatus.comms.crtAstigma.yv += (pctPulled - 0.5)*0.0004
 }
 
 function on_interaction_end() {

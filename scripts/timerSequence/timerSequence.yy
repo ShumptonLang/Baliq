@@ -1,0 +1,13 @@
+{
+  "$GMScript":"v1",
+  "%Name":"timerSequence",
+  "isCompatibility":false,
+  "isDnD":false,
+  "name":"timerSequence",
+  "parent":{
+    "name":"StateMachine",
+    "path":"folders/Scripts/StateMachine.yy",
+  },
+  "resourceType":"GMScript",
+  "resourceVersion":"2.0",
+}

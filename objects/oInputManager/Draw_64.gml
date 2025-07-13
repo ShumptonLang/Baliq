@@ -1,4 +1,5 @@
-array_foreach(wireframes,draw_wireframe)
+if wireframeDebug
+	array_foreach(wireframes,draw_wireframe)
 wireframes = []
 
 if positionDebug {

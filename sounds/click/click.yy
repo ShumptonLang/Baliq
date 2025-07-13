@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":1.406259,
+  "duration":1.4062585,
   "name":"click",
   "parent":{
     "name":"Sounds",

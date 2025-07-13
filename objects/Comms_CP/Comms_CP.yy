@@ -33,10 +33,7 @@
   "resourceType":"GMObject",
   "resourceVersion":"2.0",
   "solid":false,
-  "spriteId":{
-    "name":"RadioLowLightBlank",
-    "path":"sprites/RadioLowLightBlank/RadioLowLightBlank.yy",
-  },
+  "spriteId":null,
   "spriteMaskId":null,
   "visible":true,
 }

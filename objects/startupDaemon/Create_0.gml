@@ -1,5 +1,5 @@
 
-window_set_size(1440,1080)
+window_set_size(1920,1080)
 game_set_speed(60,gamespeed_fps)
 
 gpu_set_texfilter(true)
@@ -43,10 +43,18 @@ surface_reset_target()
 #endregion
 
 
+
+
 instance_create_depth(0,0,0,FMODManager)
 instance_create_depth(0,0,-1000,oInputManager)
 instance_create_depth(0,0,0,ControllerService)
 instance_create_depth(0,0,0,AudioService)
 instance_create_depth(0,0,0,ShipMaster)
+instance_create_depth(0,0,0,RenderManager)
 
-room_goto(Cockpit)
+videoIntroSurface = surface_create(1920,1080)
+video_open("Fino264.mp4")
+
+clickCount = 0
+
+//room_goto(Cockpit)

@@ -13,14 +13,13 @@ interaction_radius = 25;
 
 
 function on_interaction_end() {
-	print(ControllerService.shipStatus.comms.startupState.currentState.name)
 	switch (ControllerService.shipStatus.comms.startupState.currentState.name) {
 		case "off":
 			print("moving to first enable!")
 			ControllerService.shipStatus.comms.startupState.changeState("firstEnable")
 			break
 		case "enable":
-			ControllerService.shipStatus.comms.startupState.changeState("sleep")
+			//ControllerService.shipStatus.comms.startupState.changeState("sleep")
 			break
 		case "sleep":
 			ControllerService.shipStatus.comms.startupState.changeState("enable")

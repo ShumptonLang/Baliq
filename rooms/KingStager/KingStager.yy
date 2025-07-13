@@ -1,7 +1,7 @@
 {
   "$GMRoom":"v1",
   "%Name":"KingStager",
-  "creationCodeFile":"",
+  "creationCodeFile":"rooms/KingStager/RoomCreationCode.gml",
   "inheritCode":false,
   "inheritCreationOrder":false,
   "inheritLayers":false,
@@ -34,7 +34,7 @@
     "Height":1080,
     "inheritRoomSettings":false,
     "persistent":false,
-    "Width":1440,
+    "Width":1920,
   },
   "sequenceId":null,
   "views":[

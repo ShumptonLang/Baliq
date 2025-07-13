@@ -1,7 +1,7 @@
 // Inherit the parent event
 event_inherited();
 
-interaction_shape = "rectangle"
+interaction_shape = "custom"
 
 x = 0
 y = 0
@@ -12,7 +12,6 @@ function on_interaction_end() {
 }
 
 function interaction_contains_point(x, y) {
-    // Custom collision checking (only used if interaction_shape is "custom")
-	print("Checking")
-    return point_in_rectangle(x,y,0,0,300,300);
+
+    return point_in_rectangle(x,y,0,0,600,600);
 }

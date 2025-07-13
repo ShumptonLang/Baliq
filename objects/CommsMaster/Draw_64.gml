@@ -6,24 +6,34 @@ var bigDialIDX = ControllerService.shipStatus.comms.bigDialState
 var powerDialIdx = ControllerService.shipStatus.comms.PowerDialState
 var smallDialIDX = ControllerService.shipStatus.comms.smallSwitchState
 
-print(ControllerService.shipStatus.comms.startupState.currentState.name)
+var brightnessMask = ControllerService.shipStatus.comms.totalPeriphAlpha
+var isEnabled = ControllerService.shipStatus.comms.startupState.currentState.name == "enable"
+var isFinale = ControllerService.shipStatus.comms.startupState.currentState.name == "finale"
+var isTransition = ControllerService.shipStatus.comms.startupState.currentState.name == "transition"
 
-if ControllerService.shipStatus.comms.startupState.currentState.name == "enable" {
-		
-		draw_sprite_ext(CRTFrame,0,0,0,0.5,0.5,0,c_white,powerDialIdx*random_range(0.4,lerp(1,0.6,smoothstep(0,1,astigmaDifference))))
+if isEnabled or isTransition or isFinale  {
+		draw_sprite_ext(CRTFrame,0,0,0,0.5,0.5,0,c_white,random_range(0.4,lerp(1,0.6,smoothstep(0,1,astigmaDifference))))
 		var astigmatism = ControllerService.shipStatus.comms.crtAstigma
 		
 		if surface_exists(crtScreenSurface) {
 			chromaCenter.x = astigmatism.x
 			chromaCenter.y = astigmatism.y
-			//print(astigmatism)
+
 			
 			surface_set_target(crtScreenSurface)
-			//shader_set(CommCRT)
-			//shader_set_uniform_f(shader_get_uniform(CommCRT, "u_strength"), chromaStr)
-			//shader_set_uniform_f(shader_get_uniform(CommCRT, "u_center"), chromaCenter.x, chromaCenter.y)
-			draw_sprite_ext(sStatic,round((current_time)%8),0,0,1,1,0,c_white,random_range(0.3,lerp(1,0.6,smoothstep(0,1,astigmaDifference))))
-			//shader_reset()
+			draw_clear_alpha(c_black,0)
+			if ControllerService.shipStatus.comms.startupState.currentState.name != "transition" and !isFinale {
+				draw_sprite_ext(sStatic,round((current_time)%8),0,0,1,1,0,c_white,random_range(0.7,lerp(1,0.8,smoothstep(0,1,astigmaDifference))))
+			} else {
+				switch (ControllerService.shipStatus.comms.introSpriteStates.crt){
+					case 0:
+						draw_sprite_ext(sStatic,round((current_time)%8),0,0,1,1,0,c_white,random_range(0.5,0.6))
+						draw_sprite_ext(errorSprites[ControllerService.shipStatus.comms.introState],0,0,15,1,1,0,c_white,random_range(0.4,0.5))
+					case 1:
+						draw_sprite_ext(sStatic,round((current_time)%8),0,0,1,1,0,c_white,random_range(0.3,0.4))
+						draw_sprite_ext(errorSprites[ControllerService.shipStatus.comms.introState],0,0,15,1,1,0,c_white,random_range(0.4,0.5))
+				}
+			}
 			surface_reset_target()
 		}
 		
@@ -53,30 +63,35 @@ if ControllerService.shipStatus.comms.startupState.currentState.name == "enable"
 		surface_set_target(crtBleedSurface)
 			draw_clear_alpha(c_black,0)
 			var _tex = surface_get_texture(crtScreenSurface)
-			shader_set(CommCRTNormalizer)
+			
+			if ControllerService.shipStatus.comms.startupState.currentState.name != "transition"
+				shader_set(CommCRTNormalizer)
 
 			shader_set_uniform_f(shader_get_uniform(CommCRTNormalizer, "u_center"), chromaCenter.x, chromaCenter.y)
-			shader_set_uniform_f(shader_get_uniform(CommCRTNormalizer, "u_holeStrength"), lerp(holeStrAtCenter,holeStrAtEdge,smoothstep(0,1,astigmaDifference)))
-			shader_set_uniform_f(shader_get_uniform(CommCRTNormalizer, "u_holeRadius"), lerp(holeSizeAtCenter,holeSizeAtEdge,smoothstep(0,1,astigmaDifference)))
+			shader_set_uniform_f(shader_get_uniform(CommCRTNormalizer, "u_holeStrength"), holeStr)
+			shader_set_uniform_f(shader_get_uniform(CommCRTNormalizer, "u_holeRadius"), holeSize)
+			
 			vertex_submit(vb,pr_trianglefan,_tex)
-			shader_reset()
+			if ControllerService.shipStatus.comms.startupState.currentState.name != "transition"
+				shader_reset()
 		surface_reset_target()
 		
 		
 		surface_set_target(crtTempSurface)
 			draw_clear_alpha(c_black,0)
 			shader_set(CRTBloom)
-			shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_strength"), lerp(rayLengthAtCenter,rayLengthAtEdge,smoothstep(0,0.5,astigmaDifference)))
-			shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_intensity"), lerp(intensityAtCenter,intensityAtEdge,smoothstep(0,0.5,astigmaDifference)))
+			shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_strength"), rayLength)
+			shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_intensity"), rayIntensity)
 			shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_direction"), 792/1440, 390/1080)
 			draw_surface(crtBleedSurface,0,0)
 			shader_reset()
 		surface_reset_target()
 		
 		shader_set(CRTAberr)
-		shader_set_uniform_f(shader_get_uniform(CRTAberr, "u_strength"), lerp(chromaAtCenter,chromaAtEdge,smoothstep(0,0.5,astigmaDifference)))
+		shader_set_uniform_f(shader_get_uniform(CRTAberr, "u_strength"), chroma)
 		shader_set_uniform_f(shader_get_uniform(CRTAberr, "u_direction"), chromaCenter.x, chromaCenter.y)
 		draw_surface(crtTempSurface,0,0)
+		
 		shader_reset()
 		
 		gpu_set_blendmode(bm_normal);
@@ -90,11 +105,13 @@ if ControllerService.shipStatus.comms.startupState.currentState.name == "enable"
 
 
 
-draw_sprite_ext(RadioLowLightBlank50,0,0,0,0.5,0.5,0,c_white,flicker)
-draw_sprite_ext(sBigDial,bigDialIDX,0,0,0.5,0.5,0,c_white,flicker)
-draw_sprite_ext(sRadioLever,leverIdx,0,0,0.5,0.5,0,c_white,flicker)
-draw_sprite_ext(sPowerDial,powerDialIdx,0,0,0.5,0.5,0,c_white,flicker)
-draw_sprite_ext(sSmallSwitch,smallDialIDX,0,0,0.5,0.5,0,c_white,flicker)
+draw_sprite_ext(RadioLowLightBlank50,0,0,0,0.5,0.5,0,c_white,0.5*brightnessMask)
+draw_sprite_ext(Engine,0,0,0,0.5,0.5,0,c_white,ControllerService.shipStatus.comms.introSpriteStates.engine*0.25*brightnessMask)
+draw_sprite_ext(Speakers,0,0,0,0.5,0.5,0,c_white,ControllerService.shipStatus.comms.introSpriteStates.speakers*((sin(current_time/1000)+4)/5 + random_range(0,0.01))*brightnessMask)
+draw_sprite_ext(sBigDial,bigDialIDX,0,0,0.5,0.5,0,c_white,brightnessMask)
+draw_sprite_ext(sRadioLever,leverIdx,0,0,0.5,0.5,0,c_white,brightnessMask)
+draw_sprite_ext(sPowerDial,powerDialIdx,0,0,0.5,0.5,0,c_white,brightnessMask)
+draw_sprite_ext(sSmallSwitch,smallDialIDX,0,0,0.5,0.5,0,c_white,brightnessMask)
 
 
 

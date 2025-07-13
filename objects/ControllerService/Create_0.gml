@@ -60,12 +60,15 @@ shipStatus = {
 	comms: {
 		startupState: new StateMachine(CommsMaster),
 		leverState: 0,
+		totalPeriphAlpha: 1,
 		introState: 0,
 		bigDialState: 0,
 		PowerDialState: 0,
 		smallSwitchState: 0,
 		introSpriteStates:{
-			engine:0	
+			engine:0,
+			speakers:0,
+			crt:0
 		},
 		crtAstigma: {x:1,y:1,focus:0,xv:0,yv:0}
 	}
@@ -256,6 +259,10 @@ var sleep = new State("sleep")
 var firstEnable = new State("firstEnable")
 var enable = new State("enable")
 var transition = new State("transition")
+var finale = new State("finale")
+
+commsTransitionSequence = new timerSequence([0,4750,6656])
+
 firstEnable.enter = function(){
 	audio_play_sound(CommFirstStartup_PowerClickOn,1,0)
 	audio_play_sound(CommFirstStartup_FanLoop,1,1)
@@ -283,22 +290,120 @@ sleep.enter = function(){
 
 }
 transition.enter = function(){
-	ControllerService.registerTimer(3,
+	audio_play_sound(CommFirstStartup_Transition,1,0,3)
+	ControllerService.registerTimer(11.1,
 		function(){
 			//Needs to set the astigmatism somewhere else
 			shipStatus.comms.crtAstigma.x = irandom(1)
-			shipStatus.comms.crtAstigma.y = random(1)
+			shipStatus.comms.crtAstigma.y = irandom(1)
+			
 			shipStatus.comms.startupState.changeState("enable")
+			shipStatus.comms.introSpriteStates.crt = 0
+			audio_play_sound(CommFirstStartup_Spotlight,1,0)
+			shipStatus.comms.totalPeriphAlpha = 1
+			ControllerService.commsTransitionSequence = new timerSequence([0,4750,6656])
 		},
-		function(time){})	
-}
+		function(elapsed){
+			//print("Transition Timer at:", elapsed, CommsMaster.rayIntensity, CommsMaster.rayLength )
+			switch(ControllerService.commsTransitionSequence.sampleSequence(elapsed)) {
+				
+				case 0:	
+				
+				shipStatus.comms.totalPeriphAlpha = 0.0
+					switch(shipStatus.comms.introState) {
+						case 0:
+							CommsMaster.rayIntensity = 0.0001
+							CommsMaster.rayLength = 200
+						break
+						
+						case 1:
+							CommsMaster.rayIntensity = 0.001
+							CommsMaster.rayLength = 200
+						break
+						
+						case 2:
+							CommsMaster.rayIntensity = 0.005
+							CommsMaster.rayLength = 300
+						break
+					}
+				break
+				
+				case 1:
+					CommsMaster.rayIntensity = 0.000035
+					CommsMaster.rayLength = 10
+					shipStatus.comms.introSpriteStates.crt = 1
+				break
+				
+				
+				case 2:
+					
+					print(shipStatus.comms.introState)
+					
+					switch(shipStatus.comms.introState) {
+						case 0:
+						audio_play_sound(CommFirstStartup_Engine,1,0,3)
+							shipStatus.comms.introSpriteStates.engine = true
+							shipStatus.comms.introState = 1
+						break
+						
+						case 1:
+						audio_play_sound(CommFirstStartup_Spotlight,1,0,3)
+						audio_play_sound(CommFirstStartup_Feedback,1,0,3)
+							shipStatus.comms.introSpriteStates.speakers = true
+							shipStatus.comms.introState = 2
+						break
+					}
 
+				break
+			}
+			
+			//if elapsed < 2000{
+			//	CommsMaster.rayIntensity = 0.0001
+			//	CommsMaster.rayLength = 200
+			//}
+			//if elapsed > 175 and elapsed < 250{
+			//	CommsMaster.rayIntensity = 0.0001
+			//	CommsMaster.rayLength = 0
+			//}
+			//if elapsed > 250 and elapsed < 325{
+			//	CommsMaster.rayIntensity = 0.0001
+			//	CommsMaster.rayLength = 200
+			//}
+			//if elapsed > 325 and elapsed < 400{
+			//	CommsMaster.rayIntensity = 0.0001
+			//	CommsMaster.rayLength = 0
+			//}
+			//if elapsed > 2000 and elapsed < 4000{
+			//	CommsMaster.rayIntensity = 0.000035
+			//	CommsMaster.rayLength = 10
+			//	shipStatus.comms.introState = 1
+			//}
+			//if elapsed > 3000 {
+			//	if !audio_exists(CommFirstStartup_Engine)
+			//		audio_play_sound(CommFirstStartup_Engine)
+			//	shipStatus.comms.introSpriteStates.engine = true	
+			//}
+		})	
+}
+finale.enter = function () {
+	print("Finale Triggering")
+	audio_play_sound(CommFirstStartup_Spotlight,1,0,3)
+	audio_play_sound(CommFirstStartup_TransitionFinale,1,0,3)
+	//shipStatus.comms.introState = 0
+	shipStatus.comms.totalPeriphAlpha = 0
+	//shipStatus.comms.introSpriteStates.crt = 1
+	CommsMaster.rayIntensity = 0.002
+	CommsMaster.rayLength = 300
+	CommsMaster.chroma = 0.4
+}
 
 
 shipStatus.comms.startupState.addState("off",off)
 shipStatus.comms.startupState.addState("sleep",sleep)
 shipStatus.comms.startupState.addState("firstEnable",firstEnable)
 shipStatus.comms.startupState.addState("enable",enable)
+shipStatus.comms.startupState.addState("transition",transition)
+shipStatus.comms.startupState.addState("finale",finale)
 
 shipStatus.comms.startupState.changeState("off")
 

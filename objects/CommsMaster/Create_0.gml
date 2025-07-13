@@ -13,28 +13,40 @@ vertex_format_add_colour();
 vertex_format_add_texcoord();
 format = vertex_format_end();
 
+crtImage = sStatic
 
-chromaCenter = {x:0.5,y:0.5}
+chromaCenter = {x:1,y:1}
 
+errorSprites = [Error,ErrorT,ErrorC]
+
+holeSize = 0
 holeSizeAtEdge = 1.1
 holeSizeAtCenter = 0.1
 
-holeStrAtEdge = 0.35
+holeStr = 0
+holeStrAtEdge = 0.2
 holeStrAtCenter = 0.3
 
+rayLength = 0
 rayLengthAtCenter = 100
 rayLengthAtEdge = 100
 
+rayIntensity = 0
 intensityAtEdge = 0.0000035
-intensityAtCenter = 0.00001
+intensityAtCenter = [0.00001,0.0001,0.001]
 
-chromaAtEdge = 0.05
-chromaAtCenter = 0.1
+chroma = 0
+chromaAtEdge = 0.08
+chromaAtCenter = [0.1,0.2,0.3]
 
 astigmaDifference = 0
 
 function escalateStage(){
 	
+	if ControllerService.shipStatus.comms.introState == 2
+		ControllerService.shipStatus.comms.startupState.changeState("finale")
+	else
+		ControllerService.shipStatus.comms.startupState.changeState("transition")
 	//Ramp up rays and intensity for a split second, Play a transcendental success sound and show a new image (White Circle) for a few seconds
 	//Add the next Part of the scene
 	

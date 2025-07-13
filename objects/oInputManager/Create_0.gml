@@ -13,7 +13,7 @@ depth = -10000
 
 mouse_x_gui = 0
 mouse_y_gui = 0
-show_debug_overlay(1)
+//show_debug_overlay(1)
 
 function point_in_interaction_area(obj, x, y) {
     // Check different collision shapes based on the object's interaction_shape property

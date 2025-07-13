@@ -9,7 +9,7 @@
   "bitRate":128,
   "compression":0,
   "conversionMode":0,
-  "duration":0.130594,
+  "duration":0.13061224,
   "name":"shortHiBeep",
   "parent":{
     "name":"Beeps",
