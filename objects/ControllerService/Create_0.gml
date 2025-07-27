@@ -68,7 +68,8 @@ shipStatus = {
 		introSpriteStates:{
 			engine:0,
 			speakers:0,
-			crt:0
+			crt:0,
+			hideAll:0
 		},
 		crtAstigma: {x:1,y:1,focus:0,xv:0,yv:0}
 	}
@@ -261,7 +262,7 @@ var enable = new State("enable")
 var transition = new State("transition")
 var finale = new State("finale")
 
-commsTransitionSequence = new timerSequence([0,4750,6656])
+commsTransitionSequence = new timerSequence([0,4750,6656,6736])
 
 firstEnable.enter = function(){
 	audio_play_sound(CommFirstStartup_PowerClickOn,1,0)
@@ -302,6 +303,7 @@ transition.enter = function(){
 			audio_play_sound(CommFirstStartup_Spotlight,1,0)
 			shipStatus.comms.totalPeriphAlpha = 1
 			ControllerService.commsTransitionSequence = new timerSequence([0,4750,6656])
+			fmod_studio_event_instance_set_volume(AudioService.commsStartupI, 1)
 		},
 		function(elapsed){
 			//print("Transition Timer at:", elapsed, CommsMaster.rayIntensity, CommsMaster.rayLength )
@@ -309,7 +311,7 @@ transition.enter = function(){
 				
 				case 0:	
 				
-				shipStatus.comms.totalPeriphAlpha = 0.0
+				shipStatus.comms.totalPeriphAlpha = 1
 					switch(shipStatus.comms.introState) {
 						case 0:
 							CommsMaster.rayIntensity = 0.0001
@@ -332,18 +334,20 @@ transition.enter = function(){
 					CommsMaster.rayIntensity = 0.000035
 					CommsMaster.rayLength = 10
 					shipStatus.comms.introSpriteStates.crt = 1
+					//if shipStatus.comms.introState == 0
+						fmod_studio_event_instance_set_volume(AudioService.commsStartupI, 0)
 				break
 				
 				
 				case 2:
 					
-					print(shipStatus.comms.introState)
+					//print(shipStatus.comms.introState)
 					
 					switch(shipStatus.comms.introState) {
 						case 0:
-						audio_play_sound(CommFirstStartup_Engine,1,0,3)
+							shipStatus.comms.introSpriteStates.hideAll = true
 							shipStatus.comms.introSpriteStates.engine = true
-							shipStatus.comms.introState = 1
+							audio_play_sound(whitNoise,1,0,0.2)
 						break
 						
 						case 1:
@@ -355,6 +359,15 @@ transition.enter = function(){
 					}
 
 				break
+				
+				case 3:
+					switch(shipStatus.comms.introState) {
+						case 0:
+							shipStatus.comms.introSpriteStates.hideAll = false
+							shipStatus.comms.introState = 1
+							audio_stop_sound(whitNoise)
+						break
+					}
 			}
 			
 			//if elapsed < 2000{
@@ -387,6 +400,7 @@ transition.enter = function(){
 }
 finale.enter = function () {
 	print("Finale Triggering")
+	fmod_studio_event_instance_set_paused(AudioService.commsStartupI,1)
 	audio_play_sound(CommFirstStartup_Spotlight,1,0,3)
 	audio_play_sound(CommFirstStartup_TransitionFinale,1,0,3)
 	//shipStatus.comms.introState = 0

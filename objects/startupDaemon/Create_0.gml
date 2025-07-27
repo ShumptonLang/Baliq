@@ -1,9 +1,9 @@
 
-window_set_size(1920,1080)
+window_set_size(3840,2160)
 game_set_speed(60,gamespeed_fps)
 
 gpu_set_texfilter(true)
-gpu_set_texrepeat(true)
+gpu_set_texrepeat(false)
 
 #region Map Buffer Creation
 
@@ -57,4 +57,4 @@ video_open("Fino264.mp4")
 
 clickCount = 0
 
-//room_goto(Cockpit)
+room_goto(Cockpit)

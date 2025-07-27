@@ -19,6 +19,10 @@ void main()
 	float red = texture2D(gm_BaseTexture, v_vTexcoord + chroma).r;
     float blue = texture2D(gm_BaseTexture, v_vTexcoord - chroma).b;
 	float green = (red+blue)/2.;
+	float alpha = 1.0;
+	if (red <= 0.001 && blue <= 0.001) {
+		alpha = 0.0;	
+	}
 	
-    gl_FragColor = vec4(red, green, blue, 1.0) * v_vColour;
+    gl_FragColor = vec4(red, green, blue, alpha);
 }

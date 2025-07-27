@@ -29,9 +29,9 @@ void main()
 		if (!killFlag && i < u_strength){
 			valueSample = texture2D(gm_BaseTexture, v_vTexcoord + vec2(float(i)*blurAngle.x,float(i)*blurAngle.y));
 			float avg = (valueSample.r + valueSample.g + valueSample.b)/3.;
-			if (avg > 0.2) {
+			if (valueSample.a > 0.25 && avg > 0.9) {
 				killFlag = true;
-				finVal = vec4(1.);
+				finVal = texture2D(gm_BaseTexture, v_vTexcoord);
 				
 				//start-0.1/0.0000035
 				//dramatic-0.1/0.00001
