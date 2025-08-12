@@ -11,7 +11,7 @@ for (var i = 0; i <= array_length(parentRenderLayers) - 1; i++) {
 		var renderLayerKey = renderLayers[j]
 		var currentRenderLayerSurface = currentParent[$ renderLayerKey]
 
-		draw_surface(currentRenderLayerSurface,0,0)
+		draw_surface_with_alpha(currentRenderLayerSurface,0,0)
 
 	}
 	

@@ -24,9 +24,21 @@ show_debug_overlay(1)
  enum roomDisplayType {
 	smallScreen,
 	fullScreen
-	
+}
+
+enum screenDimensions {
+	x4K = 3840,
+	x2K = 2880,
+	y4K = 2160
 }
  
+ 
+
+function draw_surface_with_alpha(surf, x, y, alpha = 1) {
+    gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha); // Premultiplied alpha blend
+    draw_surface_ext(surf, x, y, 1, 1, 0, c_white, alpha);
+    gpu_set_blendmode(bm_normal);
+}
 
 function drawToLayer(surface, drawLayer,roomDisplaySize, subLayer = "base", shader = -1){
 	
@@ -49,9 +61,9 @@ function drawToLayer(surface, drawLayer,roomDisplaySize, subLayer = "base", shad
 			shader_set(shader)
 		
 		if roomDisplaySize == roomDisplayType.smallScreen
-			draw_surface(surface,240,0)
+			draw_surface_with_alpha(surface,240,0)
 		else
-			draw_surface(surface,0,0)
+			draw_surface_with_alpha(surface,0,0)
 		
 		surface_reset_target()
 		
@@ -86,3 +98,34 @@ function drawToLayer(surface, drawLayer,roomDisplaySize, subLayer = "base", shad
 	draw_clear_alpha(c_black,alpha)
 	surface_reset_target()
  }
+ 
+ function ensure_surface(surf, width, height) {
+    if !surface_exists(surf) {
+        return surface_create(width, height);
+    }
+    return surf;
+}
+
+
+function prepare_surface_for_drawing(surf, width, height, clear_alpha = 0) {
+    if !surface_exists(surf) {
+        surf = surface_create(width, height);
+    }
+    
+    surface_set_target(surf);
+    
+    // CRITICAL: Set blend mode BEFORE clearing
+    gpu_set_blendmode_ext(bm_one, bm_zero); // This overwrites everything
+    draw_clear_alpha(c_black, clear_alpha);
+    
+    // Set proper blend mode for drawing with alpha
+    gpu_set_blendmode_ext(bm_src_alpha, bm_inv_src_alpha);
+    
+    return surf;
+}
+
+function finish_surface_drawing() {
+    gpu_set_blendmode(bm_normal);
+    surface_reset_target();
+}
+
