@@ -1,7 +1,6 @@
 var parentRenderLayers = struct_get_names(layers)
 
-//Blend set to add because otherwise alpha doesn't work. No clue why
-//gpu_set_blendmode(bm_add)
+gpu_set_blendmode(bm_normal);
 for (var i = 0; i <= array_length(parentRenderLayers) - 1; i++) {
 	var currentParentKey = parentRenderLayers[i]
 	var currentParent = layers[$ currentParentKey]

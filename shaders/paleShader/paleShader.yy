@@ -1,0 +1,12 @@
+{
+  "$GMShader":"",
+  "%Name":"paleShader",
+  "name":"paleShader",
+  "parent":{
+    "name":"shaders",
+    "path":"folders/PaleRoom/shaders.yy",
+  },
+  "resourceType":"GMShader",
+  "resourceVersion":"2.0",
+  "type":1,
+}

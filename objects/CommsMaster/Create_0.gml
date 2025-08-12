@@ -116,7 +116,7 @@ function addCRTHole(isTransition){
 function crtBloomConf(){
 	shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_strength"), rayLength)
 	shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_intensity"), rayIntensity)
-	shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_direction"), (800+random_range(-0,0))/1920, (367 + random_range(-0,0))/1080)
+	shader_set_uniform_f(shader_get_uniform(CRTBloom, "u_direction"), (800-240+random_range(-0,0))/1920, (367 + random_range(-0,0))/1080)
 }
 
 function crtChromaticAberrationConf(){

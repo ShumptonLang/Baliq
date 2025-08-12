@@ -15,7 +15,7 @@ var isTransition = ControllerService.shipStatus.comms.startupState.currentState.
 
 if isEnabled or isTransition or isFinale  {
 		
-		RenderManager.surfaceClear(displaySurface)
+		RenderManager.surfaceClear(displaySurface,0)
 		surface_set_target(displaySurface)
 		draw_sprite_ext(CRTFrame,0,0,0,0.5,0.5,0,c_white,random_range(1,lerp(1,1,smoothstep(0,1,astigmaDifference))))
 		surface_reset_target()
@@ -48,13 +48,13 @@ if isEnabled or isTransition or isFinale  {
 
 }
 
-RenderManager.surfaceClear(displaySurface)
+RenderManager.surfaceClear(displaySurface, 0)
 
 
 
 surface_set_target(displaySurface)
 draw_sprite_ext(RadioLowLightBlank50,0,0,0,0.5,0.5,0,c_white,1)
-draw_sprite_ext(Engine,0,0,0,0.5,0.5,0,c_white,ControllerService.shipStatus.comms.introSpriteStates.engine*1)
+draw_sprite_ext(Engine,0,0,0,0.5,0.5,0,c_white,ControllerService.shipStatus.comms.introSpriteStates.engine)
 
 draw_sprite_ext(sBigDial,bigDialIDX,0,0,0.5,0.5,0,c_white,1)
 draw_sprite_ext(sRadioLever,leverIdx,0,0,0.5,0.5,0,c_white,1)
@@ -67,22 +67,22 @@ RenderManager.applyShaderToLayer("object",CRTExposure,"machinery",exposureTest)
 if isTransition and ControllerService.shipStatus.comms.introSpriteStates.crt == 0
 	RenderManager.applyShaderToLayer("object", MachineryBloom, "machinery", machineryBloomConf)
 	
-RenderManager.surfaceClear(displaySurface)
+RenderManager.surfaceClear(displaySurface,0)
 
 surface_set_target(displaySurface)
 draw_sprite_ext(Speakers,0,0,0,0.5,0.5,0,c_white,ControllerService.shipStatus.comms.introSpriteStates.speakers)
 surface_reset_target()
 
-RenderManager.drawToLayer(displaySurface, "object", displayType, "speaker")
-RenderManager.applyShaderToLayer("object",CRTExposure,"speaker",exposureSpeaker)
+RenderManager.drawToLayer(displaySurface, "ui", displayType, "speaker")
+RenderManager.applyShaderToLayer("ui",CRTExposure,"speaker",exposureSpeaker)
 
 
 
 
 if ControllerService.shipStatus.comms.introSpriteStates.hideAll {
-	RenderManager.surfaceClear(displaySurface)
+	RenderManager.surfaceClear(displaySurface,1)
 	surface_set_target(displaySurface)
-	draw_rectangle_colour(0,0,window_get_width(),window_get_height(),c_black,c_black,c_black,c_black,0)	
+	draw_rectangle_colour(0,0,surface_get_width(displaySurface),surface_get_height(displaySurface),c_black,c_black,c_black,c_black,0)	
 	surface_reset_target()
 	RenderManager.drawToLayer(displaySurface, "ui", displayType)
 	

@@ -57,4 +57,4 @@ video_open("Fino264.mp4")
 
 clickCount = 0
 
-room_goto(Cockpit)
+//room_goto(Cockpit)

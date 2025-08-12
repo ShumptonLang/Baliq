@@ -1,8 +1,8 @@
 depth = -600
-gpu_set_colorwriteenable(1,1,1,1)
-gpu_set_blendenable(true);
+//gpu_set_colorwriteenable(1,1,1,0)
+//gpu_set_blendenable(true);
 
-//show_debug_overlay(1)
+show_debug_overlay(1)
 
  initialWindowDimensions = {x:0,y:0}
  initialWindowDimensions.x = window_get_width()
@@ -35,7 +35,7 @@ function drawToLayer(surface, drawLayer,roomDisplaySize, subLayer = "base", shad
 		if struct_exists(layers,drawLayer) {
 
 			if !struct_exists(layers[$ drawLayer],subLayer){
-				layers[$ drawLayer][$ subLayer] = surface_create(initialWindowDimensions.x,initialWindowDimensions.y)
+				layers[$ drawLayer][$ subLayer] = surface_create(surface_get_width(surface),surface_get_height(surface))
 			}
 
 			surface_set_target(layers[$ drawLayer][$ subLayer])
@@ -81,8 +81,8 @@ function drawToLayer(surface, drawLayer,roomDisplaySize, subLayer = "base", shad
 	 gpu_set_blendmode(bm_normal);
  }
  
- function surfaceClear(surface) {
+ function surfaceClear(surface, alpha) {
 	surface_set_target(surface)
-	draw_clear_alpha(c_black,0)
+	draw_clear_alpha(c_black,alpha)
 	surface_reset_target()
  }

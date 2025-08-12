@@ -76,7 +76,7 @@ shipStatus = {
 }
 
 roomStack = array_create(1,room)
-offlimitRooms = [MapTest,Cockpit]
+offlimitRooms = [MapTest,Cockpit, PaleRoom]
 roomLock = false
 
 
@@ -334,7 +334,7 @@ transition.enter = function(){
 					CommsMaster.rayIntensity = 0.000035
 					CommsMaster.rayLength = 10
 					shipStatus.comms.introSpriteStates.crt = 1
-					//if shipStatus.comms.introState == 0
+					if shipStatus.comms.introState == 0
 						fmod_studio_event_instance_set_volume(AudioService.commsStartupI, 0)
 				break
 				
