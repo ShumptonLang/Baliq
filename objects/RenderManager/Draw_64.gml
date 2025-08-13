@@ -1,6 +1,6 @@
 var parentRenderLayers = struct_get_names(layers)
 
-gpu_set_blendmode(bm_normal);
+
 for (var i = 0; i <= array_length(parentRenderLayers) - 1; i++) {
 	var currentParentKey = parentRenderLayers[i]
 	var currentParent = layers[$ currentParentKey]
@@ -11,10 +11,9 @@ for (var i = 0; i <= array_length(parentRenderLayers) - 1; i++) {
 		var renderLayerKey = renderLayers[j]
 		var currentRenderLayerSurface = currentParent[$ renderLayerKey]
 
-		draw_surface_with_alpha(currentRenderLayerSurface,0,0)
+		draw_surface_with_alpha(currentRenderLayerSurface,0,0,1,true)
 
 	}
 	
 	
 }
-gpu_set_blendmode(bm_normal);

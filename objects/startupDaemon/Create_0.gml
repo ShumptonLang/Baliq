@@ -1,5 +1,5 @@
 
-window_set_size(3840,2160)
+//window_set_size(3840,2160)
 game_set_speed(60,gamespeed_fps)
 
 gpu_set_texfilter(true)

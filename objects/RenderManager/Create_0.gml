@@ -4,19 +4,23 @@ depth = -600
 
 show_debug_overlay(1)
 
- initialWindowDimensions = {x:0,y:0}
- initialWindowDimensions.x = window_get_width()
- initialWindowDimensions.y = window_get_height()
+ windowSizeX = window_get_width()
+ windowSizeY = window_get_height()
+ 
+ display_set_gui_size(windowSizeX,windowSizeY)
+ 
+ renderedImageX = 3840
+ renderedImageY = 2160
  
  layers = {
 	background:	{
-		base:surface_create(initialWindowDimensions.x,initialWindowDimensions.y)
+		base:surface_create(renderedImageX,renderedImageY)
 		}, 
 	object: {
-		base:surface_create(initialWindowDimensions.x,initialWindowDimensions.y)
+		base:surface_create(renderedImageX,renderedImageY)
 		},
 	ui: {
-		base:surface_create(initialWindowDimensions.x,initialWindowDimensions.y)
+		base:surface_create(renderedImageX,renderedImageY)
 		}
 
  }
@@ -34,9 +38,14 @@ enum screenDimensions {
  
  
 
-function draw_surface_with_alpha(surf, x, y, alpha = 1) {
+function draw_surface_with_alpha(surf, x, y, alpha = 1, drawToScreen = false) {
+	var scale = windowSizeY/renderedImageY
+	//print(scale, windowSizeY, renderedImageY)
     gpu_set_blendmode_ext(bm_one, bm_inv_src_alpha); // Premultiplied alpha blend
-    draw_surface_ext(surf, x, y, 1, 1, 0, c_white, alpha);
+	if drawToScreen
+		draw_surface_ext(surf, x, y, 1, 1, 0, c_white, alpha);
+	else
+		draw_surface_ext(surf, x, y, scale, scale, 0, c_white, alpha);
     gpu_set_blendmode(bm_normal);
 }
 
@@ -47,7 +56,7 @@ function drawToLayer(surface, drawLayer,roomDisplaySize, subLayer = "base", shad
 		if struct_exists(layers,drawLayer) {
 
 			if !struct_exists(layers[$ drawLayer],subLayer){
-				layers[$ drawLayer][$ subLayer] = surface_create(surface_get_width(surface),surface_get_height(surface))
+				layers[$ drawLayer][$ subLayer] = surface_create(renderedImageX,renderedImageY)
 			}
 
 			surface_set_target(layers[$ drawLayer][$ subLayer])
@@ -60,10 +69,8 @@ function drawToLayer(surface, drawLayer,roomDisplaySize, subLayer = "base", shad
 		if shader != -1
 			shader_set(shader)
 		
-		if roomDisplaySize == roomDisplayType.smallScreen
-			draw_surface_with_alpha(surface,240,0)
-		else
-			draw_surface_with_alpha(surface,0,0)
+		
+		draw_surface_with_alpha(surface,0,0)
 		
 		surface_reset_target()
 		
@@ -76,7 +83,7 @@ function drawToLayer(surface, drawLayer,roomDisplaySize, subLayer = "base", shad
  
  function applyShaderToLayer(Layer,shader,subLayer = "base",shaderConfigFunction= function(){}){
 	 var layerSurface = layers[$ Layer][$ subLayer]
-	 var postShaderSurface = surface_create(surface_get_width(layerSurface),surface_get_height(layerSurface))
+	 var postShaderSurface = surface_create(renderedImageX,renderedImageY)
 	 gpu_set_blendmode(bm_normal);
 	 surface_set_target(postShaderSurface)
 	 //New surfaces potentially contain old data. Need to clean them first.
@@ -93,11 +100,6 @@ function drawToLayer(surface, drawLayer,roomDisplaySize, subLayer = "base", shad
 	 gpu_set_blendmode(bm_normal);
  }
  
- function surfaceClear(surface, alpha) {
-	surface_set_target(surface)
-	draw_clear_alpha(c_black,alpha)
-	surface_reset_target()
- }
  
  function ensure_surface(surf, width, height) {
     if !surface_exists(surf) {
@@ -108,9 +110,7 @@ function drawToLayer(surface, drawLayer,roomDisplaySize, subLayer = "base", shad
 
 
 function prepare_surface_for_drawing(surf, width, height, clear_alpha = 0) {
-    if !surface_exists(surf) {
-        surf = surface_create(width, height);
-    }
+    surf = ensure_surface(surf, width, height)
     
     surface_set_target(surf);
     

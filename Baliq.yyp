@@ -162,6 +162,7 @@
     {"id":{"name":"CRTExposure","path":"shaders/CRTExposure/CRTExposure.yy",},},
     {"id":{"name":"CRTLidar","path":"shaders/CRTLidar/CRTLidar.yy",},},
     {"id":{"name":"MachineryBloom","path":"shaders/MachineryBloom/MachineryBloom.yy",},},
+    {"id":{"name":"MachineryWarp","path":"shaders/MachineryWarp/MachineryWarp.yy",},},
     {"id":{"name":"paleShader","path":"shaders/paleShader/paleShader.yy",},},
     {"id":{"name":"SonarLines","path":"shaders/SonarLines/SonarLines.yy",},},
     {"id":{"name":"Wallwarp","path":"shaders/Wallwarp/Wallwarp.yy",},},

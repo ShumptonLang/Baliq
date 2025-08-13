@@ -15,8 +15,8 @@ var isTransition = ControllerService.shipStatus.comms.startupState.currentState.
 
 if isEnabled or isTransition or isFinale  {
 		
-		displaySurface = RenderManager.prepare_surface_for_drawing(displaySurface,screenDimensions.x2K,screenDimensions.y4K)
-		draw_sprite_ext(CRTFrame,0,0,0,0.5,0.5,0,c_white,random_range(1,lerp(1,1,smoothstep(0,1,astigmaDifference))))
+		displaySurface = RenderManager.prepare_surface_for_drawing(displaySurface,RenderManager.renderedImageX,RenderManager.renderedImageY)
+		draw_sprite_ext(CRTFrame,0,360,0,1,1,0,c_white,random_range(1,lerp(1,1,smoothstep(0,1,astigmaDifference))))
 		RenderManager.finish_surface_drawing()
 		
 		RenderManager.drawToLayer(displaySurface,"background",displayType, "base")
@@ -47,33 +47,33 @@ if isEnabled or isTransition or isFinale  {
 
 }
 
-displaySurface = RenderManager.prepare_surface_for_drawing(displaySurface,screenDimensions.x2K,screenDimensions.y4K)
-draw_sprite_ext(RadioLowLightBlank50,0,0,0,0.5,0.5,0,c_white,1)
-draw_sprite_ext(Engine,0,0,0,0.5,0.5,0,c_white,ControllerService.shipStatus.comms.introSpriteStates.engine)
+displaySurface = RenderManager.prepare_surface_for_drawing(displaySurface,RenderManager.renderedImageX,RenderManager.renderedImageY)
+draw_sprite_ext(RadioLowLightBlank50,0,360,0,1,1,0,c_white,1)
+draw_sprite_ext(Engine,0,360,0,1,1,0,c_white,ControllerService.shipStatus.comms.introSpriteStates.engine)
 
-draw_sprite_ext(sBigDial,bigDialIDX,0,0,0.5,0.5,0,c_white,1)
-draw_sprite_ext(sRadioLever,leverIdx,0,0,0.5,0.5,0,c_white,1)
-draw_sprite_ext(sPowerDial,powerDialIdx,0,0,0.5,0.5,0,c_white,1)
-draw_sprite_ext(sSmallSwitch,smallDialIDX,0,0,0.5,0.5,0,c_white,1)
+draw_sprite_ext(sBigDial,bigDialIDX,360,0,1,1,0,c_white,1)
+draw_sprite_ext(sRadioLever,leverIdx,360,0,1,1,0,c_white,1)
+draw_sprite_ext(sPowerDial,powerDialIdx,360,0,1,1,0,c_white,1)
+draw_sprite_ext(sSmallSwitch,smallDialIDX,360,0,1,1,0,c_white,1)
 RenderManager.finish_surface_drawing()
 
 RenderManager.drawToLayer(displaySurface, "object", displayType, "machinery")
 RenderManager.applyShaderToLayer("object",CRTExposure,"machinery",exposureTest)
-if isTransition and ControllerService.shipStatus.comms.introSpriteStates.crt == 0
-	RenderManager.applyShaderToLayer("object", MachineryBloom, "machinery", machineryBloomConf)
+//if isTransition and ControllerService.shipStatus.comms.introSpriteStates.crt == 0
+//	RenderManager.applyShaderToLayer("object", MachineryBloom, "machinery", machineryBloomConf)
 	
-displaySurface = RenderManager.prepare_surface_for_drawing(displaySurface,screenDimensions.x2K,screenDimensions.y4K)
-draw_sprite_ext(Speakers,0,0,0,0.5,0.5,0,c_white,ControllerService.shipStatus.comms.introSpriteStates.speakers)
+displaySurface = RenderManager.prepare_surface_for_drawing(displaySurface,RenderManager.renderedImageX,RenderManager.renderedImageY)
+draw_sprite_ext(Speakers,0,360,0,1,1,0,c_white,ControllerService.shipStatus.comms.introSpriteStates.speakers)
 RenderManager.finish_surface_drawing()
 
-RenderManager.drawToLayer(displaySurface, "ui", displayType, "speaker")
-RenderManager.applyShaderToLayer("ui",CRTExposure,"speaker",exposureSpeaker)
+RenderManager.drawToLayer(displaySurface, "object", displayType, "speaker")
+RenderManager.applyShaderToLayer("object",CRTExposure,"speaker",exposureSpeaker)
 
-
+RenderManager.applyShaderToLayer("object", MachineryWarp, "machinery",machineryWarpConf)
 
 
 if ControllerService.shipStatus.comms.introSpriteStates.hideAll {
-	displaySurface = RenderManager.prepare_surface_for_drawing(displaySurface,screenDimensions.x2K,screenDimensions.y4K)
+	displaySurface = RenderManager.prepare_surface_for_drawing(displaySurface,RenderManager.renderedImageX,RenderManager.renderedImageY)
 	draw_rectangle_colour(0,0,surface_get_width(displaySurface),surface_get_height(displaySurface),c_black,c_black,c_black,c_black,0)	
 	RenderManager.finish_surface_drawing()
 	RenderManager.drawToLayer(displaySurface, "ui", displayType)

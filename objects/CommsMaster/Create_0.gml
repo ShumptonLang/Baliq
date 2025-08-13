@@ -5,7 +5,7 @@ instance_create_depth(865+240,906,0,oSmallSwitchInput)
 
 crtScreenSurface = surface_create(320,240)
 
-displaySurface = surface_create(2880,2160)
+displaySurface = -1
 displayType = roomDisplayType.smallScreen
 
 vertex_format_begin();
@@ -45,15 +45,15 @@ astigmaDifference = 0
 vb = vertex_create_buffer();
 vertex_begin(vb, format);
 		
-vertex_position(vb,   820,   168); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0.5, 0.5);
-vertex_position(vb,   733,   60); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0, 0);
-vertex_position(vb,   862,   98); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0.5, 0);
-vertex_position(vb,   991,   155); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 1, 0);
-vertex_position(vb,   963,   232); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 1, 0.5);
-vertex_position(vb,   927,   322); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 1, 1);
-vertex_position(vb,   649,   203); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0, 1);
-vertex_position(vb,   690,   121); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0, 0.5);
-vertex_position(vb,   733,   60); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0, 0);
+vertex_position(vb,   820*2+360,   168*2); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0.5, 0.5);
+vertex_position(vb,   733*2+360,   60*2); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0, 0);
+vertex_position(vb,   862*2+360,   98*2); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0.5, 0);
+vertex_position(vb,   991*2+360,   155*2); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 1, 0);
+vertex_position(vb,   963*2+360,   232*2); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 1, 0.5);
+vertex_position(vb,   927*2+360,   322*2); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 1, 1);
+vertex_position(vb,   649*2+360,   203*2); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0, 1);
+vertex_position(vb,   690*2+360,   121*2); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0, 0.5);
+vertex_position(vb,   733*2+360,   60*2); vertex_color(vb, c_white, 1); vertex_texcoord(vb, 0, 0);
 
 vertex_end(vb); 
 
@@ -150,6 +150,16 @@ function exposureSpeaker(){
 function exposureHandset(){
 	shader_set_uniform_f(shader_get_uniform(CRTExposure, "u_exposure"),lerp(4,1,sqrt(ControllerService.shipStatus.comms.totalPeriphAlpha)))
 	shader_set_uniform_f(shader_get_uniform(CRTExposure, "u_gamma"), lerp(5,1.5,sqrt(ControllerService.shipStatus.comms.totalPeriphAlpha)))
+
+}
+
+function machineryWarpConf(){
+	shader_set_uniform_f(shader_get_uniform(MachineryWarp, "u_time"),current_time/1000)
+	//shader_set_uniform_f(shader_get_uniform(MachineryWarp, "u_ghostIntensity"),oInputManager.mouse_x_gui/1920)
+	print(smoothstep(0.0,0.5,1-ControllerService.shipStatus.comms.totalPeriphAlpha), ControllerService.shipStatus.comms.totalPeriphAlpha)
+	shader_set_uniform_f(shader_get_uniform(MachineryWarp, "u_ghostIntensity"),smoothstep(0.3,0.5,1-ControllerService.shipStatus.comms.totalPeriphAlpha))
+
+
 
 }
 

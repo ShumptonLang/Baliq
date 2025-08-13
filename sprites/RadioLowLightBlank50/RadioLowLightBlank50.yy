@@ -9,7 +9,7 @@
   "collisionKind":1,
   "collisionTolerance":0,
   "DynamicTexturePage":false,
-  "edgeFiltering":true,
+  "edgeFiltering":false,
   "For3D":false,
   "frames":[
     {"$GMSpriteFrame":"","%Name":"36c2e960-b20a-4fd2-b8df-dabca0c0b01f","name":"36c2e960-b20a-4fd2-b8df-dabca0c0b01f","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
@@ -28,7 +28,7 @@
     "name":"Radio",
     "path":"folders/Comms/Sprites/Radio.yy",
   },
-  "preMultiplyAlpha":true,
+  "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
   "resourceVersion":"2.0",
   "sequence":{
